@@ -38,13 +38,26 @@
         }
 
         .logo {
-            font-size: 1.4em;
-            font-weight: bold;
-            background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
+    display: flex;
+    align-items: center;
+    font-size: 1.4em;
+    font-weight: bold;
+}
+
+.logo span {
+    background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.logo img {
+    transition: transform 0.3s;
+}
+
+.logo:hover img {
+    transform: rotate(5deg) scale(1.1);
+}
 
         .nav-links {
             display: flex;
@@ -64,23 +77,20 @@
         }
 
         /* Hero Section */
-        .hero {
-            background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
-            color: white;
-            padding: 100px 20px 80px;
-            position: relative;
-            overflow: hidden;
-        }
+       .hero {
+    background: linear-gradient(135deg, #000000 0%, #000000 50%, #000000 100%);
+    background-size: 200% 200%;
+    animation: gradientShift 10s ease infinite;
+    padding: 80px 20px;
+    position: relative;
+    overflow: hidden;
+}
 
-        .hero::before {
-            content: 'ॐ';
-            position: absolute;
-            font-size: 500px;
-            opacity: 0.05;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
 
         .hero-content {
             max-width: 1200px;
@@ -542,13 +552,143 @@
                 justify-content: center;
             }
         }
+        .hero-content-new {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+    padding: 40px 20px;
+}
+
+.hero-left h1 {
+    font-size: 3.5em;
+    margin-bottom: 15px;
+    line-height: 1.1;
+}
+
+.hero-stats-mini {
+    display: flex;
+    gap: 30px;
+    margin: 30px 0;
+    flex-wrap: wrap;
+}
+
+.stat-mini {
+    text-align: center;
+    background: rgba(255,255,255,0.15);
+    padding: 15px 25px;
+    border-radius: 12px;
+    backdrop-filter: blur(10px);
+}
+
+.stat-mini strong {
+    display: block;
+    font-size: 2em;
+    margin-bottom: 5px;
+}
+
+.stat-mini span {
+    font-size: 0.9em;
+    opacity: 0.9;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 20px;
+    margin-top: 35px;
+    flex-wrap: wrap;
+}
+
+.btn-primary {
+    background: white;
+    color: #ff6b35;
+    padding: 18px 40px;
+    text-decoration: none;
+    border-radius: 50px;
+    font-size: 1.2em;
+    font-weight: bold;
+    transition: all 0.3s;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+}
+
+.btn-secondary {
+    background: rgba(255,255,255,0.2);
+    color: white;
+    padding: 18px 40px;
+    text-decoration: none;
+    border-radius: 50px;
+    font-size: 1.2em;
+    font-weight: bold;
+    border: 2px solid white;
+    transition: all 0.3s;
+    backdrop-filter: blur(10px);
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn-secondary:hover {
+    background: white;
+    color: #ff6b35;
+    transform: translateY(-3px);
+}
+
+.video-container {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+}
+
+.video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 20px;
+}
+
+@media (max-width: 968px) {
+    .hero-content-new {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+    
+    .hero-left h1 {
+        font-size: 2.5em;
+    }
+    
+    .hero-stats-mini {
+        justify-content: center;
+    }
+    
+    .hero-buttons {
+        justify-content: center;
+    }
+}
     </style>
 </head>
 <body>
     <!-- Navigation -->
     <nav>
         <div class="container">
-            <div class="logo">Values For All</div>
+            <div class="logo">
+                <a href="https://ibb.co/yFfQMsTY"><img src="https://i.ibb.co/DfVR6KX8/iskcon-logo.png" alt="ISKCON Logo" style="height: 45px; margin-right: 12px; vertical-align: middle;"></a>
+                <span>Value Education Contest</span>
+            </div>
             <ul class="nav-links">
                 <li><a href="#about">About</a></li>
                 <li><a href="#impact">Impact</a></li>
@@ -560,25 +700,99 @@
     </nav>
 
     <!-- Hero Section -->
-    <div class="hero">
-        <div class="hero-content">
-            <div class="hero-text">
-                <h1>Value Education Contest</h1>
-                <p class="subtitle">World's Biggest Value Education Initiative</p>
-                <p class="tagline">"Right Values, Bright Future"</p>
-                <div class="hero-badges">
-                    <div class="badge">Non-Profit Initiative</div>
-                    <div class="badge">Based on Bhagavad Gita</div>
-                    <div class="badge">Free Study Material</div>
-                </div>
-                <a href="#register" class="cta-button">Register Now</a>
+   
+
+<div class="hero-content-new">
+    <div class="hero-left">
+        <h1>Value Education Contest 2025</h1>
+        <p class="subtitle">World's Biggest Value Education Initiative</p>
+        <p class="tagline">Right Values, Bright Future ✨</p>
+        
+        <div class="hero-stats-mini">
+            <div class="stat-mini">
+                <strong>6,50,000+</strong>
+                <span>Students</span>
             </div>
-            <div class="hero-image">
-                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 500'%3E%3Crect width='400' height='500' fill='%23c44a3a'/%3E%3Ctext x='200' y='250' font-size='180' text-anchor='middle' fill='%23fff' opacity='0.3'%3E📚%3C/text%3E%3Ctext x='200' y='400' font-size='32' text-anchor='middle' fill='%23fff' font-weight='bold'%3EBHAGAVAD%3C/text%3E%3Ctext x='200' y='440' font-size='32' text-anchor='middle' fill='%23fff' font-weight='bold'%3EGITA%3C/text%3E%3C/svg%3E" alt="Bhagavad Gita">
+            <div class="stat-mini">
+                <strong>1500+</strong>
+                <span>Schools</span>
             </div>
+            <div class="stat-mini">
+                <strong>8+</strong>
+                <span>Years</span>
+            </div>
+        </div>
+
+        <div class="hero-buttons">
+            <a href="#register" class="btn-primary">
+                📝 Register Now
+            </a>
+            <a href="#whatsapp-section" class="btn-secondary">
+                💬 Join WhatsApp
+            </a>
         </div>
     </div>
 
+    <div class="hero-right">
+        <!-- Success Student Image -->
+        <img src="https://i.ibb.co/3mw2cCKj/Picture1.png" alt="Right Values Bright Future" style="max-width: 100%; height: auto; border-radius: 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); animation: float 3s ease-in-out infinite;">
+    </div>
+</div>
+<!-- WhatsApp Join Section -->
+<section id="whatsapp-section" style="padding: 60px 20px; background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);">
+    <div class="container" style="text-align: center; color: white;">
+        <h2 style="font-size: 2.5em; margin-bottom: 20px;">Join Your District's WhatsApp Group</h2>
+        <p style="font-size: 1.2em; margin-bottom: 40px; opacity: 0.9;">Get updates, study materials, and connect with fellow participants</p>
+        
+        <div style="max-width: 600px; margin: 0 auto; background: white; padding: 40px; border-radius: 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.2);">
+            <h3 style="color: #128C7E; margin-bottom: 30px; font-size: 1.8em;">Select Your State & District</h3>
+            
+            <div style="margin-bottom: 25px;">
+                <select id="stateSelect" style="width: 100%; padding: 15px; font-size: 1.1em; border: 2px solid #ddd; border-radius: 10px; margin-bottom: 20px;">
+                    <option value="">-- Select State --</option>
+                    <option value="maharashtra">Maharashtra</option>
+                    <option value="karnataka">Karnataka</option>
+                    <option value="gujarat">Gujarat</option>
+                    <option value="rajasthan">Rajasthan</option>
+                    <option value="mp">Madhya Pradesh</option>
+                    <!-- Add more states -->
+                </select>
+                
+                <select id="districtSelect" style="width: 100%; padding: 15px; font-size: 1.1em; border: 2px solid #ddd; border-radius: 10px;">
+                    <option value="">-- Select District --</option>
+                    <option value="pune">Pune</option>
+                    <option value="mumbai">Mumbai</option>
+                    <option value="nagpur">Nagpur</option>
+                    <!-- Add more districts -->
+                </select>
+            </div>
+            
+            <a href="https://chat.whatsapp.com/YOUR_GROUP_LINK" class="btn-primary" style="display: inline-block; margin-top: 20px; background: #25D366; color: white;">
+                💬 Open WhatsApp Group
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Results Section -->
+<section id="results" style="padding: 80px 20px; background: #f8f9fa;">
+    <div class="container" style="text-align: center;">
+        <h2 style="font-size: 2.8em; color: #2c3e50; margin-bottom: 20px;">Check Your Results</h2>
+        <p style="font-size: 1.2em; color: #7f8c8d; margin-bottom: 50px;">Enter your details to view contest results and download certificate</p>
+        
+        <div style="max-width: 500px; margin: 0 auto; background: white; padding: 50px 40px; border-radius: 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.1);">
+            <input type="text" placeholder="Enter Roll Number" style="width: 100%; padding: 18px; font-size: 1.1em; border: 2px solid #ddd; border-radius: 10px; margin-bottom: 20px;">
+            
+            <input type="text" placeholder="Enter Name" style="width: 100%; padding: 18px; font-size: 1.1em; border: 2px solid #ddd; border-radius: 10px; margin-bottom: 30px;">
+            
+            <button onclick="alert('Results will be displayed here')" style="width: 100%; background: linear-gradient(135deg, #ff6b35, #f7931e); color: white; padding: 18px; font-size: 1.2em; font-weight: bold; border: none; border-radius: 50px; cursor: pointer; transition: all 0.3s;">
+                🏆 Check Results
+            </button>
+        </div>
+        
+        <p style="margin-top: 30px; color: #7f8c8d;">Results for VEC 2024-25 will be announced soon</p>
+    </div>
+</section>
     <!-- Gift Banner -->
     <div class="gift-banner">
         <div class="gift-content">
@@ -587,6 +801,41 @@
         </div>
     </div>
 
+    <!-- Photo Gallery Section -->
+<section style="padding: 80px 20px; background: #f8f9fa;">
+    <div class="container">
+        <h2 style="text-align: center; font-size: 2.8em; color: #2c3e50; margin-bottom: 20px;">📸 VEC in Action</h2>
+        <p style="text-align: center; font-size: 1.2em; color: #7f8c8d; margin-bottom: 60px;">Moments from our award ceremonies and events across India</p>
+        
+        <div class="photo-grid">
+            <div class="photo-item">
+                <img src="IMAGE_1_URL" alt="Award Ceremony">
+                <div class="photo-overlay">
+                    <h4>Award Ceremony</h4>
+                    <p>Celebrating excellence</p>
+                </div>
+            </div>
+            
+            <div class="photo-item">
+                <img src="IMAGE_2_URL" alt="Student Winners">
+                <div class="photo-overlay">
+                    <h4>Student Winners</h4>
+                    <p>Young achievers</p>
+                </div>
+            </div>
+            
+            <div class="photo-item">
+                <img src="IMAGE_3_URL" alt="Mass Participation">
+                <div class="photo-overlay">
+                    <h4>Mass Participation</h4>
+                    <p>Thousands learning together</p>
+                </div>
+            </div>
+            
+            <!-- Add more photo-item divs for more images -->
+        </div>
+    </div>
+</section>
     <!-- Stats Section -->
     <section class="stats-section">
         <div class="container">
@@ -612,7 +861,80 @@
             </div>
         </div>
     </section>
-
+<!-- Success Stories with Photos -->
+<section style="padding: 80px 20px; background: white;">
+    <div class="container">
+        <h2 style="text-align: center; font-size: 2.8em; color: #2c3e50; margin-bottom: 60px;">🌟 Success Stories</h2>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px;">
+            
+            <!-- Story 1 -->
+            <div style="text-align: center; background: #f8f9fa; padding: 30px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.08);">
+                <img src="STUDENT_PHOTO_1" alt="Winner" style="width: 150px; height: 150px; border-radius: 50%; object-fit: cover; margin-bottom: 20px; border: 5px solid #ff6b35;">
+                <h4 style="color: #2c3e50; margin-bottom: 10px;">Student Name</h4>
+                <p style="color: #ff6b35; font-weight: bold; margin-bottom: 15px;">All India Rank 1</p>
+                <p style="color: #555; line-height: 1.6;">"VEC transformed my life..."</p>
+            </div>
+            
+            <!-- Story 2 -->
+            <div style="text-align: center; background: #f8f9fa; padding: 30px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.08);">
+                <img src="STUDENT_PHOTO_2" alt="Winner" style="width: 150px; height: 150px; border-radius: 50%; object-fit: cover; margin-bottom: 20px; border: 5px solid #ff6b35;">
+                <h4 style="color: #2c3e50; margin-bottom: 10px;">Student Name</h4>
+                <p style="color: #ff6b35; font-weight: bold; margin-bottom: 15px;">District Topper</p>
+                <p style="color: #555; line-height: 1.6;">"Best decision of my life..."</p>
+            </div>
+            
+        </div>
+    </div>
+</section>
+<!-- VEC Journey -->
+<section style="padding: 80px 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+    <div class="container">
+        <h2 style="text-align: center; font-size: 2.8em; margin-bottom: 60px;">🎯 Your VEC Journey</h2>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px;">
+            
+            <div style="text-align: center;">
+                <img src="REGISTRATION_PHOTO" alt="Register" style="width: 100%; border-radius: 15px; margin-bottom: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
+                <h4 style="font-size: 1.5em; margin-bottom: 10px;">1. Register</h4>
+                <p>Get your study kit</p>
+            </div>
+            
+            <div style="text-align: center;">
+                <img src="STUDY_PHOTO" alt="Study" style="width: 100%; border-radius: 15px; margin-bottom: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
+                <h4 style="font-size: 1.5em; margin-bottom: 10px;">2. Study</h4>
+                <p>Learn from Bhagavad Gita</p>
+            </div>
+            
+            <div style="text-align: center;">
+                <img src="EXAM_PHOTO" alt="Exam" style="width: 100%; border-radius: 15px; margin-bottom: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
+                <h4 style="font-size: 1.5em; margin-bottom: 10px;">3. Contest</h4>
+                <p>Take the exam</p>
+            </div>
+            
+            <div style="text-align: center;">
+                <img src="AWARD_PHOTO" alt="Win" style="width: 100%; border-radius: 15px; margin-bottom: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
+                <h4 style="font-size: 1.5em; margin-bottom: 10px;">4. Celebrate</h4>
+                <p>Receive awards</p>
+            </div>
+            
+        </div>
+    </div>
+</section>
+<!-- Sponsors Section -->
+<section style="padding: 60px 20px; background: white;">
+    <div class="container">
+        <h2 style="text-align: center; font-size: 2.5em; color: #2c3e50; margin-bottom: 50px;">🤝 Our Supporters</h2>
+        
+        <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 40px;">
+            <img src="LOGO_1_URL" alt="Supporter 1" style="height: 60px; filter: grayscale(100%); opacity: 0.7; transition: all 0.3s;" onmouseover="this.style.filter='grayscale(0%)'; this.style.opacity='1';" onmouseout="this.style.filter='grayscale(100%)'; this.style.opacity='0.7';">
+            
+            <img src="LOGO_2_URL" alt="Supporter 2" style="height: 60px; filter: grayscale(100%); opacity: 0.7; transition: all 0.3s;" onmouseover="this.style.filter='grayscale(0%)'; this.style.opacity='1';" onmouseout="this.style.filter='grayscale(100%)'; this.style.opacity='0.7';">
+            
+            <!-- Add more logos -->
+        </div>
+    </div>
+</section>
     <!-- Mission & Vision -->
     <section class="mission-vision" id="about">
         <div class="container">
