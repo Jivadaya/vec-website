@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>ISKCON Values For All — National Value Education Contest 2025</title>
+    <title>ISKCON Values For All — National Value Education Contest 2026</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
@@ -80,46 +80,61 @@
             letter-spacing: 0.5px;
         }
         
-        /* ==== Responsive menubar (keeps visible on mobile) ==== */
+       /* ==== Responsive Menubar (Always Visible on Mobile) ==== */
 
-/* Container for the nav + menubar */
-.nav-menubar { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:10px 16px; }
-
-/* The menubar area holding links + CTA */
-.nav-bar { display:flex; align-items:center; gap:12px; flex:1; justify-content:flex-end; }
-
-/* Links area: horizontal, scrollable on small screens */
-.nav-links {
-  display:flex;
-  gap:18px;
-  align-items:center;
-  padding:6px 4px;
-  /* allow horizontal scrolling on narrow screens */
-  overflow-x:auto;
-  -webkit-overflow-scrolling:touch;
-  scrollbar-width: none; /* firefox */
+/* Base container */
+.nav-menubar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 16px;
 }
 
-/* hide scrollbar visually (but still usable) */
-.nav-links::-webkit-scrollbar { height: 8px; }
-.nav-links::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.08); border-radius: 8px; }
+/* Right side: links + CTA */
+.nav-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  justify-content: flex-end;
+}
+
+/* Links container */
+.nav-links {
+  display: flex;
+  gap: 18px;
+  align-items: center;
+  padding: 6px 4px;
+  overflow-x: auto;               /* enable scroll on narrow screens */
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;          /* Firefox */
+  scroll-snap-type: x proximity;  /* smoother scrolling */
+}
+
+.nav-links::-webkit-scrollbar { height: 6px; }
+.nav-links::-webkit-scrollbar-thumb {
+  background: rgba(0,0,0,0.08);
+  border-radius: 8px;
+}
 .nav-links::-webkit-scrollbar-track { background: transparent; }
 
-/* individual links */
+/* Links */
 .nav-links a {
   color: #374151;
   text-decoration: none;
   font-weight: 600;
   padding: 8px 12px;
   border-radius: 8px;
-  white-space: nowrap; /* keep each link on single line */
-  display:inline-flex;
-  align-items:center;
-  gap:8px;
-  transition: background .18s ease, color .18s ease, transform .12s;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: background 0.18s ease, color 0.18s ease, transform 0.12s;
+  scroll-snap-align: start;
 }
 
-/* hover / focus */
+/* Hover / focus */
 .nav-links a:hover,
 .nav-links a:focus {
   color: var(--maroon);
@@ -128,19 +143,28 @@
   transform: translateY(-1px);
 }
 
-/* CTA styling — smaller on mobile via media query below */
-.nav-cta { margin-left: 8px; padding: 10px 16px; border-radius: 999px; font-weight:800; }
-
-/* Desktop: keep current spacing */
-@media (min-width: 981px) {
-  .nav-links { gap:25px; }
-  .nav-menubar { padding:12px 20px; }
-  .nav-cta .cta-text { display:inline; margin-left:8px; }
+/* CTA button */
+.nav-cta {
+  margin-left: 8px;
+  padding: 10px 16px;
+  border-radius: 999px;
+  font-weight: 800;
+  white-space: nowrap;
 }
 
-/* MOBILE: compact menubar, visible, horizontally scrollable */
+/* Desktop (unchanged) */
+@media (min-width: 981px) {
+  .nav-links { gap: 25px; }
+  .nav-menubar { padding: 12px 20px; }
+  .nav-cta .cta-text { display: inline; margin-left: 10px; }
+}
+
+/* =============================== */
+/* 📱 MOBILE (up to 980px width)  */
+/* =============================== */
+/* --- MOBILE / TABLET --- */
 @media (max-width: 980px) {
-  /* make nav sticky at top for easy access on mobile */
+
   nav[aria-label="Top navigation"] {
     position: sticky;
     top: 0;
@@ -150,27 +174,59 @@
     border-bottom: 1px solid rgba(15,23,42,0.04);
   }
 
-  .nav-menubar { padding:8px 10px; gap:8px; }
+  /* stack vertically */
+  .nav-menubar {
+    /* flex-direction: column; */
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+  }
 
-  /* tighten gaps and font size for small screens */
-  .nav-links { gap:10px; padding:6px 6px; -ms-overflow-style: none; } /* hide in IE */
-  .nav-links a { padding:8px 10px; font-size:0.95rem; border-radius:8px; }
+  /* logo stays centered */
+  .logo {
+    justify-content: center;
+    text-align: center;
+  }
+  .logo img {
+    height: 44px;
+  }
 
-  /* keep CTA compact: icon + small text */
-  .nav-cta { padding:8px 12px; font-size:0.95rem; display:inline-flex; align-items:center; gap:8px; }
-  .nav-cta .cta-text { display:inline-block; } 
+  /* links row centered and scrollable */
+  .nav-bar {
+    /* flex-direction: column; */
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+  }
 
-  /* if screen gets very narrow, hide CTA text to preserve space (only show icon) */
-  @media (max-width:420px) {
-    .nav-cta .cta-text { display:none; }
-    .nav-links a { font-size:0.92rem; padding:7px 8px; }
+  .nav-links {
+    /* justify-content: center; */
+    gap: 14px;
+    padding: 4px 0;
+    width: 100%;
+  }
+
+  .nav-links a {
+    font-size: 0.95rem;
+    padding: 7px 10px;
+  }
+
+  /* CTA centered below links */
+  .nav-cta {
+    margin: 6px auto 0;
+    font-size: 0.9rem;
+    padding: 8px 14px;
+  }
+
+  /* very small screens */
+  @media (max-width: 420px) {
+    .logo img { height: 40px; }
+    .logo-title { font-size: 1rem; }
+    .logo-sub { font-size: 0.8rem; }
+    .nav-links a { font-size: 0.9rem; }
+    .nav-cta .cta-text { display: none; }
   }
 }
-
-/* Accessibility focus-visible */
-.nav-links a:focus-visible { outline: 3px solid rgba(255,153,51,0.16); border-radius:8px; }
-.nav-cta:focus-visible { outline: 3px solid rgba(39,174,96,0.16); border-radius:999px; }
-
 /* small helper to ensure menubar doesn't push content too much */
 body { padding-top: 0; } /* if you later make nav fixed, add top padding equal to nav height */
 
@@ -825,7 +881,7 @@ body { padding-top: 0; } /* if you later make nav fixed, add top padding equal t
         <a role="menuitem" href="#impact">Impact</a>
         <a role="menuitem" href="#videos">Videos</a>
         <a role="menuitem" href="#gifts">Gifts</a>
-        <a role="menuitem" href="#results">Results</a>
+        <!-- <a role="menuitem" href="#results">Results</a> -->
         <!-- add any additional links here -->
       </div>
 
@@ -840,7 +896,7 @@ body { padding-top: 0; } /* if you later make nav fixed, add top padding equal t
     <section class="hero full-bleed-hero">
         <div class="hero-left">
             <div class="subtitle">A Pan-India Initiative</div>
-            <h1>National Value Education Contest <span style="color:var(--saffron)">2025</span></h1>
+            <h1>National Value Education Contest <span style="color:var(--saffron)">2026</span></h1>
             <p class="tagline">Empowering students across India with timeless wisdom from the <strong>Bhagavad Gita</strong>. Join the largest contest for character building and ethical clarity.</p>
            <div class="hero-stats">
   <div class="stat-mini">
@@ -948,11 +1004,12 @@ body { padding-top: 0; } /* if you later make nav fixed, add top padding equal t
     <section id="results" style="padding: 80px 20px; background: #f8f9fa;">
       <div class="container" style="text-align: center;">
         <h2 style="font-size: 2.8em; color: #2c3e50; margin-bottom: 20px;">Check Your Results</h2>
-        <p style="font-size: 1.2em; color: #7f8c8d; margin-bottom: 50px;">Enter your details to view contest results and download certificate</p>
+        <!-- <p style="font-size: 1.2em; color: #7f8c8d; margin-bottom: 50px;">Enter your details to view contest results and download certificate</p> -->
 
         <div style="max-width: 500px; margin: 0 auto; background: white; padding: 50px 40px; border-radius: 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.1);">
-          <input id="res_roll" type="text" placeholder="Enter Roll Number" style="width: 100%; padding: 18px; font-size: 1.1em; border: 2px solid #ddd; border-radius: 10px; margin-bottom: 20px;">
-          <input id="res_name" type="text" placeholder="Enter Name" style="width: 100%; padding: 18px; font-size: 1.1em; border: 2px solid #ddd; border-radius: 10px; margin-bottom: 30px;">
+             <h2 style="font-size: 2.8em; color: #2c3e50; margin-bottom: 20px;">Check Your Results</h2>
+          <!-- <input id="res_roll" type="text" placeholder="Enter Roll Number" style="width: 100%; padding: 18px; font-size: 1.1em; border: 2px solid #ddd; border-radius: 10px; margin-bottom: 20px;">
+          <input id="res_name" type="text" placeholder="Enter Name" style="width: 100%; padding: 18px; font-size: 1.1em; border: 2px solid #ddd; border-radius: 10px; margin-bottom: 30px;"> -->
           <button id="checkResultsBtn" style="width: 100%; background: linear-gradient(135deg, #ff6b35, #f7931e); color: white; padding: 18px; font-size: 1.2em; font-weight: bold; border: none; border-radius: 50px; cursor: pointer; transition: all 0.3s;">
             🏆 Check Results
           </button>
