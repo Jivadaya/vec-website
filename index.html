@@ -1236,23 +1236,25 @@ document.addEventListener("DOMContentLoaded", () => {
 /* Save your posted JSON array exactly as whatsapp_groups.json in the same directory as index.html */
 
 async function loadWhatsAppJSONAndInit() {
-  const url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS25FQotsgdlN-k6xCO-gczCkMluhjMl59EC7rGVhaOGCM1WF4tC21KVXB7kxmneUVXTGWdrAlc1Hlh/pub?output=csv'; // path to the JSON file (same folder => '/whatsapp_groups.json')
+  const url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS25FQotsgdlN-k6xCO-gczCkMluhjMl59EC7rGVhaOGCM1WF4tC21KVXB7kxmneUVXTGWdrAlc1Hlh/pub?output=csv';
   let arr = [];
   try {
     const resp = await fetch(url, { cache: 'no-store' });
     if (!resp.ok) throw new Error('HTTP ' + resp.status);
-    arr = await resp.json();
-    if (!Array.isArray(arr)) throw new Error('JSON is not an array');
+
+    const text = await resp.text();       // ✅ get raw CSV text
+    arr = parseCSV(text);                 // ✅ convert to array of objects
+
+    if (!Array.isArray(arr)) throw new Error('Parsed data is not an array');
   } catch (err) {
-    console.error('Could not load whatsapp_groups.json — falling back to small sample. Error:', err);
-    // sample fallback (keeps UI working if file missing)
+    console.error('Could not load WhatsApp data — using fallback:', err);
     arr = [
       { "state": "Maharashtra", "district": "Pune", "whatsapp_link": "https://chat.whatsapp.com/PUNE_LINK" },
       { "state": "Karnataka", "district": "Bangalore", "whatsapp_link": "https://chat.whatsapp.com/BANGALORE_LINK" }
     ];
   }
 
-  // convert array -> nested object: { State: { District: link, ... }, ... }
+  // convert array -> nested object
   const groups = arr.reduce((acc, item) => {
     if (!item || !item.state || !item.district || !item.whatsapp_link) return acc;
     const st = item.state.trim();
@@ -1265,6 +1267,17 @@ async function loadWhatsAppJSONAndInit() {
   initWhatsAppUI(groups);
 }
 
+// helper
+function parseCSV(text) {
+  const lines = text.trim().split('\n');
+  const headers = lines.shift().split(',').map(h => h.trim());
+  return lines.map(line => {
+    const values = line.split(',').map(v => v.trim());
+    const obj = {};
+    headers.forEach((h, i) => obj[h] = values[i]);
+    return obj;
+  });
+}
 /* initialize the selects and keep inline + modal in sync */
 function initWhatsAppUI(whatsappGroups) {
   const wa_state = document.getElementById('wa_stateSelect');
