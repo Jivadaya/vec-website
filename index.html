@@ -648,7 +648,22 @@
             font-size: 1.1rem;
             margin-bottom: 8px;
         }
-        
+
+        /* Additional styles for merged sections */
+        .gift-banner {
+            background: linear-gradient(90deg,#4facfe 0%,#00f2fe 100%);
+            color: white;
+            padding: 35px 20px;
+            text-align: center;
+        }
+
+        .photo-grid img { display:block; width:100%; height:220px; object-fit:cover; }
+
+        .photo-item h4 { margin: 8px 0 6px; color: #2c3e50; }
+        .photo-item p { color: #666; margin: 0; }
+
+        .gifts-grid, .syllabus-grid, .solution-grid { max-width: 1200px; margin: 0 auto; }
+
         @media (max-width: 560px) {
             .hero { grid-template-columns: 1fr; }
             .video-item iframe { height: 180px; }
@@ -699,7 +714,7 @@
                 </div>
             </div>
             <div style="margin-top:30px;display:flex;flex-wrap:wrap;gap:15px">
-                <button class="fancy-btn fancy-whatsapp" id="heroWhatsapp">
+                <button class="fancy-btn fancy-whatsapp" id="heroWhatsapp" onclick="openModal()">
                     <i class="fa-brands fa-whatsapp"></i> Join District Group
                 </button>
                 <a href="https://vec.jivadaya.org/" target="_blank" class="fancy-btn fancy-primary">
@@ -715,7 +730,7 @@
     <div class="quick-wrap" id="quick">
         <h2><i class="fa-solid fa-star"></i> Essential Links & Actions</h2>
         <div class="quick-grid">
-            <div class="tile" id="tile-join">
+            <div class="tile" id="tile-join" onclick="openModal()">
                 <div class="icon t-join"><i class="fa-brands fa-whatsapp"></i></div>
                 <div>
                     <div class="title">Join WhatsApp Group</div>
@@ -753,48 +768,61 @@
         </div>
     </div>
 
-    <!-- WhatsApp Modal -->
-    <div id="modalBackdrop" class="modal-backdrop-custom" aria-hidden="true">
-        <div class="modal-card" role="dialog" aria-modal="true">
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
-                <h4><i class="fa-brands fa-whatsapp" style="color:#25D366;margin-right:8px"></i>Join WhatsApp Group</h4>
-                <button class="close-x" id="closeModal" aria-label="Close modal">&times;</button>
-            </div>
-            <p class="section-desc">Select your state and district to join the official WhatsApp group for live updates and announcements.</p>
-            <div style="display:flex;flex-direction:column;gap:16px;margin-top:20px">
-                <div>
-                    <label class="form-label">Select State</label>
-                    <select id="stateSelect" class="form-control" required></select>
-                </div>
-                <div>
-                    <label class="form-label">Select District / City</label>
-                    <select id="districtSelect" class="form-control" required></select>
-                </div>
-                <button id="openWhatsapp" class="fancy-btn fancy-whatsapp" disabled style="width:100%;justify-content:center;padding:14px;margin-top:10px">
-                    <i class="fa-brands fa-whatsapp"></i> Open WhatsApp Group
-                </button>
-            </div>
-            <p style="color:var(--muted);font-size:0.85rem;margin-top:15px;text-align:center">
-                ⚠️ Groups may be full during peak times. Try again later if full.
-            </p>
-        </div>
-    </div>
+    <!-- START: WhatsApp Join Section (added from backup) -->
+    <section id="whatsapp-section" style="padding: 60px 20px; background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);">
+      <div class="container" style="text-align: center; color: white;">
+        <h2 style="font-size: 2.5em; margin-bottom: 20px;">Join Your District's WhatsApp Group</h2>
+        <p style="font-size: 1.2em; margin-bottom: 40px; opacity: 0.9;">Get updates, study materials, and connect with fellow participants</p>
 
-    <!-- Gita Quote Section -->
-    <section class="gita-quote-section" id="gita-quote">
-        <div class="quote-text">
-            <h3><i class="fa-solid fa-book-bible" style="color:var(--saffron);margin-right:8px"></i>Bhagavad Gita - Chapter 6, Text 17</h3>
-            <blockquote>
-                "Yuktāhāra-vihārasya yukta-ceṣṭasya karmasu,<br>
-                yukta-svapnāvabodhaṣya yogo bhavati duḥkha-hā."
-            </blockquote>
-            <p><strong>Translation:</strong> The student who is moderate in eating, resting, working, and recreation can mitigate all material pains by practicing the Yoga of Regulation and discipline.</p>
-            <footer>— Bhagavad Gita As It Is, Chapter 6, Text 17</footer>
+        <div style="max-width: 600px; margin: 0 auto; background: white; padding: 40px; border-radius: 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.2);">
+          <h3 style="color: #128C7E; margin-bottom: 30px; font-size: 1.8em;">Select Your State & District</h3>
+
+          <div style="margin-bottom: 25px;">
+            <select id="wa_stateSelect" style="width: 100%; padding: 15px; font-size: 1.1em; border: 2px solid #ddd; border-radius: 10px; margin-bottom: 20px;">
+              <option value="">-- Select State --</option>
+            </select>
+
+            <select id="wa_districtSelect" style="width: 100%; padding: 15px; font-size: 1.1em; border: 2px solid #ddd; border-radius: 10px;">
+              <option value="">-- Select District --</option>
+            </select>
+          </div>
+
+          <a id="wa_openLink" class="btn-primary" style="display: inline-block; margin-top: 20px; background: #25D366; color: white;">
+            💬 Open WhatsApp Group
+          </a>
         </div>
-        <div class="quote-image-wrap">
-            <img src="https://i.ibb.co/3Wf2wzX/gita-placeholder.jpg" alt="Bhagavad Gita Wisdom">
-        </div>
+      </div>
     </section>
+    <!-- END: WhatsApp Join Section -->
+
+    <!-- START: Results Section (added from backup) -->
+    <section id="results" style="padding: 80px 20px; background: #f8f9fa;">
+      <div class="container" style="text-align: center;">
+        <h2 style="font-size: 2.8em; color: #2c3e50; margin-bottom: 20px;">Check Your Results</h2>
+        <p style="font-size: 1.2em; color: #7f8c8d; margin-bottom: 50px;">Enter your details to view contest results and download certificate</p>
+
+        <div style="max-width: 500px; margin: 0 auto; background: white; padding: 50px 40px; border-radius: 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.1);">
+          <input id="res_roll" type="text" placeholder="Enter Roll Number" style="width: 100%; padding: 18px; font-size: 1.1em; border: 2px solid #ddd; border-radius: 10px; margin-bottom: 20px;">
+          <input id="res_name" type="text" placeholder="Enter Name" style="width: 100%; padding: 18px; font-size: 1.1em; border: 2px solid #ddd; border-radius: 10px; margin-bottom: 30px;">
+          <button id="checkResultsBtn" style="width: 100%; background: linear-gradient(135deg, #ff6b35, #f7931e); color: white; padding: 18px; font-size: 1.2em; font-weight: bold; border: none; border-radius: 50px; cursor: pointer; transition: all 0.3s;">
+            🏆 Check Results
+          </button>
+        </div>
+
+        <p style="margin-top: 30px; color: #7f8c8d;">Results for VEC 2024-25 will be announced soon</p>
+      </div>
+    </section>
+    <!-- END: Results Section -->
+
+    <!-- Gift Banner (added from backup) -->
+    <div class="gift-banner" style="margin: 30px 0;">
+      <div class="gift-content">
+        <h3 style="font-size:1.9em; margin-bottom:15px;">🎁 Every Participant Receives</h3>
+        <p style="font-size:1.15em; max-width:1000px; margin:0 auto; line-height:1.8;">
+          Complete Bhagavad Gita (All Languages) • VEC Booklet & Question Bank • Practice OMR Sheets • Calendar • Certificate e-signed by Former President Pranab Mukherjee • Flair Pens & Many More Gifts!
+        </p>
+      </div>
+    </div>
 
     <main>
         <section id="about">
@@ -802,28 +830,90 @@
             <p class="section-desc"><strong>ISKCON's "Values For All"</strong> is a nationwide initiative dedicated to instilling core ethical and moral values in young minds through the timeless teachings of the Bhagavad Gita. The VEC is an opportunity for students to not just compete, but to truly connect with profound spiritual wisdom and transform their lives.</p>
             <p class="section-desc">The contest is open for <strong>individual registrations</strong> across various states and cities in India, encouraging independent learning and personal growth.</p>
         </section>
-        
-        <section id="impact">
-            <h3><i class="fa-solid fa-chart-line"></i> Our Reach & Impact</h3>
-            <p class="section-desc">Transforming student lives and fostering ethical leadership across India for the past 8 years.</p>
-            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:15px;margin-top:25px">
-                <div class="stat-mini">
-                    <strong>650K+</strong>
-                    <div class="text">Total Students Impacted</div>
-                </div>
-                <div class="stat-mini">
-                    <strong>1500+</strong>
-                    <div class="text">Partnering Schools</div>
-                </div>
-                <div class="stat-mini">
-                    <strong>100+</strong>
-                    <div class="text">Cities Covered</div>
-                </div>
-                <div class="stat-mini">
-                    <strong>8+</strong>
-                    <div class="text">Years of Service</div>
-                </div>
+
+        <!-- Photo Gallery (added) -->
+        <section style="padding: 80px 20px; background: #f8f9fa;">
+          <div class="container">
+            <h2 style="text-align:center; font-size:2.8em; color:#2c3e50; margin-bottom:20px;">📸 VEC in Action</h2>
+            <p style="text-align:center; font-size:1.2em; color:#7f8c8d; margin-bottom:60px;">Moments from our award ceremonies and events across India</p>
+
+            <div class="photo-grid" style="display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:18px;">
+              <div class="photo-item" style="background:white; border-radius:12px; overflow:hidden; box-shadow:0 8px 30px rgba(0,0,0,0.08);">
+                <img src="https://i.ibb.co/3ZKx1x2/sample1.jpg" alt="Award Ceremony" style="width:100%;">
+                <div style="padding:14px;"><h4>Award Ceremony</h4><p>Celebrating excellence</p></div>
+              </div>
+              <div class="photo-item" style="background:white; border-radius:12px; overflow:hidden; box-shadow:0 8px 30px rgba(0,0,0,0.08);">
+                <img src="https://i.ibb.co/7W2dGmF/sample2.jpg" alt="Student Winners" style="width:100%;">
+                <div style="padding:14px;"><h4>Student Winners</h4><p>Young achievers</p></div>
+              </div>
+              <div class="photo-item" style="background:white; border-radius:12px; overflow:hidden; box-shadow:0 8px 30px rgba(0,0,0,0.08);">
+                <img src="https://i.ibb.co/8nZ7s0m/sample3.jpg" alt="Mass Participation" style="width:100%;">
+                <div style="padding:14px;"><h4>Mass Participation</h4><p>Thousands learning together</p></div>
+              </div>
             </div>
+          </div>
+        </section>
+
+        <!-- Gifts & Prizes -->
+        <section class="gifts-section" id="gifts" style="padding:80px 20px; background:#f8f9fa;">
+          <div class="container">
+            <h2 class="section-title" style="text-align:center; font-size:2.8em; color:#2c3e50; margin-bottom:20px;">Gifts & Recognition</h2>
+            <p class="section-subtitle" style="text-align:center; font-size:1.2em; color:#7f8c8d; margin-bottom:60px;">Every participant is a winner with valuable gifts and learning materials</p>
+
+            <div class="gifts-grid" style="display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:30px; margin-top:50px;">
+              <div class="gift-item" style="background:white;padding:30px;border-radius:12px;text-align:center;box-shadow:0 5px 20px rgba(0,0,0,0.08);">
+                <div class="gift-icon" style="font-size:3em;margin-bottom:15px;">📖</div>
+                <h4 style="color:#ff6b35;margin-bottom:10px;">Complete Bhagavad Gita</h4>
+                <p>Available in all languages</p>
+              </div>
+              <div class="gift-item" style="background:white;padding:30px;border-radius:12px;text-align:center;box-shadow:0 5px 20px rgba(0,0,0,0.08);">
+                <div class="gift-icon" style="font-size:3em;margin-bottom:15px;">📚</div>
+                <h4 style="color:#ff6b35;margin-bottom:10px;">Study Material</h4>
+                <p>VEC Booklet & Question Bank</p>
+              </div>
+              <div class="gift-item" style="background:white;padding:30px;border-radius:12px;text-align:center;box-shadow:0 5px 20px rgba(0,0,0,0.08);">
+                <div class="gift-icon" style="font-size:3em;margin-bottom:15px;">🏆</div>
+                <h4 style="color:#ff6b35;margin-bottom:10px;">Certificate</h4>
+                <p>E-signed by Former President</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Syllabus / Core Values -->
+        <section style="padding:80px 20px; background:#fff;">
+          <div class="container">
+            <h2 class="section-title" style="text-align:center; font-size:2.8em; color:#2c3e50; margin-bottom:20px;">Core Values Covered</h2>
+            <p class="section-subtitle" style="text-align:center; font-size:1.2em; color:#7f8c8d; margin-bottom:40px;">Essential virtues for character building and holistic development</p>
+            <div class="syllabus-grid" style="display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:25px; margin-top:50px;">
+              <div class="syllabus-item" style="background:linear-gradient(135deg,#667eea 0%,#764ba2 100%); color:white; padding:25px; border-radius:12px; text-align:center;">Cleanliness</div>
+              <div class="syllabus-item" style="background:linear-gradient(135deg,#667eea 0%,#764ba2 100%); color:white; padding:25px; border-radius:12px; text-align:center;">Forgiveness</div>
+              <div class="syllabus-item" style="background:linear-gradient(135deg,#667eea 0%,#764ba2 100%); color:white; padding:25px; border-radius:12px; text-align:center;">Tolerance</div>
+              <div class="syllabus-item" style="background:linear-gradient(135deg,#667eea 0%,#764ba2 100%); color:white; padding:25px; border-radius:12px; text-align:center;">Generosity</div>
+              <div class="syllabus-item" style="background:linear-gradient(135deg,#667eea 0%,#764ba2 100%); color:white; padding:25px; border-radius:12px; text-align:center;">Concentration</div>
+              <div class="syllabus-item" style="background:linear-gradient(135deg,#667eea 0%,#764ba2 100%); color:white; padding:25px; border-radius:12px; text-align:center;">Self-Confidence</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Solution / Process Steps -->
+        <section style="padding:80px 20px; background:#f8f9fa;">
+          <div class="container">
+            <h2 class="section-title" style="text-align:center; font-size:2.8em; color:#2c3e50; margin-bottom:20px;">Our Solution Framework</h2>
+            <p class="section-subtitle" style="text-align:center; font-size:1.2em; color:#7f8c8d; margin-bottom:40px;">How VEC builds character — step by step</p>
+            <div class="solution-grid" style="display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:35px; margin-top:60px;">
+              <div class="solution-card" style="background:white;padding:35px 30px;border-radius:15px;box-shadow:0 10px 30px rgba(0,0,0,0.08);text-align:center;border-top:4px solid #ff6b35;">
+                <div class="solution-number" style="width:60px;height:60px;background:linear-gradient(135deg,#ff6b35,#f7931e);color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;">1</div>
+                <h3 style="color:#2c3e50;font-size:1.6em;margin-bottom:15px;">Awareness</h3>
+                <p>Introduce values through stories, Gita lessons and activities</p>
+              </div>
+              <div class="solution-card" style="background:white;padding:35px 30px;border-radius:15px;box-shadow:0 10px 30px rgba(0,0,0,0.08);text-align:center;border-top:4px solid #ff6b35;">
+                <div class="solution-number" style="width:60px;height:60px;background:linear-gradient(135deg,#ff6b35,#f7931e);color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;">2</div>
+                <h3 style="color:#2c3e50;font-size:1.6em;margin-bottom:15px;">Practice</h3>
+                <p>Practice through classroom activities and roleplay</p>
+              </div>
+            </div>
+          </div>
         </section>
 
         <hr style="margin:50px 0;border:none;height:2px;background:linear-gradient(to right, transparent, var(--saffron), transparent)">
@@ -838,173 +928,187 @@
                 <div class="video-item">
                     <iframe src="https://www.youtube-nocookie.com/embed/pwFhgRDQus0" title="VEC Experience 2" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
                 </div>
-                <div class="video-item">
-                    <iframe src="https://www.youtube-nocookie.com/embed/LwKpvU43UeM" title="VEC Experience 3" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
-                </div>
-                <div class="video-item">
-                    <iframe src="https://www.youtube-nocookie.com/embed/n4Vm0AvF6ns" title="VEC Experience 4" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
-                </div>
-            </div>
-        </section>
-
-        <hr style="margin:50px 0;border:none;height:2px;background:linear-gradient(to right, transparent, var(--saffron), transparent)">
-
-        <section class="cta-section">
-            <h3>🚀 Ready to Begin Your Journey of Values?</h3>
-            <p>Secure your spot today and receive complete study material. Join thousands of students transforming their lives!</p>
-            <div class="cta-buttons">
-                <a href="https://vec.jivadaya.org/" target="_blank" class="fancy-btn" style="background:linear-gradient(135deg,#fff,#f0f0f0);color:var(--maroon);box-shadow:0 8px 25px rgba(0,0,0,0.15);">
-                    <i class="fa-solid fa-pencil"></i> Register Now
-                </a>
-                <button class="fancy-btn fancy-whatsapp" id="ctaJoin">
-                    <i class="fa-brands fa-whatsapp"></i> Join WhatsApp
-                </button>
             </div>
         </section>
     </main>
 
-    <footer id="contact">
-        <div style="max-width:1200px;margin:0 auto">
-            <div class="footer-title" style="color:var(--saffron)">ISKCON Values For All</div>
-            <div style="margin-bottom:8px">National Value Education Contest 2025</div>
-            <div class="section-desc" style="color:rgba(255,255,255,0.8);margin:0">For any queries, please reach out to your local ISKCON representative or join your district WhatsApp group.</div>
-            <div style="margin-top:15px;font-size:0.85rem;color:rgba(255,255,255,0.7)">
-                🙏 Developed with devotion | All rights reserved © 2025
+    <!-- Modal for WhatsApp join (existing modal synced) -->
+    <div id="modalBackdrop" class="modal-backdrop-custom" aria-hidden="true">
+        <div class="modal-card" role="dialog" aria-modal="true">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+                <h4><i class="fa-brands fa-whatsapp" style="color:#25D366;margin-right:8px"></i>Join WhatsApp Group</h4>
+                <button class="close-x" id="closeModal" aria-label="Close modal">&times;</button>
             </div>
+            <p class="section-desc">Select your state and district to join the official WhatsApp group for live updates and announcements.</p>
+            <div style="display:flex;flex-direction:column;gap:16px;margin-top:20px">
+                <div>
+                    <label class="form-label">Select State</label>
+                    <select id="modal_stateSelect" class="form-control" required></select>
+                </div>
+                <div>
+                    <label class="form-label">Select District / City</label>
+                    <select id="modal_districtSelect" class="form-control" required></select>
+                </div>
+                <button id="openWhatsapp" class="fancy-btn fancy-whatsapp" disabled style="width:100%;justify-content:center;padding:14px;margin-top:10px">
+                    <i class="fa-brands fa-whatsapp"></i> Open WhatsApp Group
+                </button>
+            </div>
+            <p style="color:var(--muted);font-size:0.85rem;margin-top:15px;text-align:center">
+                ⚠️ Groups may be full during peak times. Try again later if full.
+            </p>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-title">ISKCON Values — National VEC 2025</div>
+            <p>Connecting students with timeless wisdom from the Bhagavad Gita.</p>
+            <p style="opacity:0.85;margin-top:8px;">&copy; <span id="year"></span> ISKCON Values</p>
         </div>
     </footer>
 
     <script>
-        let stateData = [];
-        let stateMap = {};
+      // small helper for modal
+      function openModal(){ document.getElementById('modalBackdrop').style.display = 'flex'; document.getElementById('modalBackdrop').setAttribute('aria-hidden','false'); }
+      function closeModal(){ document.getElementById('modalBackdrop').style.display = 'none'; document.getElementById('modalBackdrop').setAttribute('aria-hidden','true'); }
 
-        // Fetch WhatsApp groups data from JSON file
-        async function loadWhatsAppData() {
-            try {
-                const response = await fetch('https://raw.githubusercontent.com/YOUR-USERNAME/vec-2025/main/whatsapp_groups.json');
-                if (!response.ok) throw new Error('Failed to load WhatsApp data');
-                stateData = await response.json();
-                stateMap = groupByState(stateData);
-                populateStateSelect();
-            } catch (error) {
-                console.error('Error loading WhatsApp data:', error);
-                alert('Could not load WhatsApp groups. Please try again later.');
-            }
-        }
+      document.getElementById('closeModal').addEventListener('click', closeModal);
+      document.getElementById('modalBackdrop').addEventListener('click', function(e){
+        if(e.target === this) closeModal();
+      });
 
-        function groupByState(data) {
-            const map = {};
-            data.forEach(row => {
-                const state = row.state.trim();
-                if (!map[state]) map[state] = [];
-                map[state].push(row);
-            });
-            return map;
-        }
+      // set footer year
+      document.getElementById('year').innerText = new Date().getFullYear();
 
-        function populateStateSelect() {
-            const stateSelect = document.getElementById('stateSelect');
-            stateSelect.innerHTML = '<option value="">-- Select State --</option>';
-            const sortedStates = Object.keys(stateMap).sort();
-            sortedStates.forEach(state => {
-                const option = document.createElement('option');
-                option.value = state;
-                option.textContent = state;
-                stateSelect.appendChild(option);
-            });
-        }
+      // RESULTS button placeholder - hook your API here
+      document.getElementById('checkResultsBtn').addEventListener('click', function(){
+        const roll = document.getElementById('res_roll').value.trim();
+        const name = document.getElementById('res_name').value.trim();
+        if(!roll || !name){ alert('Please enter both roll number and name'); return; }
+        // replace with real API call
+        alert('Searching results for ' + roll + ' — integrate backend API here.');
+      });
 
-        // Update district select based on state
-        document.getElementById('stateSelect').addEventListener('change', function() {
-            const state = this.value;
-            const districtSelect = document.getElementById('districtSelect');
-            districtSelect.innerHTML = '<option value="">-- Select District --</option>';
-            
-            if (state && stateMap[state]) {
-                const sortedDistricts = stateMap[state].sort((a, b) => 
-                    a.district.localeCompare(b.district)
-                );
-                sortedDistricts.forEach(row => {
-                    const option = document.createElement('option');
-                    option.value = row.district;
-                    option.textContent = row.district;
-                    districtSelect.appendChild(option);
-                });
-            }
-            updateWhatsAppButton();
-        });
+   
+/* ---------- Load external JSON (whatsapp_groups.json) and initialize selects ---------- */
+/* Save your posted JSON array exactly as whatsapp_groups.json in the same directory as index.html */
 
-        // Update district select change listener
-        document.getElementById('districtSelect').addEventListener('change', updateWhatsAppButton);
+async function loadWhatsAppJSONAndInit() {
+  const url = '/whatsapp_groups.json'; // path to the JSON file (same folder => '/whatsapp_groups.json')
+  let arr = [];
+  try {
+    const resp = await fetch(url, { cache: 'no-store' });
+    if (!resp.ok) throw new Error('HTTP ' + resp.status);
+    arr = await resp.json();
+    if (!Array.isArray(arr)) throw new Error('JSON is not an array');
+  } catch (err) {
+    console.error('Could not load whatsapp_groups.json — falling back to small sample. Error:', err);
+    // sample fallback (keeps UI working if file missing)
+    arr = [
+      { "state": "Maharashtra", "district": "Pune", "whatsapp_link": "https://chat.whatsapp.com/PUNE_LINK" },
+      { "state": "Karnataka", "district": "Bangalore", "whatsapp_link": "https://chat.whatsapp.com/BANGALORE_LINK" }
+    ];
+  }
 
-        function updateWhatsAppButton() {
-            const districtSelect = document.getElementById('districtSelect');
-            const button = document.getElementById('openWhatsapp');
-            button.disabled = !districtSelect.value;
-        }
+  // convert array -> nested object: { State: { District: link, ... }, ... }
+  const groups = arr.reduce((acc, item) => {
+    if (!item || !item.state || !item.district || !item.whatsapp_link) return acc;
+    const st = item.state.trim();
+    const dt = item.district.trim();
+    if (!acc[st]) acc[st] = {};
+    acc[st][dt] = item.whatsapp_link.trim();
+    return acc;
+  }, {});
 
-        // Open WhatsApp group
-        document.getElementById('openWhatsapp').addEventListener('click', function() {
-            const state = document.getElementById('stateSelect').value;
-            const district = document.getElementById('districtSelect').value;
-            
-            if (!state || !district) {
-                alert('Please select both state and district');
-                return;
-            }
+  initWhatsAppUI(groups);
+}
 
-            const row = stateData.find(r => r.state === state && r.district === district);
-            if (row && row.whatsapp_link) {
-                window.open(row.whatsapp_link, '_blank');
-                document.getElementById('modalBackdrop').style.display = 'none';
-            } else {
-                alert('WhatsApp link is not available for this district. Please check back soon!');
-            }
-        });
+/* initialize the selects and keep inline + modal in sync */
+function initWhatsAppUI(whatsappGroups) {
+  const wa_state = document.getElementById('wa_stateSelect');
+  const wa_district = document.getElementById('wa_districtSelect');
+  const modal_state = document.getElementById('modal_stateSelect');
+  const modal_district = document.getElementById('modal_districtSelect');
+  const openBtnInline = document.getElementById('wa_openLink');
+  const openBtnModal = document.getElementById('openWhatsapp');
 
-        // Modal handlers
-        const modal = document.getElementById('modalBackdrop');
-        document.getElementById('heroWhatsapp').addEventListener('click', () => {
-            modal.style.display = 'flex';
-            modal.setAttribute('aria-hidden', 'false');
-        });
-        document.getElementById('ctaJoin').addEventListener('click', () => {
-            modal.style.display = 'flex';
-            modal.setAttribute('aria-hidden', 'false');
-        });
-        document.getElementById('tile-join').addEventListener('click', () => {
-            modal.style.display = 'flex';
-            modal.setAttribute('aria-hidden', 'false');
-        });
-        document.getElementById('closeModal').addEventListener('click', () => {
-            modal.style.display = 'none';
-            modal.setAttribute('aria-hidden', 'true');
-        });
+  function buildStateOptions(sel) {
+    const states = Object.keys(whatsappGroups).sort();
+    sel.innerHTML = `<option value="">-- Select State --</option>` + states.map(s => `<option value="${escapeHtml(s)}">${escapeHtml(s)}</option>`).join('');
+  }
 
-        // Quick link tiles
-        document.getElementById('tile-register').addEventListener('click', () => {
-            window.open('https://vec.jivadaya.org/', '_blank');
-        });
-        document.getElementById('tile-omr').addEventListener('click', () => {
-            alert('OMR Submission Portal opens from 26 January to 31 January 2025. Keep your Exam Code ready!');
-        });
-        document.getElementById('tile-guide').addEventListener('click', () => {
-            alert('Study Guidelines:\n1. Refer to the Question Booklet for instructions.\n2. Keep your Exam Code confidential.\n3. Join your district WhatsApp group for live updates.');
-        });
-        document.getElementById('tile-results').addEventListener('click', () => {
-            alert('Results will be declared tentatively by 14th February 2025. Keep your exam code ready to check results!');
-        });
+  function buildDistrictOptionsFor(sel, state) {
+    const districts = whatsappGroups[state] ? Object.keys(whatsappGroups[state]).sort() : [];
+    sel.innerHTML = `<option value="">-- Select District --</option>` + districts.map(d => `<option value="${escapeHtml(d)}">${escapeHtml(d)}</option>`).join('');
+  }
 
-        // Close modal on Escape key
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                modal.style.display = 'none';
-                modal.setAttribute('aria-hidden', 'true');
-            }
-        });
+  // small escape to avoid injection if names contain special chars
+  function escapeHtml(s){ return String(s).replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch])); }
 
-        // Load data on page load
-        window.addEventListener('DOMContentLoaded', loadWhatsAppData);
-    </script>
+  buildStateOptions(wa_state);
+  buildStateOptions(modal_state);
+
+  // Inline state -> districts (and sync modal)
+  wa_state.addEventListener('change', function(){
+    const st = this.value;
+    buildDistrictOptionsFor(wa_district, st);
+    // sync modal selects
+    modal_state.value = st;
+    modal_district.innerHTML = wa_district.innerHTML;
+    openBtnInline.href = '#';
+    openBtnInline.onclick = null;
+  });
+
+  // Inline district -> set inline open link and sync modal
+  wa_district.addEventListener('change', function(){
+    const st = wa_state.value;
+    const dt = this.value;
+    modal_state.value = st;
+    modal_district.value = dt;
+    const link = whatsappGroups[st] && whatsappGroups[st][dt];
+    if (link) {
+      openBtnInline.href = link;
+      openBtnInline.onclick = () => { window.open(link, '_blank'); return false; };
+    } else {
+      openBtnInline.href = '#';
+      openBtnInline.onclick = null;
+    }
+  });
+
+  // Modal state -> districts (and sync inline)
+  modal_state.addEventListener('change', function(){
+    const st = this.value;
+    buildDistrictOptionsFor(modal_district, st);
+    wa_state.value = st;
+    wa_district.innerHTML = modal_district.innerHTML;
+    openBtnModal.disabled = true;
+    openBtnModal.onclick = null;
+  });
+
+  // Modal district -> set modal open link and sync inline
+  modal_district.addEventListener('change', function(){
+    const st = modal_state.value;
+    const dt = modal_district.value;
+    wa_state.value = st;
+    wa_district.value = dt;
+    const link = whatsappGroups[st] && whatsappGroups[st][dt];
+    if (link) {
+      openBtnModal.disabled = false;
+      openBtnModal.onclick = () => { window.open(link, '_blank'); return false; };
+    } else {
+      openBtnModal.disabled = true;
+      openBtnModal.onclick = null;
+    }
+  });
+
+  // ensure inline button doesn't submit the page if no link
+  openBtnInline.addEventListener('click', function(e){
+    if (!this.href || this.href === '#') e.preventDefault();
+  });
+}
+
+/* call loader after DOM ready */
+document.addEventListener('DOMContentLoaded', loadWhatsAppJSONAndInit);
+ </script>
 </body>
 </html>
