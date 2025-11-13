@@ -1236,7 +1236,7 @@ document.addEventListener("DOMContentLoaded", () => {
 /* Save your posted JSON array exactly as whatsapp_groups.json in the same directory as index.html */
 
 async function loadWhatsAppJSONAndInit() {
-  const url = '/whatsapp_groups.json'; // path to the JSON file (same folder => '/whatsapp_groups.json')
+  const url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS25FQotsgdlN-k6xCO-gczCkMluhjMl59EC7rGVhaOGCM1WF4tC21KVXB7kxmneUVXTGWdrAlc1Hlh/pub?output=csv'; // path to the JSON file (same folder => '/whatsapp_groups.json')
   let arr = [];
   try {
     const resp = await fetch(url, { cache: 'no-store' });
