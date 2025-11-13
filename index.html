@@ -1004,11 +1004,11 @@ async function loadWhatsAppJSONAndInit() {
   } catch (err) {
     console.error('Could not load whatsapp_groups.json — falling back to small sample. Error:', err);
     // sample fallback (keeps UI working if file missing)
-    arr = [
-    //   { "state": "Maharashtra", "district": "Pune", "whatsapp_link": "https://chat.whatsapp.com/PUNE_LINK" },
-    //   { "state": "Karnataka", "district": "Bangalore", "whatsapp_link": "https://chat.whatsapp.com/BANGALORE_LINK" }
-    ];
-  }
+//     arr = [
+//       { "state": "Maharashtra", "district": "Pune", "whatsapp_link": "https://chat.whatsapp.com/PUNE_LINK" },
+//       { "state": "Karnataka", "district": "Bangalore", "whatsapp_link": "https://chat.whatsapp.com/BANGALORE_LINK" }
+//     ];
+//   }
 
   // convert array -> nested object: { State: { District: link, ... }, ... }
   const groups = arr.reduce((acc, item) => {
