@@ -1239,7 +1239,7 @@ async function loadWhatsAppJSONAndInit() {
   const url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS25FQotsgdlN-k6xCO-gczCkMluhjMl59EC7rGVhaOGCM1WF4tC21KVXB7kxmneUVXTGWdrAlc1Hlh/pub?output=csv';
   let arr = [];
   try {
-    const resp = await fetch(url, { cache: 'no-store' });
+    const resp = await fetch(url + '&t=' + Date.now(), { cache: 'no-store' });
     if (!resp.ok) throw new Error('HTTP ' + resp.status);
 
     const text = await resp.text();       // ✅ get raw CSV text
