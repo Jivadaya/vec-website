@@ -80,42 +80,100 @@
             letter-spacing: 0.5px;
         }
         
-        .nav-links {
-            display: flex;
-            gap: 25px;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-        
-        .nav-links a {
-            color: #374151;
-            text-decoration: none;
-            font-weight: 600;
-            padding: 8px 12px;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-        
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--saffron);
-            transition: width 0.3s ease;
-        }
-        
-        .nav-links a:hover {
-            color: var(--maroon);
-            background: rgba(255,153,51,0.1);
-        }
-        
-        .nav-links a:hover::after {
-            width: 100%;
-        }
+        /* ==== Responsive menubar (keeps visible on mobile) ==== */
+
+/* Container for the nav + menubar */
+.nav-menubar { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:10px 16px; }
+
+/* The menubar area holding links + CTA */
+.nav-bar { display:flex; align-items:center; gap:12px; flex:1; justify-content:flex-end; }
+
+/* Links area: horizontal, scrollable on small screens */
+.nav-links {
+  display:flex;
+  gap:18px;
+  align-items:center;
+  padding:6px 4px;
+  /* allow horizontal scrolling on narrow screens */
+  overflow-x:auto;
+  -webkit-overflow-scrolling:touch;
+  scrollbar-width: none; /* firefox */
+}
+
+/* hide scrollbar visually (but still usable) */
+.nav-links::-webkit-scrollbar { height: 8px; }
+.nav-links::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.08); border-radius: 8px; }
+.nav-links::-webkit-scrollbar-track { background: transparent; }
+
+/* individual links */
+.nav-links a {
+  color: #374151;
+  text-decoration: none;
+  font-weight: 600;
+  padding: 8px 12px;
+  border-radius: 8px;
+  white-space: nowrap; /* keep each link on single line */
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  transition: background .18s ease, color .18s ease, transform .12s;
+}
+
+/* hover / focus */
+.nav-links a:hover,
+.nav-links a:focus {
+  color: var(--maroon);
+  background: rgba(255,153,51,0.08);
+  outline: none;
+  transform: translateY(-1px);
+}
+
+/* CTA styling — smaller on mobile via media query below */
+.nav-cta { margin-left: 8px; padding: 10px 16px; border-radius: 999px; font-weight:800; }
+
+/* Desktop: keep current spacing */
+@media (min-width: 981px) {
+  .nav-links { gap:25px; }
+  .nav-menubar { padding:12px 20px; }
+  .nav-cta .cta-text { display:inline; margin-left:8px; }
+}
+
+/* MOBILE: compact menubar, visible, horizontally scrollable */
+@media (max-width: 980px) {
+  /* make nav sticky at top for easy access on mobile */
+  nav[aria-label="Top navigation"] {
+    position: sticky;
+    top: 0;
+    z-index: 1200;
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid rgba(15,23,42,0.04);
+  }
+
+  .nav-menubar { padding:8px 10px; gap:8px; }
+
+  /* tighten gaps and font size for small screens */
+  .nav-links { gap:10px; padding:6px 6px; -ms-overflow-style: none; } /* hide in IE */
+  .nav-links a { padding:8px 10px; font-size:0.95rem; border-radius:8px; }
+
+  /* keep CTA compact: icon + small text */
+  .nav-cta { padding:8px 12px; font-size:0.95rem; display:inline-flex; align-items:center; gap:8px; }
+  .nav-cta .cta-text { display:inline-block; } 
+
+  /* if screen gets very narrow, hide CTA text to preserve space (only show icon) */
+  @media (max-width:420px) {
+    .nav-cta .cta-text { display:none; }
+    .nav-links a { font-size:0.92rem; padding:7px 8px; }
+  }
+}
+
+/* Accessibility focus-visible */
+.nav-links a:focus-visible { outline: 3px solid rgba(255,153,51,0.16); border-radius:8px; }
+.nav-cta:focus-visible { outline: 3px solid rgba(39,174,96,0.16); border-radius:999px; }
+
+/* small helper to ensure menubar doesn't push content too much */
+body { padding-top: 0; } /* if you later make nav fixed, add top padding equal to nav height */
+
         
         /* Hero Section */
         .hero {
@@ -135,7 +193,7 @@
                 gap: 30px;
                 padding: 25px 18px;
             }
-            .hero-right { order: -1; }
+            .hero-right { order: 0; }
         }
         
         @keyframes fadeInUp {
@@ -183,7 +241,7 @@
         .hero-right img {
             width: 100%;
             border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+            /* box-shadow: 0 20px 60px rgba(0,0,0,0.15); */
             transition: transform 0.4s ease-out;
             animation: float 4s ease-in-out infinite;
         }
@@ -672,27 +730,51 @@
             h1 { font-size: 1.8rem; }
             .quick-grid { grid-template-columns: 1fr; }
         }
+
+    .section-divider {
+    width: 100%;
+    height: 70px;
+    overflow: hidden;
+    line-height: 0;
+}
+
+.section-divider svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
     </style>
 </head>
 <body>
     <nav aria-label="Top navigation">
-        <div class="nav-container">
-            <div class="logo">
-                <img src="https://i.ibb.co/DfVR6KX8/iskcon-logo.png" alt="ISKCON logo">
-                <div>
-                    <div class="logo-title">ISKCON Values</div>
-                    <div class="logo-sub">National VEC 2025</div>
-                </div>
-            </div>
-            <div class="nav-links">
-                <a href="#quick">Quick Links</a>
-                <a href="#gita-quote">Gita Focus</a>
-                <a href="#impact">Impact</a>
-                <a href="#videos">Videos</a>
-                <a href="https://vec.jivadaya.org/" target="_blank" class="fancy-btn fancy-primary" style="margin: 0;">Register Now <i class="fa-solid fa-arrow-right"></i></a>
-            </div>
-        </div>
-    </nav>
+  <div class="nav-container nav-menubar">
+    <div class="logo">
+      <img src="https://i.ibb.co/DfVR6KX8/iskcon-logo.png" alt="ISKCON logo">
+      <div>
+        <div class="logo-title">ISKCON Values</div>
+        <div class="logo-sub">National VEC 2025</div>
+      </div>
+    </div>
+
+    <!-- Menubar: desktop and mobile use same visible bar (mobile becomes compact & scrollable) -->
+    <div class="nav-bar" role="navigation" aria-label="Primary">
+      <div class="nav-links" role="menubar" aria-label="Main menu">
+        <a role="menuitem" href="#quick">Quick Links</a>
+        <a role="menuitem" href="#gita-quote">Gita Focus</a>
+        <a role="menuitem" href="#impact">Impact</a>
+        <a role="menuitem" href="#videos">Videos</a>
+        <a role="menuitem" href="#gifts">Gifts</a>
+        <a role="menuitem" href="#results">Results</a>
+        <!-- add any additional links here -->
+      </div>
+
+      <a href="https://vec.jivadaya.org/" target="_blank" class="fancy-btn fancy-primary nav-cta" aria-label="Register Now">
+        <i class="fa-solid fa-pencil" aria-hidden="true"></i>
+        <span class="cta-text">Register</span>
+      </a>
+    </div>
+  </div>
+</nav>
 
     <section class="hero">
         <div class="hero-left">
@@ -726,7 +808,11 @@
             <img src="https://i.ibb.co/WNnwHNj0/Removal-924.png" alt="Students studying">
         </div>
     </section>
-
+   <div class="section-divider-saffron">
+    <svg viewBox="0 0 1440 140" preserveAspectRatio="none">
+        <path d="M0,40 C300,120 1100,-20 1440,80 L1440,0 L0,0 Z" fill="#ff9933"></path>
+    </svg>
+</div>
     <div class="quick-wrap" id="quick">
         <h2><i class="fa-solid fa-star"></i> Essential Links & Actions</h2>
         <div class="quick-grid">
@@ -748,7 +834,7 @@
                 <div class="icon t-omr"><i class="fa-regular fa-file-lines"></i></div>
                 <div>
                     <div class="title">OMR Submission</div>
-                    <div class="sub">26 Jan - 31 Jan 2025</div>
+                    <div class="sub">26 Jan - 31 Jan 2026</div>
                 </div>
             </div>
             <div class="tile" id="tile-guide">
@@ -762,7 +848,8 @@
                 <div class="icon t-results"><i class="fa-solid fa-award"></i></div>
                 <div>
                     <div class="title">Check Results</div>
-                    <div class="sub">14th February 2025</div>
+                    <div class="sub">14th February 2026</div>
+                    
                 </div>
             </div>
         </div>
@@ -961,7 +1048,7 @@
 
     <footer>
         <div class="footer-content">
-            <div class="footer-title">ISKCON Values — National VEC 2025</div>
+            <div class="footer-title">ISKCON Values — National VEC 2026</div>
             <p>Connecting students with timeless wisdom from the Bhagavad Gita.</p>
             <p style="opacity:0.85;margin-top:8px;">&copy; <span id="year"></span> ISKCON Values</p>
         </div>
@@ -1109,6 +1196,9 @@ function initWhatsAppUI(whatsappGroups) {
 
 /* call loader after DOM ready */
 document.addEventListener('DOMContentLoaded', loadWhatsAppJSONAndInit);
+
+
+
  </script>
 </body>
 </html>
