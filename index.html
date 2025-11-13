@@ -193,7 +193,12 @@ body { padding-top: 0; } /* if you later make nav fixed, add top padding equal t
                 gap: 30px;
                 padding: 25px 18px;
             }
-            .hero-right { order: 0; }
+            .hero-right { 
+                position: relative;
+                order: 0; 
+                margin-bottom:-10px;
+                z-index: 5;
+        }
         }
         
         @keyframes fadeInUp {
@@ -231,11 +236,12 @@ body { padding-top: 0; } /* if you later make nav fixed, add top padding equal t
         }
         
         .tagline {
-            color: #4b5563;
+            color: #34150d;
             max-width: 70ch;
             font-size: 1.1rem;
             line-height: 1.6;
             animation: slideInLeft 0.8s ease-out 0.2s both;
+            font-family: poppins, sans-serif;
         }
         
         .hero-right img {
@@ -244,7 +250,46 @@ body { padding-top: 0; } /* if you later make nav fixed, add top padding equal t
             /* box-shadow: 0 20px 60px rgba(0,0,0,0.15); */
             transition: transform 0.4s ease-out;
             animation: float 4s ease-in-out infinite;
+            position: relative;
+            top: 30px; /* pushes image slightly downward to sit behind divider */
+            z-index: 4; /* below divider */
         }
+        /* Tablets (768–1024px) */
+@media (max-width: 1024px) {
+  .hero-right img {
+    top: 18px;              /* slightly less overlap */
+    animation: float 3.5s ease-in-out infinite;
+  }
+  .section-divider-saffron {
+    height: 90px;
+    margin-top: -60px;
+  }
+}
+
+/* Mobiles (up to 768px) */
+@media (max-width: 768px) {
+  .hero-right img {
+    top: 12px;              /* smaller overlap for small screen */
+    animation: float 3s ease-in-out infinite;
+  }
+  .section-divider-saffron {
+    height: 70px;
+    margin-top: -50px;
+  }
+}
+
+/* Extra-small devices (below 480px) */
+@media (max-width: 480px) {
+  .hero-right img {
+    top: 8px;               /* minimal overlap */
+    animation: float 2.8s ease-in-out infinite;
+  }
+  .section-divider-saffron {
+    height: 60px;
+    margin-top: -40px;
+  }
+}
+
         
         @keyframes float {
             0%, 100% { transform: translateY(0px); }
@@ -252,8 +297,8 @@ body { padding-top: 0; } /* if you later make nav fixed, add top padding equal t
         }
         
         .hero-right:hover img {
-            transform: translateY(-8px);
-            box-shadow: 0 25px 80px rgba(0,0,0,0.2);
+            transform: translateY(-50px);
+            /* box-shadow: 0 25px 80px rgba(0,0,0,0.2); */
         }
         
         /* Stats */
@@ -263,6 +308,7 @@ body { padding-top: 0; } /* if you later make nav fixed, add top padding equal t
             flex-wrap: wrap;
             margin-top: 30px;
             animation: slideInLeft 0.8s ease-out 0.3s both;
+            justify-content: center;
         }
         
         .stat-mini {
@@ -274,6 +320,8 @@ body { padding-top: 0; } /* if you later make nav fixed, add top padding equal t
             border: 1.5px solid rgba(255,153,51,0.15);
             transition: all 0.3s ease;
             min-width: 140px;
+            text-align: center;
+            font-size: 1em;
         }
         
         .stat-mini:hover {
@@ -285,9 +333,13 @@ body { padding-top: 0; } /* if you later make nav fixed, add top padding equal t
         .stat-mini strong {
             display: block;
             color: var(--saffron);
-            font-size: 1.8rem;
+            font-size: 2em;
             font-weight: 900;
             margin-bottom: 5px;
+            width: 90px;              /* Reserve enough width for largest number */
+            text-align: center;
+            font-variant-numeric: tabular-nums; /* Prevents width changes per digit */
+            /* color: #007BFF; */
         }
         
         .stat-mini .text {
@@ -731,19 +783,28 @@ body { padding-top: 0; } /* if you later make nav fixed, add top padding equal t
             .quick-grid { grid-template-columns: 1fr; }
         }
 
-    .section-divider {
+    .section-divider-saffron {
     width: 100%;
-    height: 70px;
-    overflow: hidden;
-    line-height: 0;
+    height: 110px;
+    margin-top: -70px; /* pulls divider UP behind the boy */
+    position: relative;
+    z-index: 6; /* keeps divider behind elements */
 }
 
-.section-divider svg {
+.section-divider-saffron svg {
     width: 100%;
     height: 100%;
     display: block;
 }
-    </style>
+
+
+
+.hero {
+    position: relative;
+    z-index: 5;
+}
+
+</style>
 </head>
 <body>
     <nav aria-label="Top navigation">
@@ -776,25 +837,26 @@ body { padding-top: 0; } /* if you later make nav fixed, add top padding equal t
   </div>
 </nav>
 
-    <section class="hero">
+    <section class="hero full-bleed-hero">
         <div class="hero-left">
             <div class="subtitle">A Pan-India Initiative</div>
             <h1>National Value Education Contest <span style="color:var(--saffron)">2025</span></h1>
             <p class="tagline">Empowering students across India with timeless wisdom from the <strong>Bhagavad Gita</strong>. Join the largest contest for character building and ethical clarity.</p>
-            <div class="hero-stats">
-                <div class="stat-mini">
-                    <strong>650K+</strong>
-                    <div class="text">Students Impacted</div>
-                </div>
-                <div class="stat-mini">
-                    <strong>1500+</strong>
-                    <div class="text">Schools</div>
-                </div>
-                <div class="stat-mini">
-                    <strong>8+</strong>
-                    <div class="text">Years Running</div>
-                </div>
-            </div>
+           <div class="hero-stats">
+  <div class="stat-mini">
+    <strong><span class="count" data-target="650000">0</span></strong>+
+    <div class="text">Students Impacted</div>
+  </div>
+  <div class="stat-mini">
+    <strong><span class="count" data-target="1500">0</span></strong>+
+    <div class="text">Schools</div>
+  </div>
+  <div class="stat-mini">
+    <strong><span class="count" data-target="8">0</span></strong>+
+    <div class="text">Years Running</div>
+  </div>
+</div>
+
             <div style="margin-top:30px;display:flex;flex-wrap:wrap;gap:15px">
                 <button class="fancy-btn fancy-whatsapp" id="heroWhatsapp" onclick="openModal()">
                     <i class="fa-brands fa-whatsapp"></i> Join District Group
@@ -1076,7 +1138,43 @@ body { padding-top: 0; } /* if you later make nav fixed, add top padding equal t
         alert('Searching results for ' + roll + ' — integrate backend API here.');
       });
 
-   
+// ---------- Animated Counters ----------
+document.addEventListener("DOMContentLoaded", () => {
+  const counters = document.querySelectorAll(".count");
+
+  const easeOutCubic = t => 1 - Math.pow(1 - t, 3);
+
+  const animateCount = (el) => {
+    const target = +el.getAttribute("data-target");
+    const duration = 2000;
+    const startTime = performance.now();
+
+    const step = (now) => {
+      const elapsed = now - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = easeOutCubic(progress);
+      const value = Math.floor(eased * target);
+      el.textContent = value.toLocaleString();
+
+      if (progress < 1) requestAnimationFrame(step);
+      else el.textContent = target.toLocaleString();
+    };
+
+    requestAnimationFrame(step);
+  };
+
+  // Start when visible
+  const observer = new IntersectionObserver((entries, obs) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        animateCount(entry.target);
+        obs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.3 });
+
+  counters.forEach(c => observer.observe(c));
+});
 /* ---------- Load external JSON (whatsapp_groups.json) and initialize selects ---------- */
 /* Save your posted JSON array exactly as whatsapp_groups.json in the same directory as index.html */
 
