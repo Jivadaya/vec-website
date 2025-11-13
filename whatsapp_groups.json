@@ -1,0 +1,13 @@
+[
+    { "state": "Maharashtra", "district": "Nashik", "whatsapp": "https://chat.whatsapp.com/GtdzaBouYYhHZZS7h2tQDw" },
+    { "state": "Maharashtra", "district": "Pune", "whatsapp": "https://chat.whatsapp.com/samplePune" },
+    { "state": "Maharashtra", "district": "Mumbai", "whatsapp": "https://chat.whatsapp.com/sampleMumbai" },
+    { "state": "Karnataka", "district": "Bengaluru", "whatsapp": "https://chat.whatsapp.com/GsxtbumKFZMA0ccuV7nA7G" },
+    { "state": "Karnataka", "district": "Mangalore", "whatsapp": "https://chat.whatsapp.com/EtDRQkevDU8Af2Bkt0fdnT" },
+    { "state": "Karnataka", "district": "Udupi", "whatsapp": "https://chat.whatsapp.com/G2wRC7MxG7eDxEVwGnOpmm" },
+    { "state": "Gujarat", "district": "Ahmedabad", "whatsapp": "https://chat.whatsapp.com/sampleAhmedabad" },
+    { "state": "Gujarat", "district": "Surat", "whatsapp": "https://chat.whatsapp.com/sampleSurat" },
+    { "state": "Rajasthan", "district": "Jaipur", "whatsapp": "https://chat.whatsapp.com/sampleJaipur" },
+    { "state": "Madhya Pradesh", "district": "Indore", "whatsapp": "https://chat.whatsapp.com/sampleIndore" },
+    { "state": "Madhya Pradesh", "district": "Bhopal", "whatsapp": "https://chat.whatsapp.com/sampleBhopal" }
+]
