@@ -1,92 +1,18 @@
 [
-  {
-    "state": "Maharashtra",
-    "district": "Mumbai",
-    "whatsapp_link": "https://chat.whatsapp.com/xxxxxxxxxx"
-  },
-  {
-    "state": "Maharashtra",
-    "district": "Pune",
-    "whatsapp_link": "https://chat.whatsapp.com/xxxxxxxxxx"
-  },
-  {
-    "state": "Maharashtra",
-    "district": "Nagpur",
-    "whatsapp_link": "https://chat.whatsapp.com/xxxxxxxxxx"
-  },
-  {
-    "state": "Delhi",
-    "district": "Central Delhi",
-    "whatsapp_link": "https://chat.whatsapp.com/xxxxxxxxxx"
-  },
-  {
-    "state": "Delhi",
-    "district": "East Delhi",
-    "whatsapp_link": "https://chat.whatsapp.com/xxxxxxxxxx"
-  },
-  {
-    "state": "Delhi",
-    "district": "West Delhi",
-    "whatsapp_link": "https://chat.whatsapp.com/xxxxxxxxxx"
-  },
-  {
+    {
     "state": "Karnataka",
     "district": "Bangalore",
     "whatsapp_link": "https://chat.whatsapp.com/GsxtbumKFZMA0ccuV7nA7G"
   },
   {
     "state": "Karnataka",
-    "district": "Mysore",
-    "whatsapp_link": "https://chat.whatsapp.com/xxxxxxxxxx"
+    "district": "Mangalore",
+    "whatsapp_link": "https://chat.whatsapp.com/EtDRQkevDU8Af2Bkt0fdnT"
   },
   {
-    "state": "Tamil Nadu",
-    "district": "Chennai",
-    "whatsapp_link": "https://chat.whatsapp.com/xxxxxxxxxx"
+    "state": "Karnataka",
+    "district": "Udupi",
+    "whatsapp_link": "https://chat.whatsapp.com/G2wRC7MxG7eDxEVwGnOpmm"
   },
-  {
-    "state": "Tamil Nadu",
-    "district": "Coimbatore",
-    "whatsapp_link": "https://chat.whatsapp.com/xxxxxxxxxx"
-  },
-  {
-    "state": "Gujarat",
-    "district": "Ahmedabad",
-    "whatsapp_link": "https://chat.whatsapp.com/xxxxxxxxxx"
-  },
-  {
-    "state": "Gujarat",
-    "district": "Surat",
-    "whatsapp_link": "https://chat.whatsapp.com/xxxxxxxxxx"
-  },
-  {
-    "state": "Uttar Pradesh",
-    "district": "Lucknow",
-    "whatsapp_link": "https://chat.whatsapp.com/xxxxxxxxxx"
-  },
-  {
-    "state": "Uttar Pradesh",
-    "district": "Varanasi",
-    "whatsapp_link": "https://chat.whatsapp.com/xxxxxxxxxx"
-  },
-  {
-    "state": "West Bengal",
-    "district": "Kolkata",
-    "whatsapp_link": "https://chat.whatsapp.com/xxxxxxxxxx"
-  },
-  {
-    "state": "Telangana",
-    "district": "Hyderabad",
-    "whatsapp_link": "https://chat.whatsapp.com/xxxxxxxxxx"
-  },
-  {
-    "state": "Rajasthan",
-    "district": "Jaipur",
-    "whatsapp_link": "https://chat.whatsapp.com/xxxxxxxxxx"
-  },
-  {
-    "state": "Haryana",
-    "district": "Gurgaon",
-    "whatsapp_link": "https://chat.whatsapp.com/xxxxxxxxxx"
-  }
+  
 ]
