@@ -82,7 +82,6 @@
         
        /* ==== Responsive Menubar (Always Visible on Mobile) ==== */
 
-/* Base container */
 .nav-menubar {
   display: flex;
   align-items: center;
@@ -91,7 +90,6 @@
   padding: 10px 16px;
 }
 
-/* Right side: links + CTA */
 .nav-bar {
   display: flex;
   align-items: center;
@@ -100,16 +98,15 @@
   justify-content: flex-end;
 }
 
-/* Links container */
 .nav-links {
   display: flex;
   gap: 18px;
   align-items: center;
   padding: 6px 4px;
-  overflow-x: auto;               /* enable scroll on narrow screens */
+  overflow-x: auto;
   -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;          /* Firefox */
-  scroll-snap-type: x proximity;  /* smoother scrolling */
+  scrollbar-width: none;
+  scroll-snap-type: x proximity;
 }
 
 .nav-links::-webkit-scrollbar { height: 6px; }
@@ -119,7 +116,6 @@
 }
 .nav-links::-webkit-scrollbar-track { background: transparent; }
 
-/* Links */
 .nav-links a {
   color: #374151;
   text-decoration: none;
@@ -134,7 +130,6 @@
   scroll-snap-align: start;
 }
 
-/* Hover / focus */
 .nav-links a:hover,
 .nav-links a:focus {
   color: var(--maroon);
@@ -152,17 +147,13 @@
   white-space: nowrap;
 }
 
-/* Desktop (unchanged) */
 @media (min-width: 981px) {
   .nav-links { gap: 25px; }
   .nav-menubar { padding: 12px 20px; }
   .nav-cta .cta-text { display: inline; margin-left: 10px; }
 }
 
-/* =============================== */
-/* 📱 MOBILE (up to 980px width)  */
-/* =============================== */
-/* --- MOBILE / TABLET --- */
+/* MOBILE */
 @media (max-width: 980px) {
 
   nav[aria-label="Top navigation"] {
@@ -174,15 +165,12 @@
     border-bottom: 1px solid rgba(15,23,42,0.04);
   }
 
-  /* stack vertically */
   .nav-menubar {
-    /* flex-direction: column; */
     align-items: center;
     gap: 10px;
     padding: 10px 12px;
   }
 
-  /* logo stays centered */
   .logo {
     justify-content: center;
     text-align: center;
@@ -191,16 +179,13 @@
     height: 44px;
   }
 
-  /* links row centered and scrollable */
   .nav-bar {
-    /* flex-direction: column; */
     align-items: center;
     gap: 8px;
     width: 100%;
   }
 
   .nav-links {
-    /* justify-content: center; */
     gap: 14px;
     padding: 4px 0;
     width: 100%;
@@ -211,14 +196,12 @@
     padding: 7px 10px;
   }
 
-  /* CTA centered below links */
   .nav-cta {
     margin: 6px auto 0;
     font-size: 0.9rem;
     padding: 8px 14px;
   }
 
-  /* very small screens */
   @media (max-width: 420px) {
     .logo img { height: 40px; }
     .logo-title { font-size: 1rem; }
@@ -227,10 +210,9 @@
     .nav-cta .cta-text { display: none; }
   }
 }
-/* small helper to ensure menubar doesn't push content too much */
-body { padding-top: 0; } /* if you later make nav fixed, add top padding equal to nav height */
 
-        
+body { padding-top: 0; }
+
         /* Hero Section */
         .hero {
             max-width: 1300px;
@@ -303,17 +285,16 @@ body { padding-top: 0; } /* if you later make nav fixed, add top padding equal t
         .hero-right img {
             width: 120%;
             border-radius: 20px;
-            /* box-shadow: 0 20px 60px rgba(0,0,0,0.15); */
             transition: transform 0.4s ease-out;
             animation: float 4s ease-in-out infinite;
             position: relative;
-            top: 30px; /* pushes image slightly downward to sit behind divider */
-            z-index: 4; /* below divider */
+            top: 30px;
+            z-index: 4;
         }
-        /* Tablets (768–1024px) */
+
 @media (max-width: 1024px) {
   .hero-right img {
-    top: 18px;              /* slightly less overlap */
+    top: 18px;
     animation: float 3.5s ease-in-out infinite;
     align-items: center;
     width: 100%;
@@ -325,10 +306,9 @@ body { padding-top: 0; } /* if you later make nav fixed, add top padding equal t
   }
 }
 
-/* Mobiles (up to 768px) */
 @media (max-width: 768px) {
   .hero-right img {
-    top: 12px;              /* smaller overlap for small screen */
+    top: 12px;
     animation: float 3s ease-in-out infinite;
   }
   .section-divider-saffron {
@@ -337,10 +317,9 @@ body { padding-top: 0; } /* if you later make nav fixed, add top padding equal t
   }
 }
 
-/* Extra-small devices (below 480px) */
 @media (max-width: 480px) {
   .hero-right img {
-    top: 8px;               /* minimal overlap */
+    top: 8px;
     animation: float 2.8s ease-in-out infinite;
     width: 100%;
   }
@@ -350,7 +329,6 @@ body { padding-top: 0; } /* if you later make nav fixed, add top padding equal t
   }
 }
 
-        
         @keyframes float {
             0%, 100% { transform: translateY(0px); }
             50% { transform: translateY(-12px); }
@@ -358,7 +336,6 @@ body { padding-top: 0; } /* if you later make nav fixed, add top padding equal t
         
         .hero-right:hover img {
             transform: translateY(-50px);
-            /* box-shadow: 0 25px 80px rgba(0,0,0,0.2); */
         }
         
         /* Stats */
@@ -380,7 +357,6 @@ body { padding-top: 0; } /* if you later make nav fixed, add top padding equal t
             border: 1.5px solid rgba(255,153,51,0.15);
             transition: all 0.3s ease;
             min-width: 140px;
-            text-align: center;
             font-size: 1em;
         }
         
@@ -396,10 +372,9 @@ body { padding-top: 0; } /* if you later make nav fixed, add top padding equal t
             font-size: 2em;
             font-weight: 900;
             margin-bottom: 5px;
-            width: 90px;              /* Reserve enough width for largest number */
+            width: 90px;
             text-align: center;
-            font-variant-numeric: tabular-nums; /* Prevents width changes per digit */
-            /* color: #007BFF; */
+            font-variant-numeric: tabular-nums;
         }
         
         .stat-mini .text {
@@ -447,6 +422,16 @@ body { padding-top: 0; } /* if you later make nav fixed, add top padding equal t
             background: var(--glass);
             border: 2px solid var(--saffron);
             color: var(--saffron);
+        }
+
+        .fancy-omr {
+            background: linear-gradient(135deg, #fb7185, #e11d48);
+            color: #fff;
+        }
+
+        .fancy-result {
+            background: linear-gradient(135deg, #f97316, #ea580c);
+            color: #fff;
         }
         
         /* Quick Links Tiles */
@@ -618,7 +603,7 @@ body { padding-top: 0; } /* if you later make nav fixed, add top padding equal t
             display: none;
             align-items: center;
             justify-content: center;
-            z-index: 1200;
+            z-index: 1400;
             padding: 18px;
             animation: fadeIn 0.3s ease-out;
         }
@@ -657,6 +642,9 @@ body { padding-top: 0; } /* if you later make nav fixed, add top padding equal t
             font-weight: 800;
             font-size: 1.3rem;
             margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
         
         .close-x {
@@ -819,7 +807,6 @@ body { padding-top: 0; } /* if you later make nav fixed, add top padding equal t
             margin-bottom: 8px;
         }
 
-        /* Additional styles for merged sections */
         .gift-banner {
             background: linear-gradient(90deg,#4facfe 0%,#00f2fe 100%);
             color: white;
@@ -843,59 +830,111 @@ body { padding-top: 0; } /* if you later make nav fixed, add top padding equal t
             .quick-grid { grid-template-columns: 1fr; }
         }
 
-    .section-divider-saffron {
-    width: 100%;
-    height: 110px;
-    margin-top: -70px; /* pulls divider UP behind the boy */
-    position: relative;
-    z-index: 6; /* keeps divider behind elements */
-}
+        .section-divider-saffron {
+            width: 100%;
+            height: 110px;
+            margin-top: -70px;
+            position: relative;
+            z-index: 6;
+        }
 
-.section-divider-saffron svg {
-    width: 100%;
-    height: 100%;
-    display: block;
-}
+        .section-divider-saffron svg {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
 
+        .hero {
+            position: relative;
+            z-index: 5;
+        }
 
+        /* 🔥 Floating 3-Button Dock (Mobile) */
+        .fixed-action-dock {
+            position: fixed;
+            bottom: 16px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1350;
+            display: flex;
+            gap: 8px;
+            padding: 8px 12px;
+            background: rgba(15,23,42,0.96);
+            border-radius: 999px;
+            box-shadow: 0 18px 50px rgba(0,0,0,0.35);
+            backdrop-filter: blur(10px);
+            animation: dockSlideUp 0.4s ease-out;
+        }
 
-.hero {
-    position: relative;
-    z-index: 5;
-}
+        @keyframes dockSlideUp {
+            from { opacity: 0; transform: translate(-50%, 20px); }
+            to { opacity: 1; transform: translate(-50%, 0); }
+        }
 
-</style>
+        .dock-btn {
+            border: none;
+            border-radius: 999px;
+            padding: 8px 12px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            color: #e5e7eb;
+            background: transparent;
+            transition: background 0.2s ease, transform 0.15s ease;
+            white-space: nowrap;
+        }
+
+        .dock-btn i {
+            font-size: 1rem;
+        }
+
+        .dock-btn:hover {
+            background: rgba(148,163,184,0.25);
+            transform: translateY(-1px);
+        }
+
+        .dock-wa span { color: #bbf7d0; }
+        .dock-omr span { color: #fecaca; }
+        .dock-result span { color: #fed7aa; }
+
+        @media (min-width: 992px) {
+            .fixed-action-dock {
+                display: none;
+            }
+        }
+
+    </style>
 </head>
 <body>
     <nav aria-label="Top navigation">
-  <div class="nav-container nav-menubar">
-    <div class="logo">
-      <img src="https://i.ibb.co/DfVR6KX8/iskcon-logo.png" alt="ISKCON logo">
-      <div>
-        <div class="logo-title">ISKCON Values</div>
-        <div class="logo-sub">National VEC 2025-26</div>
-      </div>
-    </div>
+      <div class="nav-container nav-menubar">
+        <div class="logo">
+          <img src="https://i.ibb.co/DfVR6KX8/iskcon-logo.png" alt="ISKCON logo">
+          <div>
+            <div class="logo-title">ISKCON Values</div>
+            <div class="logo-sub">National VEC 2025-26</div>
+          </div>
+        </div>
 
-    <!-- Menubar: desktop and mobile use same visible bar (mobile becomes compact & scrollable) -->
-    <div class="nav-bar" role="navigation" aria-label="Primary">
-      <div class="nav-links" role="menubar" aria-label="Main menu">
-        <a role="menuitem" href="#quick">Quick Links</a>
-        <a role="menuitem" href="#gita-quote">Gita Focus</a>
-        <a role="menuitem" href="#impact">Impact</a>
-        <a role="menuitem" href="#videos">Videos</a>
-        <a role="menuitem" href="#gifts">Gifts</a>
-        <!-- <a role="menuitem" href="#results">Results</a> -->
-        <!-- add any additional links here -->
-      </div>
+        <div class="nav-bar" role="navigation" aria-label="Primary">
+          <div class="nav-links" role="menubar" aria-label="Main menu">
+            <a role="menuitem" href="#quick">Quick Links</a>
+            <a role="menuitem" href="#gita-quote">Gita Focus</a>
+            <a role="menuitem" href="#impact">Impact</a>
+            <a role="menuitem" href="#videos">Videos</a>
+            <a role="menuitem" href="#gifts">Gifts</a>
+          </div>
 
-      <a href="https://vec.jivadaya.org/" target="_blank" class="fancy-btn fancy-primary nav-cta" aria-label="Register Now">
-        <i class="fa-solid fa-pencil" aria-hidden="true"></i>
-        <span class="cta-text">Pay and Get Your Kit</span>
-      </a>
-    </div>
-  </div>
-</nav>
+          <a href="https://vec.jivadaya.org/" target="_blank" class="fancy-btn fancy-primary nav-cta" aria-label="Register Now">
+            <i class="fa-solid fa-pencil" aria-hidden="true"></i>
+            <span class="cta-text">Pay and Get Your Kit</span>
+          </a>
+        </div>
+      </div>
+    </nav>
 
     <section class="hero full-bleed-hero">
         <div class="hero-left">
@@ -903,60 +942,61 @@ body { padding-top: 0; } /* if you later make nav fixed, add top padding equal t
             <h1>National Value Education Contest <span style="color:var(--saffron)">2026</span></h1>
             <p class="tagline">Empowering students across India with timeless wisdom from the <strong>Bhagavad Gita</strong>. Join the largest contest for character building and ethical clarity.</p>
            <div class="hero-stats">
-  <div class="stat-mini">
-    <strong><span class="count" data-target="1350000">0</span></strong>+
-    <div class="text">Students Impacted</div>
-  </div>
-   <!-- <div class="stat-mini">
-    <strong><span class="count" data-target="380">0</span></strong>+
-    <div class="text">Cities</div>
-  </div> -->
-  <div class="stat-mini">
-    <strong><span class="count" data-target="4200">0</span></strong>+
-    <div class="text">Schools</div>
-  </div>
-  <div class="stat-mini">
-    <strong><span class="count" data-target="14">0</span></strong>+
-    <div class="text">Years Running</div>
-  </div>
-</div>
+              <div class="stat-mini">
+                <strong><span class="count" data-target="1350000">0</span></strong>+
+                <div class="text">Students Impacted</div>
+              </div>
+              <div class="stat-mini">
+                <strong><span class="count" data-target="4200">0</span></strong>+
+                <div class="text">Schools</div>
+              </div>
+              <div class="stat-mini">
+                <strong><span class="count" data-target="14">0</span></strong>+
+                <div class="text">Years Running</div>
+              </div>
+            </div>
 
             <div style="margin-top:30px;display:flex;flex-wrap:wrap;gap:15px">
-                <button class="fancy-btn fancy-whatsapp" id="heroWhatsapp" onclick="openModal()">
+                <button class="fancy-btn fancy-whatsapp" id="heroWhatsapp" onclick="openActionModal('whatsapp')">
                     <i class="fa-brands fa-whatsapp"></i> Join District Group
                 </button>
-                <a href="https://vec.jivadaya.org/" target="_blank" class="fancy-btn fancy-primary">
-                    <i class="fa-solid fa-pencil"></i> Get Your Kit
-                </a>
+                <button class="fancy-btn fancy-omr" onclick="openActionModal('omr')">
+                    <i class="fa-regular fa-file-lines"></i> OMR Submission
+                </button>
+                <button class="fancy-btn fancy-result" onclick="openActionModal('result')">
+                    <i class="fa-solid fa-award"></i> Check Results
+                </button>
             </div>
         </div>
         <div class="hero-right" aria-hidden="true">
             <img src="/images/front page.png" alt="Students studying">
         </div>
     </section>
-   <div class="section-divider-saffron">
-    <svg viewBox="0 0 1440 140" preserveAspectRatio="none">
-        <path d="M0,40 C300,120 1100,-20 1440,80 L1440,0 L0,0 Z" fill="#ff9933"></path>
-    </svg>
-</div>
+
+    <div class="section-divider-saffron">
+        <svg viewBox="0 0 1440 140" preserveAspectRatio="none">
+            <path d="M0,40 C300,120 1100,-20 1440,80 L1440,0 L0,0 Z" fill="#ff9933"></path>
+        </svg>
+    </div>
+
     <div class="quick-wrap" id="quick">
         <h2><i class="fa-solid fa-star"></i> Essential Links & Actions</h2>
         <div class="quick-grid">
-            <div class="tile" id="tile-join" onclick="openModal()">
+            <div class="tile" id="tile-join" onclick="openActionModal('whatsapp')">
                 <div class="icon t-join"><i class="fa-brands fa-whatsapp"></i></div>
                 <div>
                     <div class="title">Join WhatsApp Group</div>
                     <div class="sub">State & District Updates</div>
                 </div>
             </div>
-            <div class="tile" id="tile-register">
+            <div class="tile" id="tile-register" onclick="window.open('https://vec.jivadaya.org/','_blank')">
                 <div class="icon t-register"><i class="fa-solid fa-user-plus"></i></div>
                 <div>
                     <div class="title">Pay and Get Your Kit</div>
                     <div class="sub">Get Your Kit</div>
                 </div>
             </div>
-            <div class="tile" id="tile-omr">
+            <div class="tile" id="tile-omr" onclick="openActionModal('omr')">
                 <div class="icon t-omr"><i class="fa-regular fa-file-lines"></i></div>
                 <div>
                     <div class="title">OMR Submission</div>
@@ -970,18 +1010,17 @@ body { padding-top: 0; } /* if you later make nav fixed, add top padding equal t
                     <div class="sub">Syllabus & Instructions</div>
                 </div>
             </div>
-            <div class="tile" id="tile-results">
+            <div class="tile" id="tile-results" onclick="openActionModal('result')">
                 <div class="icon t-results"><i class="fa-solid fa-award"></i></div>
                 <div>
                     <div class="title">Check Results</div>
                     <div class="sub">14th February 2026</div>
-                    
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- START: WhatsApp Join Section (added from backup) -->
+    <!-- WhatsApp Join Section (inline dropdown) -->
     <section id="whatsapp-section" style="padding: 60px 20px; background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);">
       <div class="container" style="text-align: center; color: white;">
         <h2 style="font-size: 2.5em; margin-bottom: 20px;">Join Your District's WhatsApp Group</h2>
@@ -1000,35 +1039,26 @@ body { padding-top: 0; } /* if you later make nav fixed, add top padding equal t
             </select>
           </div>
 
-          <a id="wa_openLink" class="btn-primary" style="display: inline-block; margin-top: 20px; background: #25D366; color: white;">
+          <a id="wa_openLink" class="btn-primary" style="display: inline-block; margin-top: 20px; background: #25D366; color: white; padding: 12px 20px; border-radius: 999px; font-weight: 600;">
             💬 Open WhatsApp Group
           </a>
         </div>
       </div>
     </section>
-    <!-- END: WhatsApp Join Section -->
 
-    <!-- START: Results Section (added from backup) -->
+    <!-- Results CTA (now opens modal for state/district based result link) -->
     <section id="results" style=" background: #f8f9fa;">
       <div class="container" style="text-align: center;">
-        <!-- <h2 style="font-size: 2.8em; color: #2c3e50; margin-bottom: 20px;">Check Your Results</h2> -->
-        <!-- <p style="font-size: 1.2em; color: #7f8c8d; margin-bottom: 50px;">Enter your details to view contest results and download certificate</p> -->
-
         <div style="max-width: 500px; margin: 0 auto; background: white; padding: 50px 40px; border-radius: 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.1);">
-             <!-- <h2 style="font-size: 2.8em; color: #2c3e50; margin-bottom: 20px;">Check Your Results</h2> -->
-          <!-- <input id="res_roll" type="text" placeholder="Enter Roll Number" style="width: 100%; padding: 18px; font-size: 1.1em; border: 2px solid #ddd; border-radius: 10px; margin-bottom: 20px;">
-          <input id="res_name" type="text" placeholder="Enter Name" style="width: 100%; padding: 18px; font-size: 1.1em; border: 2px solid #ddd; border-radius: 10px; margin-bottom: 30px;"> -->
           <button id="checkResultsBtn" style="width: 100%; background: linear-gradient(135deg, #ff6b35, #f7931e); color: white; padding: 18px; font-size: 1.2em; font-weight: bold; border: none; border-radius: 50px; cursor: pointer; transition: all 0.3s;">
-            🏆 Check Results
+            🏆 Check Results (Select State & District)
           </button>
         </div>
 
         <p style="margin-top: 30px; color: #7f8c8d;">Results for VEC 2025-26 will be announced soon</p>
       </div>
     </section>
-    <!-- END: Results Section -->
 
-    <!-- Gift Banner (added from backup) -->
     <div class="gift-banner" style="margin: 30px 0;">
       <div class="gift-content">
         <h3 style="font-size:1.9em; margin-bottom:15px;">🎁 Every Participant Receives</h3>
@@ -1045,7 +1075,7 @@ body { padding-top: 0; } /* if you later make nav fixed, add top padding equal t
             <p class="section-desc">The contest is open for <strong>individual registrations</strong> across various states and cities in India, encouraging independent learning and personal growth.</p>
         </section>
 
-        <!-- Photo Gallery (added) -->
+        <!-- Photo Gallery -->
         <section style="padding: 80px 20px; background: #f8f9fa;">
           <div class="container">
             <h2 style="text-align:center; font-size:2.8em; color:#2c3e50; margin-bottom:20px;">📸 VEC in Action</h2>
@@ -1094,7 +1124,7 @@ body { padding-top: 0; } /* if you later make nav fixed, add top padding equal t
           </div>
         </section>
 
-        <!-- Syllabus / Core Values -->
+        <!-- Core Values -->
         <section style="padding:80px 20px; background:#fff;">
           <div class="container">
             <h2 class="section-title" style="text-align:center; font-size:2.8em; color:#2c3e50; margin-bottom:20px;">Core Values Covered</h2>
@@ -1110,7 +1140,7 @@ body { padding-top: 0; } /* if you later make nav fixed, add top padding equal t
           </div>
         </section>
 
-        <!-- Solution / Process Steps -->
+        <!-- Solution / Process -->
         <section style="padding:80px 20px; background:#f8f9fa;">
           <div class="container">
             <h2 class="section-title" style="text-align:center; font-size:2.8em; color:#2c3e50; margin-bottom:20px;">Our Solution Framework</h2>
@@ -1146,14 +1176,19 @@ body { padding-top: 0; } /* if you later make nav fixed, add top padding equal t
         </section>
     </main>
 
-    <!-- Modal for WhatsApp join (existing modal synced) -->
+    <!-- 🔁 Unified Modal for WhatsApp / OMR / Results -->
     <div id="modalBackdrop" class="modal-backdrop-custom" aria-hidden="true">
         <div class="modal-card" role="dialog" aria-modal="true">
             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
-                <h4><i class="fa-brands fa-whatsapp" style="color:#25D366;margin-right:8px"></i>Join WhatsApp Group</h4>
+                <h4>
+                    <i id="modalTitleIcon" class="fa-brands fa-whatsapp" style="margin-right:4px;color:#25D366;"></i>
+                    <span id="modalTitleText">Join WhatsApp Group</span>
+                </h4>
                 <button class="close-x" id="closeModal" aria-label="Close modal">&times;</button>
             </div>
-            <p class="section-desc">Select your state and district to join the official WhatsApp group for live updates and announcements.</p>
+            <p class="section-desc" id="modalDescription">
+                Select your state and district to join the official WhatsApp group for live updates and announcements.
+            </p>
             <div style="display:flex;flex-direction:column;gap:16px;margin-top:20px">
                 <div>
                     <label class="form-label">Select State</label>
@@ -1163,14 +1198,31 @@ body { padding-top: 0; } /* if you later make nav fixed, add top padding equal t
                     <label class="form-label">Select District / City</label>
                     <select id="modal_districtSelect" class="form-control" required></select>
                 </div>
-                <button id="openWhatsapp" class="fancy-btn fancy-whatsapp" disabled style="width:100%;justify-content:center;padding:14px;margin-top:10px">
-                    <i class="fa-brands fa-whatsapp"></i> Open WhatsApp Group
+                <button id="openActionBtn" class="fancy-btn fancy-whatsapp" disabled style="width:100%;justify-content:center;padding:14px;margin-top:10px">
+                    <i id="modalBtnIcon" class="fa-brands fa-whatsapp"></i>
+                    <span id="modalBtnText">Open WhatsApp Group</span>
                 </button>
             </div>
-            <p style="color:var(--muted);font-size:0.85rem;margin-top:15px;text-align:center">
+            <p id="modalHint" style="color:var(--muted);font-size:0.85rem;margin-top:15px;text-align:center">
                 ⚠️ Groups may be full during peak times. Try again later if full.
             </p>
         </div>
+    </div>
+
+    <!-- 📌 Floating dock with 3 main actions -->
+    <div class="fixed-action-dock" aria-label="Quick actions">
+        <button class="dock-btn dock-wa" onclick="openActionModal('whatsapp')">
+            <i class="fa-brands fa-whatsapp"></i>
+            <span>WhatsApp Group</span>
+        </button>
+        <button class="dock-btn dock-omr" onclick="openActionModal('omr')">
+            <i class="fa-regular fa-file-lines"></i>
+            <span>OMR Submission</span>
+        </button>
+        <button class="dock-btn dock-result" onclick="openActionModal('result')">
+            <i class="fa-solid fa-award"></i>
+            <span>Check Results</span>
+        </button>
     </div>
 
     <footer>
@@ -1182,199 +1234,288 @@ body { padding-top: 0; } /* if you later make nav fixed, add top padding equal t
     </footer>
 
     <script>
-      // small helper for modal
-      function openModal(){ document.getElementById('modalBackdrop').style.display = 'flex'; document.getElementById('modalBackdrop').setAttribute('aria-hidden','false'); }
-      function closeModal(){ document.getElementById('modalBackdrop').style.display = 'none'; document.getElementById('modalBackdrop').setAttribute('aria-hidden','true'); }
+      // ---------- Modal show/hide ----------
+      function showModal(){
+        const mb = document.getElementById('modalBackdrop');
+        mb.style.display = 'flex';
+        mb.setAttribute('aria-hidden','false');
+      }
 
-      document.getElementById('closeModal').addEventListener('click', closeModal);
+      function closeModalFn(){
+        const mb = document.getElementById('modalBackdrop');
+        mb.style.display = 'none';
+        mb.setAttribute('aria-hidden','true');
+      }
+
+      document.getElementById('closeModal').addEventListener('click', closeModalFn);
       document.getElementById('modalBackdrop').addEventListener('click', function(e){
-        if(e.target === this) closeModal();
+        if(e.target === this) closeModalFn();
       });
 
-      // set footer year
       document.getElementById('year').innerText = new Date().getFullYear();
 
-      // RESULTS button placeholder - hook your API here
-      document.getElementById('checkResultsBtn').addEventListener('click', function(){
-        const roll = document.getElementById('res_roll').value.trim();
-        const name = document.getElementById('res_name').value.trim();
-        if(!roll || !name){ alert('Please enter both roll number and name'); return; }
-        // replace with real API call
-        alert('Searching results for ' + roll + ' — integrate backend API here.');
+      // --------- Animated Counters ----------
+      document.addEventListener("DOMContentLoaded", () => {
+        const counters = document.querySelectorAll(".count");
+
+        const easeOutCubic = t => 1 - Math.pow(1 - t, 3);
+
+        const animateCount = (el) => {
+          const target = +el.getAttribute("data-target");
+          const duration = 2000;
+          const startTime = performance.now();
+
+          const step = (now) => {
+            const elapsed = now - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            const eased = easeOutCubic(progress);
+            const value = Math.floor(eased * target);
+            el.textContent = value.toLocaleString();
+
+            if (progress < 1) requestAnimationFrame(step);
+            else el.textContent = target.toLocaleString();
+          };
+
+          requestAnimationFrame(step);
+        };
+
+        const observer = new IntersectionObserver((entries, obs) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              animateCount(entry.target);
+              obs.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.3 });
+
+        counters.forEach(c => observer.observe(c));
       });
 
-// ---------- Animated Counters ----------
-document.addEventListener("DOMContentLoaded", () => {
-  const counters = document.querySelectorAll(".count");
+      // --------- GLOBAL: current action (whatsapp / omr / result) ----------
+      let currentAction = 'whatsapp';
+      let whatsappGroups = {}; // state -> district -> { whatsapp, omr, result }
 
-  const easeOutCubic = t => 1 - Math.pow(1 - t, 3);
+      const ACTION_CONFIG = {
+        whatsapp: {
+          title: 'Join WhatsApp Group',
+          description: 'Select your state and district to join the official WhatsApp group for live updates and announcements.',
+          btnText: 'Open WhatsApp Group',
+          iconClass: 'fa-brands fa-whatsapp',
+          btnClass: 'fancy-whatsapp',
+          hint: '⚠️ Groups may be full during peak times. Try again later if full.'
+        },
+        omr: {
+          title: 'OMR Sheet Submission',
+          description: 'Select your state and district to open the correct OMR submission link.',
+          btnText: 'Open OMR Submission',
+          iconClass: 'fa-regular fa-file-lines',
+          btnClass: 'fancy-omr',
+          hint: '📄 Please upload your OMR sheet as per instructions shared in your state group.'
+        },
+        result: {
+          title: 'Check Contest Results',
+          description: 'Select your state and district to check results and download certificates (if available).',
+          btnText: 'Open Results Page',
+          iconClass: 'fa-solid fa-award',
+          btnClass: 'fancy-result',
+          hint: '🏆 Results links will be enabled as they are published by each state.'
+        }
+      };
 
-  const animateCount = (el) => {
-    const target = +el.getAttribute("data-target");
-    const duration = 2000;
-    const startTime = performance.now();
+      function applyActionUI(action) {
+        const cfg = ACTION_CONFIG[action] || ACTION_CONFIG.whatsapp;
+        const titleIcon = document.getElementById('modalTitleIcon');
+        const titleText = document.getElementById('modalTitleText');
+        const desc = document.getElementById('modalDescription');
+        const hint = document.getElementById('modalHint');
+        const btn = document.getElementById('openActionBtn');
+        const btnIcon = document.getElementById('modalBtnIcon');
+        const btnText = document.getElementById('modalBtnText');
 
-    const step = (now) => {
-      const elapsed = now - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-      const eased = easeOutCubic(progress);
-      const value = Math.floor(eased * target);
-      el.textContent = value.toLocaleString();
+        // update icon
+        titleIcon.className = cfg.iconClass;
+        // color tweak
+        if (action === 'whatsapp') titleIcon.style.color = '#25D366';
+        else if (action === 'omr') titleIcon.style.color = '#e11d48';
+        else titleIcon.style.color = '#ea580c';
 
-      if (progress < 1) requestAnimationFrame(step);
-      else el.textContent = target.toLocaleString();
-    };
+        // text
+        titleText.textContent = cfg.title;
+        desc.textContent = cfg.description;
+        hint.textContent = cfg.hint;
 
-    requestAnimationFrame(step);
-  };
+        // button styles
+        btn.className = 'fancy-btn ' + cfg.btnClass;
+        btn.disabled = true;
 
-  // Start when visible
-  const observer = new IntersectionObserver((entries, obs) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        animateCount(entry.target);
-        obs.unobserve(entry.target);
+        btnIcon.className = cfg.iconClass;
+        btnText.textContent = cfg.btnText;
       }
-    });
-  }, { threshold: 0.3 });
 
-  counters.forEach(c => observer.observe(c));
-});
-/* ---------- Load external JSON (whatsapp_groups.json) and initialize selects ---------- */
-/* Save your posted JSON array exactly as whatsapp_groups.json in the same directory as index.html */
+      function openActionModal(action) {
+        currentAction = action || 'whatsapp';
+        applyActionUI(currentAction);
+        updateModalButtonLink(); // set enabled/disabled based on current selection
+        showModal();
+      }
 
-async function loadWhatsAppJSONAndInit() {
-  const url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS25FQotsgdlN-k6xCO-gczCkMluhjMl59EC7rGVhaOGCM1WF4tC21KVXB7kxmneUVXTGWdrAlc1Hlh/pub?output=csv';
-  let arr = [];
-  try {
-    const resp = await fetch(url + '&t=' + Date.now(), { cache: 'no-store' });
-    if (!resp.ok) throw new Error('HTTP ' + resp.status);
+      // ---------- Load Google Sheet CSV and init data ----------
+      async function loadWhatsAppJSONAndInit() {
+        const url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS25FQotsgdlN-k6xCO-gczCkMluhjMl59EC7rGVhaOGCM1WF4tC21KVXB7kxmneUVXTGWdrAlc1Hlh/pub?output=csv';
+        let arr = [];
+        try {
+          const resp = await fetch(url + '&t=' + Date.now(), { cache: 'no-store' });
+          if (!resp.ok) throw new Error('HTTP ' + resp.status);
+          const text = await resp.text();
+          arr = parseCSV(text);
+          if (!Array.isArray(arr)) throw new Error('Parsed data is not an array');
+        } catch (err) {
+          console.error('Could not load WhatsApp data — using fallback:', err);
+          arr = [
+            { "state": "Maharashtra", "district": "Pune", "whatsapp_link": "https://chat.whatsapp.com/PUNE_LINK", "omr_link": "https://example.com/pune-omr", "result_link": "https://example.com/pune-result" },
+            { "state": "Karnataka", "district": "Bangalore", "whatsapp_link": "https://chat.whatsapp.com/BANGALORE_LINK", "omr_link": "https://example.com/blore-omr", "result_link": "https://example.com/blore-result" }
+          ];
+        }
 
-    const text = await resp.text();       // ✅ get raw CSV text
-    arr = parseCSV(text);                 // ✅ convert to array of objects
+        // Build nested structure: state -> district -> { whatsapp, omr, result }
+        whatsappGroups = arr.reduce((acc, item) => {
+          if (!item || !item.state || !item.district) return acc;
+          const st = String(item.state).trim();
+          const dt = String(item.district).trim();
+          if (!acc[st]) acc[st] = {};
+          acc[st][dt] = {
+            whatsapp: item.whatsapp_link ? String(item.whatsapp_link).trim() : '',
+            omr: item.omr_link ? String(item.omr_link).trim() : '',
+            result: item.result_link ? String(item.result_link).trim() : ''
+          };
+          return acc;
+        }, {});
 
-    if (!Array.isArray(arr)) throw new Error('Parsed data is not an array');
-  } catch (err) {
-    console.error('Could not load WhatsApp data — using fallback:', err);
-    arr = [
-      { "state": "Maharashtra", "district": "Pune", "whatsapp_link": "https://chat.whatsapp.com/PUNE_LINK" },
-      { "state": "Karnataka", "district": "Bangalore", "whatsapp_link": "https://chat.whatsapp.com/BANGALORE_LINK" }
-    ];
-  }
+        initWhatsAppUI(whatsappGroups);
+      }
 
-  // convert array -> nested object
-  const groups = arr.reduce((acc, item) => {
-    if (!item || !item.state || !item.district || !item.whatsapp_link) return acc;
-    const st = item.state.trim();
-    const dt = item.district.trim();
-    if (!acc[st]) acc[st] = {};
-    acc[st][dt] = item.whatsapp_link.trim();
-    return acc;
-  }, {});
+      function parseCSV(text) {
+        const lines = text.trim().split('\n');
+        const headers = lines.shift().split(',').map(h => h.trim());
+        return lines.map(line => {
+          const values = line.split(',').map(v => v.trim());
+          const obj = {};
+          headers.forEach((h, i) => obj[h] = values[i]);
+          return obj;
+        });
+      }
 
-  initWhatsAppUI(groups);
-}
+      function initWhatsAppUI(groups) {
+        const wa_state = document.getElementById('wa_stateSelect');
+        const wa_district = document.getElementById('wa_districtSelect');
+        const modal_state = document.getElementById('modal_stateSelect');
+        const modal_district = document.getElementById('modal_districtSelect');
+        const openBtnInline = document.getElementById('wa_openLink');
+        const openBtnModal = document.getElementById('openActionBtn');
 
-// helper
-function parseCSV(text) {
-  const lines = text.trim().split('\n');
-  const headers = lines.shift().split(',').map(h => h.trim());
-  return lines.map(line => {
-    const values = line.split(',').map(v => v.trim());
-    const obj = {};
-    headers.forEach((h, i) => obj[h] = values[i]);
-    return obj;
-  });
-}
-/* initialize the selects and keep inline + modal in sync */
-function initWhatsAppUI(whatsappGroups) {
-  const wa_state = document.getElementById('wa_stateSelect');
-  const wa_district = document.getElementById('wa_districtSelect');
-  const modal_state = document.getElementById('modal_stateSelect');
-  const modal_district = document.getElementById('modal_districtSelect');
-  const openBtnInline = document.getElementById('wa_openLink');
-  const openBtnModal = document.getElementById('openWhatsapp');
+        function escapeHtml(s){ return String(s).replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch])); }
 
-  function buildStateOptions(sel) {
-    const states = Object.keys(whatsappGroups).sort();
-    sel.innerHTML = `<option value="">-- Select State --</option>` + states.map(s => `<option value="${escapeHtml(s)}">${escapeHtml(s)}</option>`).join('');
-  }
+        function buildStateOptions(sel) {
+          const states = Object.keys(groups).sort();
+          sel.innerHTML = `<option value="">-- Select State --</option>` +
+            states.map(s => `<option value="${escapeHtml(s)}">${escapeHtml(s)}</option>`).join('');
+        }
 
-  function buildDistrictOptionsFor(sel, state) {
-    const districts = whatsappGroups[state] ? Object.keys(whatsappGroups[state]).sort() : [];
-    sel.innerHTML = `<option value="">-- Select District --</option>` + districts.map(d => `<option value="${escapeHtml(d)}">${escapeHtml(d)}</option>`).join('');
-  }
+        function buildDistrictOptionsFor(sel, state) {
+          const districts = groups[state] ? Object.keys(groups[state]).sort() : [];
+          sel.innerHTML = `<option value="">-- Select District --</option>` +
+            districts.map(d => `<option value="${escapeHtml(d)}">${escapeHtml(d)}</option>`).join('');
+        }
 
-  // small escape to avoid injection if names contain special chars
-  function escapeHtml(s){ return String(s).replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch])); }
+        function getLinkFor(state, district, action) {
+          if (!state || !district) return '';
+          const stObj = groups[state];
+          if (!stObj) return '';
+          const entry = stObj[district];
+          if (!entry) return '';
+          if (action === 'omr') return entry.omr;
+          if (action === 'result') return entry.result;
+          return entry.whatsapp;
+        }
 
-  buildStateOptions(wa_state);
-  buildStateOptions(modal_state);
+        buildStateOptions(wa_state);
+        buildStateOptions(modal_state);
 
-  // Inline state -> districts (and sync modal)
-  wa_state.addEventListener('change', function(){
-    const st = this.value;
-    buildDistrictOptionsFor(wa_district, st);
-    // sync modal selects
-    modal_state.value = st;
-    modal_district.innerHTML = wa_district.innerHTML;
-    openBtnInline.href = '#';
-    openBtnInline.onclick = null;
-  });
+        // Inline: state -> district; always for WhatsApp
+        wa_state.addEventListener('change', function(){
+          const st = this.value;
+          buildDistrictOptionsFor(wa_district, st);
+          modal_state.value = st;
+          modal_district.innerHTML = wa_district.innerHTML;
+          openBtnInline.href = '#';
+          openBtnInline.onclick = null;
+        });
 
-  // Inline district -> set inline open link and sync modal
-  wa_district.addEventListener('change', function(){
-    const st = wa_state.value;
-    const dt = this.value;
-    modal_state.value = st;
-    modal_district.value = dt;
-    const link = whatsappGroups[st] && whatsappGroups[st][dt];
-    if (link) {
-      openBtnInline.href = link;
-      openBtnInline.onclick = () => { window.open(link, '_blank'); return false; };
-    } else {
-      openBtnInline.href = '#';
-      openBtnInline.onclick = null;
-    }
-  });
+        wa_district.addEventListener('change', function(){
+          const st = wa_state.value;
+          const dt = this.value;
+          modal_state.value = st;
+          modal_district.value = dt;
+          const link = getLinkFor(st, dt, 'whatsapp');
+          if (link) {
+            openBtnInline.href = link;
+            openBtnInline.onclick = () => { window.open(link, '_blank'); return false; };
+          } else {
+            openBtnInline.href = '#';
+            openBtnInline.onclick = null;
+          }
+        });
 
-  // Modal state -> districts (and sync inline)
-  modal_state.addEventListener('change', function(){
-    const st = this.value;
-    buildDistrictOptionsFor(modal_district, st);
-    wa_state.value = st;
-    wa_district.innerHTML = modal_district.innerHTML;
-    openBtnModal.disabled = true;
-    openBtnModal.onclick = null;
-  });
+        // Modal: state -> districts
+        modal_state.addEventListener('change', function(){
+          const st = this.value;
+          buildDistrictOptionsFor(modal_district, st);
+          wa_state.value = st;
+          wa_district.innerHTML = modal_district.innerHTML;
+          openBtnModal.disabled = true;
+          openBtnModal.onclick = null;
+        });
 
-  // Modal district -> set modal open link and sync inline
-  modal_district.addEventListener('change', function(){
-    const st = modal_state.value;
-    const dt = modal_district.value;
-    wa_state.value = st;
-    wa_district.value = dt;
-    const link = whatsappGroups[st] && whatsappGroups[st][dt];
-    if (link) {
-      openBtnModal.disabled = false;
-      openBtnModal.onclick = () => { window.open(link, '_blank'); return false; };
-    } else {
-      openBtnModal.disabled = true;
-      openBtnModal.onclick = null;
-    }
-  });
+        modal_district.addEventListener('change', function(){
+          syncInlineFromModal();
+          updateModalButtonLink();
+        });
 
-  // ensure inline button doesn't submit the page if no link
-  openBtnInline.addEventListener('click', function(e){
-    if (!this.href || this.href === '#') e.preventDefault();
-  });
-}
+        function syncInlineFromModal() {
+          const st = modal_state.value;
+          const dt = modal_district.value;
+          wa_state.value = st;
+          buildDistrictOptionsFor(wa_district, st);
+          wa_district.value = dt;
+        }
 
-/* call loader after DOM ready */
-document.addEventListener('DOMContentLoaded', loadWhatsAppJSONAndInit);
+        // compute link and update modal button
+        window.updateModalButtonLink = function(){
+          const st = modal_state.value;
+          const dt = modal_district.value;
+          const btn = document.getElementById('openActionBtn');
+          const link = getLinkFor(st, dt, currentAction);
+          if (link) {
+            btn.disabled = false;
+            btn.onclick = () => { window.open(link, '_blank'); return false; };
+          } else {
+            btn.disabled = true;
+            btn.onclick = null;
+          }
+        };
 
+        // ensure inline button doesn't do anything if no link
+        openBtnInline.addEventListener('click', function(e){
+          if (!this.href || this.href === '#') e.preventDefault();
+        });
+      }
 
+      document.addEventListener('DOMContentLoaded', loadWhatsAppJSONAndInit);
 
- </script>
+      // Results section CTA: open modal in "result" mode
+      document.getElementById('checkResultsBtn').addEventListener('click', function(){
+        openActionModal('result');
+      });
+    </script>
 </body>
 </html>
