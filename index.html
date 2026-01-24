@@ -524,6 +524,48 @@ body { padding-top: 0; }
             margin-top: 4px;
         }
         
+
+        /* Mobile Optimization (Screens smaller than 768px) */
+@media (max-width: 768px) {
+    .tile {
+        padding: 16px; /* Slightly tighter padding */
+        gap: 14px;     /* Reduce gap to save horizontal space */
+        border-radius: 15px;
+    }
+
+    .tile .icon {
+        width: 50px;  /* Smaller icon for mobile */
+        height: 50px;
+        font-size: 1.3rem;
+        border-radius: 12px;
+    }
+
+    .tile .title {
+        font-size: 0.95rem; /* Scales down text slightly */
+        line-height: 1.2;
+    }
+
+    .tile .sub {
+        font-size: 0.8rem;
+        margin-top: 2px;
+    }
+
+    /* Since there is no 'hover' on mobile, 
+       we simulate a 'pressed' effect instead */
+    .tile:active {
+        transform: scale(0.96); /* Slight shrink when tapped */
+        background: rgba(255, 255, 255, 0.9);
+        box-shadow: 0 5px 15px rgba(2,6,23,0.1);
+    }
+
+    /* Optional: If you want the tiles to take full width on very small phones */
+    .tiles-container {
+        display: grid;
+        grid-template-columns: 1fr; /* Stack tiles in a single column */
+        gap: 15px;
+        padding: 10px;
+    }
+}
         /* Gita Quote Section */
         .gita-quote-section {
             background: linear-gradient(135deg, rgba(255,153,51,0.12), rgba(255,153,51,0.03));
@@ -937,7 +979,7 @@ body { padding-top: 0; }
                   <i class="fa-regular fa-file-lines"></i>
               </div>
               <div>
-                  <div class="title">OMR Submission</div>
+                  <div class="title">Submit OMR</div>
                   <!-- <div class="sub">Active: 26 Jan - 31 Jan 2026</div> -->
               </div>
           </div>
