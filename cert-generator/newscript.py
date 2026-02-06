@@ -1,4 +1,4 @@
-import os, subprocess, psycopg2
+import os, subprocess, psycopg2, time
 from pptx import Presentation
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
@@ -9,15 +9,12 @@ from googleapiclient.http import MediaIoBaseUpload
 # ======================
 # CONFIGURATION
 # ======================
-# ======================
-# CONFIGURATION
-# ======================
-import sys
-
 if os.name == 'nt':  # Windows
     LIBREOFFICE_PATH = r"C:\Program Files\LibreOffice\program\soffice.exe"
-else:  # Linux / Mac
-    LIBREOFFICE_PATH = "libreoffice"  # Assumes it's in the PATH
+    USE_SHELL = True
+else:  # Linux (VPS)
+    LIBREOFFICE_PATH = "libreoffice"
+    USE_SHELL = False
 
 PPTX_TEMPLATE = "certificate_template.pptx"
 OUTPUT_DIR = "generated"
@@ -79,75 +76,79 @@ try:
         print(f"✍️ Processing: {name} ({exam_code})")
 
         # --- 1. GENERATE PPTX ---
-        prs = Presentation(PPTX_TEMPLATE)
-        slide = prs.slides[0] if len(prs.slides) > 0 else prs.slides.add_slide(prs.slide_layouts[0])
+        try:
+            prs = Presentation(PPTX_TEMPLATE)
+            slide = prs.slides[0] if len(prs.slides) > 0 else prs.slides.add_slide(prs.slide_layouts[0])
 
-        data_map = {
-            10: str(name).title(),
-            11: str(school),
-            14: ACADEMIC_YEAR,
-            15: str(standard),
-            16: f"Secured: {grade}",
-            17: str(exam_code)
-        }
+            data_map = {
+                10: str(name).title(),
+                11: str(school),
+                14: ACADEMIC_YEAR,
+                15: str(standard),
+                16: f"Secured: {grade}",
+                17: str(exam_code)
+            }
 
-        for shape in slide.placeholders:
-            idx = shape.placeholder_format.idx
-            if idx in data_map:
-                shape.text = data_map[idx]
+            for shape in slide.placeholders:
+                idx = shape.placeholder_format.idx
+                if idx in data_map:
+                    shape.text = data_map[idx]
 
-        temp_pptx = os.path.abspath(os.path.join(OUTPUT_DIR, f"{exam_code}.pptx"))
-        pdf_path = os.path.abspath(os.path.join(OUTPUT_DIR, f"{exam_code}.pdf"))
-        prs.save(temp_pptx)
-        
-        # --- 2. CONVERT TO PDF ---
-        subprocess.run([
-            LIBREOFFICE_PATH, "--headless", "--convert-to", "pdf",
-            "--outdir", os.path.abspath(OUTPUT_DIR), temp_pptx
-        ], shell=True, capture_output=True)
-        
-        # --- 3. AUTO-UPLOAD TO DRIVE ---
-        file_metadata = {
-            'name': f"{exam_code}_{name.replace(' ', '_')}.pdf",
-            'parents': [DRIVE_FOLDER_ID]
-        }
-        
-        # Use context manager to ensure file is closed (Fix for WinError 32)
-        with open(pdf_path, 'rb') as f:
-            media = MediaIoBaseUpload(f, mimetype='application/pdf', resumable=True)
+            temp_pptx = os.path.abspath(os.path.join(OUTPUT_DIR, f"{exam_code}.pptx"))
+            pdf_path = os.path.abspath(os.path.join(OUTPUT_DIR, f"{exam_code}.pdf"))
+            prs.save(temp_pptx)
             
-            uploaded_file = drive_service.files().create(
-                body=file_metadata,
-                media_body=media,
-                fields='id, webViewLink'
+            # --- 2. CONVERT TO PDF ---
+            subprocess.run([
+                LIBREOFFICE_PATH, "--headless", "--convert-to", "pdf",
+                "--outdir", os.path.abspath(OUTPUT_DIR), temp_pptx
+            ], shell=USE_SHELL, capture_output=True)
+            
+            # --- 3. AUTO-UPLOAD TO DRIVE ---
+            file_metadata = {
+                'name': f"{exam_code}_{name.replace(' ', '_')}.pdf",
+                'parents': [DRIVE_FOLDER_ID]
+            }
+            
+            with open(pdf_path, 'rb') as f:
+                media = MediaIoBaseUpload(f, mimetype='application/pdf', resumable=True)
+                uploaded_file = drive_service.files().create(
+                    body=file_metadata,
+                    media_body=media,
+                    fields='id, webViewLink'
+                ).execute()
+            
+            file_id = uploaded_file.get('id')
+            drive_link = uploaded_file.get('webViewLink')
+
+            # --- 4. FIX PERMISSIONS ---
+            drive_service.permissions().create(
+                fileId=file_id,
+                body={'type': 'anyone', 'role': 'reader'}
             ).execute()
-        
-        file_id = uploaded_file.get('id')
-        drive_link = uploaded_file.get('webViewLink')
 
-        # --- 4. FIX PERMISSIONS (Ensures link is viewable) ---
-        drive_service.permissions().create(
-            fileId=file_id,
-            body={'type': 'anyone', 'role': 'reader'}
-        ).execute()
+            # --- 5. UPDATE SUPABASE ---
+            cur.execute("""
+                UPDATE students 
+                SET "Certificate Flag" = 'YES', "Link of Certificate" = %s 
+                WHERE "VEC Exam Code" = %s
+            """, (drive_link, exam_code))
+            conn.commit()
 
-        # --- 5. UPDATE SUPABASE ---
-        cur.execute("""
-            UPDATE students 
-            SET "Certificate Flag" = 'YES', "Link of Certificate" = %s 
-            WHERE "VEC Exam Code" = %s
-        """, (drive_link, exam_code))
-        conn.commit()
+            # --- 6. CLEANUP ---
+            if os.path.exists(temp_pptx): os.remove(temp_pptx)
+            if os.path.exists(pdf_path): os.remove(pdf_path)
+            
+            print(f"✅ Success: {exam_code} is live.")
+            time.sleep(1)  # Brief pause to ensure stability for 80k run
 
-        # --- 6. CLEANUP ---
-        if os.path.exists(temp_pptx): os.remove(temp_pptx)
-        if os.path.exists(pdf_path): os.remove(pdf_path)
-        
-        print(f"✅ Success: {exam_code} is live.")
+        except Exception as e:
+            print(f"⚠️ Failed to process {exam_code}: {e}")
+            continue
 
-    print(f"\n🚀 MISSION ACCOMPLISHED! {len(rows)} certificates generated, uploaded, and linked.")
+    print(f"\n🚀 MISSION ACCOMPLISHED! {len(rows)} certificates handled.")
 
 except Exception as e:
-    print(f"❌ Error: {e}")
+    print(f"❌ Critical Error: {e}")
 finally:
     cur.close(); conn.close()
