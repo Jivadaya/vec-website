@@ -82,7 +82,7 @@ try:
 
             data_map = {
                 10: str(name).title(),
-                11: str(school),
+                11: str(school).title(),
                 14: ACADEMIC_YEAR,
                 15: str(standard),
                 16: f"Secured: {grade}",
