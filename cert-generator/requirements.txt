@@ -1,0 +1,5 @@
+psycopg2-binary
+python-pptx
+google-auth
+google-auth-oauthlib
+google-api-python-client

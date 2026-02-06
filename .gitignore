@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+env/
+
+# Data & Secrets (CRITICAL)
+cert-generator/token.json
+cert-generator/credentials.json
+cert-generator/service_account.json
+cert-generator/generated/
+cert-generator/output/
+
+# VS Code
+.vscode/
+
+# System
+Thumbs.db
+Desktop.ini

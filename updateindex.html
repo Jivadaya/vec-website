@@ -1,0 +1,2134 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>ISKCON Values For All — National Value Education Contest 2026</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        :root {
+            --primary: #ff9933;
+            --primary-light: #ffb366;
+            --primary-dark: #e68a2e;
+            --maroon: #7c2d12;
+            --maroon-light: #991b1b;
+            --accent: #10b981;
+            --blue: #3b82f6;
+            --text: #1e293b;
+            --text-light: #64748b;
+            --bg: #ffffff;
+            --bg-subtle: #f8fafc;
+            --border: #e2e8f0;
+            --shadow: rgba(15, 23, 42, 0.08);
+            --shadow-lg: rgba(15, 23, 42, 0.15);
+        }
+        
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            color: var(--text);
+            background: var(--bg);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+        
+        a { 
+            cursor: pointer; 
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        /* ==================== NAVIGATION ==================== */
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 1100;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .nav-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 18px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+        }
+        
+        .logo {
+            display: flex;
+            gap: 14px;
+            align-items: center;
+        }
+        
+        .logo img {
+            height: 48px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .logo-title {
+            font-size: 1.15rem;
+            color: var(--maroon);
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+        }
+        
+        .logo-sub {
+            font-size: 0.75rem;
+            color: var(--text-light);
+            font-weight: 600;
+            letter-spacing: 0.05em;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 4px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 600;
+            padding: 10px 18px;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--maroon);
+            background: var(--bg-subtle);
+        }
+
+        .nav-cta-btn {
+            background: var(--primary);
+            color: white;
+            padding: 11px 22px;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin-left: 12px;
+            box-shadow: 0 4px 12px rgba(255, 153, 51, 0.25);
+            border: none;
+            cursor: pointer;
+        }
+
+        .nav-cta-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(255, 153, 51, 0.35);
+        }
+
+        /* Mobile Navigation */
+        @media (max-width: 768px) {
+            .nav-container {
+                padding: 14px 16px;
+            }
+            
+            .logo img {
+                height: 40px;
+            }
+            
+            .logo-title {
+                font-size: 1rem;
+            }
+            
+            .logo-sub {
+                font-size: 0.7rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .nav-cta-btn {
+                padding: 10px 16px;
+                font-size: 0.85rem;
+                margin-left: 0;
+            }
+        }
+
+        /* ==================== HERO SECTION ==================== */
+        .hero {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 100px 24px 60px;
+            display: grid;
+            grid-template-columns: 1fr 500px;
+            gap: 80px;
+            align-items: center;
+        }
+        
+        .hero-left {
+            animation: fadeInUp 0.8s ease;
+        }
+        
+        .hero-right {
+            animation: fadeInRight 0.8s ease;
+        }
+        
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes fadeInRight {
+            from { opacity: 0; transform: translateX(30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        .subtitle {
+            color: var(--primary);
+            font-weight: 800;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            margin-bottom: 14px;
+        }
+        
+        h1 {
+            font-size: clamp(2.2rem, 5vw, 3.5rem);
+            margin-bottom: 24px;
+            line-height: 1.15;
+            font-weight: 900;
+            color: var(--maroon);
+            letter-spacing: -0.03em;
+        }
+        
+        .tagline {
+            color: var(--text-light);
+            max-width: 60ch;
+            font-size: 1.15rem;
+            line-height: 1.75;
+            font-weight: 400;
+        }
+        
+        .hero-right img {
+            width: 100%;
+            border-radius: 20px;
+            box-shadow: 0 25px 70px var(--shadow-lg);
+        }
+
+        /* Hero Stats */
+        .hero-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-top: 40px;
+        }
+        
+        .stat-card {
+            background: linear-gradient(135deg, var(--bg-subtle) 0%, #fff 100%);
+            padding: 24px;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px var(--shadow);
+            border-color: var(--primary);
+        }
+        
+        .stat-card strong {
+            display: block;
+            color: var(--primary);
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin-bottom: 6px;
+            font-variant-numeric: tabular-nums;
+        }
+        
+        .stat-card .label {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+        
+        /* Hero Actions */
+        .hero-actions {
+            margin-top: 40px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+        }
+        
+        .btn-primary-hero {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 16px 32px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 6px 20px rgba(255, 153, 51, 0.3);
+        }
+        
+        .btn-primary-hero:hover {
+            background: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 28px rgba(255, 153, 51, 0.4);
+        }
+        
+        .btn-secondary-hero {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 16px 32px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1rem;
+            border: 2px solid var(--border);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: white;
+            color: var(--text);
+        }
+        
+        .btn-secondary-hero:hover {
+            border-color: var(--primary);
+            background: var(--bg-subtle);
+            transform: translateY(-3px);
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                grid-template-columns: 1fr;
+                gap: 40px;
+                padding: 50px 20px 40px;
+            }
+            
+            .hero-right {
+                order: -1;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .tagline {
+                font-size: 1rem;
+            }
+            
+            .hero-stats {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+            
+            .stat-card {
+                padding: 20px;
+            }
+            
+            .stat-card strong {
+                font-size: 2rem;
+            }
+            
+            .hero-actions {
+                flex-direction: column;
+            }
+            
+            .btn-primary-hero,
+            .btn-secondary-hero {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+        
+        /* ==================== QUICK LINKS SECTION ==================== */
+        .quick-section {
+            max-width: 1280px;
+            margin: 80px auto;
+            padding: 0 24px;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+        
+        .section-title {
+            font-weight: 800;
+            font-size: 2.2rem;
+            color: var(--maroon);
+            margin-bottom: 12px;
+            letter-spacing: -0.02em;
+        }
+        
+        .section-description {
+            color: var(--text-light);
+            font-size: 1.1rem;
+            max-width: 65ch;
+            margin: 0 auto;
+        }
+        
+        .quick-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        
+        .quick-card {
+            background: linear-gradient(135deg, #fff 0%, var(--bg-subtle) 100%);
+            border-radius: 16px;
+            padding: 28px;
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            border: 2px solid var(--border);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .quick-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 16px 40px var(--shadow-lg);
+            border-color: var(--primary);
+        }
+        
+        .quick-icon {
+            width: 64px;
+            height: 64px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: white;
+            flex-shrink: 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        
+        .icon-whatsapp { background: linear-gradient(135deg, #25D366 0%, #128C7E 100%); }
+        .icon-submit { background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); }
+        .icon-guide { background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%); }
+        .icon-results { background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); }
+        
+        .quick-content h3 {
+            font-weight: 700;
+            color: var(--text);
+            font-size: 1.15rem;
+            margin-bottom: 6px;
+        }
+        
+        .quick-content p {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            line-height: 1.5;
+        }
+
+        @media (max-width: 768px) {
+            .quick-section {
+                margin: 60px auto;
+                padding: 0 20px;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .quick-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+            
+            .quick-card {
+                padding: 20px;
+                gap: 16px;
+            }
+            
+            .quick-icon {
+                width: 56px;
+                height: 56px;
+                font-size: 1.5rem;
+            }
+        }
+
+        /* ==================== WHATSAPP SECTION ==================== */
+        .whatsapp-section {
+            background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+            padding: 100px 24px;
+            color: white;
+        }
+
+        .whatsapp-container {
+            max-width: 700px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .whatsapp-container h2 {
+            font-size: 2.5rem;
+            margin-bottom: 16px;
+            font-weight: 900;
+            letter-spacing: -0.02em;
+        }
+
+        .whatsapp-container > p {
+            font-size: 1.15rem;
+            margin-bottom: 48px;
+            opacity: 0.95;
+            line-height: 1.7;
+        }
+
+        .whatsapp-card {
+            background: white;
+            padding: 48px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+        }
+
+        .whatsapp-card h3 {
+            color: #128C7E;
+            margin-bottom: 32px;
+            font-size: 1.6rem;
+            font-weight: 800;
+        }
+
+        @media (max-width: 768px) {
+            .whatsapp-section {
+                padding: 60px 20px;
+            }
+
+            .whatsapp-container h2 {
+                font-size: 2rem;
+            }
+
+            .whatsapp-card {
+                padding: 32px 24px;
+            }
+        }
+        
+        /* ==================== RESULTS SECTION ==================== */
+        .results-section {
+            background: linear-gradient(135deg, var(--bg-subtle) 0%, #fff 100%);
+            padding: 100px 24px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .results-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--maroon) 100%);
+        }
+        
+        .results-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .results-card {
+            background: white;
+            border-radius: 24px;
+            padding: 48px;
+            box-shadow: 0 20px 60px var(--shadow-lg);
+            border: 1px solid var(--border);
+        }
+        
+        .results-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .results-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, rgba(255,153,51,0.1) 0%, rgba(255,153,51,0.05) 100%);
+            color: var(--primary);
+            padding: 10px 24px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            letter-spacing: 0.1em;
+            margin-bottom: 16px;
+            border: 1px solid rgba(255,153,51,0.2);
+        }
+        
+        .results-header h2 {
+            font-size: 2.2rem;
+            font-weight: 900;
+            color: var(--maroon);
+            margin-bottom: 12px;
+            letter-spacing: -0.02em;
+        }
+        
+        .results-header p {
+            color: var(--text-light);
+            font-size: 1.05rem;
+            line-height: 1.6;
+        }
+        
+        .search-box {
+            position: relative;
+            margin-bottom: 24px;
+        }
+        
+        .search-input-wrapper {
+            position: relative;
+            display: flex;
+            background: var(--bg-subtle);
+            padding: 6px;
+            border-radius: 16px;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .search-input-wrapper:focus-within {
+            border-color: var(--primary);
+            background: white;
+            box-shadow: 0 0 0 4px rgba(255, 153, 51, 0.1);
+        }
+        
+        .search-input-wrapper input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            font-size: 1.15rem;
+            font-weight: 700;
+            padding: 14px 20px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--text);
+        }
+        
+        .search-input-wrapper input:focus {
+            outline: none;
+        }
+        
+        .search-input-wrapper input::placeholder {
+            color: var(--text-light);
+            opacity: 0.5;
+            font-weight: 600;
+        }
+        
+        .search-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            width: 56px;
+            height: 56px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+        
+        .search-btn:hover {
+            background: var(--primary-dark);
+            transform: scale(1.05);
+        }
+        
+        .search-btn:active {
+            transform: scale(0.95);
+        }
+        
+        .error-message {
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+            color: #991b1b;
+            padding: 16px 20px;
+            border-radius: 12px;
+            border: 1px solid #fca5a5;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 600;
+            animation: shake 0.5s;
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+        
+        .result-display {
+            animation: slideUp 0.5s ease;
+        }
+        
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .certificate-box {
+            background: linear-gradient(135deg, var(--bg-subtle) 0%, #fff 100%);
+            border-radius: 16px;
+            padding: 32px;
+            border: 2px dashed var(--primary);
+            text-align: center;
+        }
+        
+        .certificate-icon {
+            font-size: 3.5rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+        
+        .student-name {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--maroon);
+            margin-bottom: 8px;
+            letter-spacing: -0.02em;
+        }
+        
+        .student-grade {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 24px;
+        }
+        
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 18px 36px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 14px;
+            font-weight: 700;
+            font-size: 1.05rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 20px rgba(255, 153, 51, 0.3);
+            text-decoration: none;
+        }
+        
+        .download-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 28px rgba(255, 153, 51, 0.4);
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .results-section {
+                padding: 60px 20px;
+            }
+            
+            .results-card {
+                padding: 32px 24px;
+            }
+            
+            .results-header h2 {
+                font-size: 1.8rem;
+            }
+            
+            .search-input-wrapper input {
+                font-size: 1rem;
+                padding: 12px 16px;
+            }
+            
+            .search-btn {
+                width: 50px;
+                height: 50px;
+            }
+            
+            .certificate-box {
+                padding: 24px;
+            }
+            
+            .student-name {
+                font-size: 1.5rem;
+            }
+            
+            .download-btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        /* ==================== GIFT BANNER ==================== */
+        .gift-banner {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: white;
+            padding: 80px 24px;
+            text-align: center;
+        }
+
+        .gift-banner h3 {
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+            font-weight: 900;
+            letter-spacing: -0.02em;
+        }
+
+        .gift-banner p {
+            font-size: 1.15rem;
+            max-width: 1000px;
+            margin: 0 auto;
+            line-height: 1.8;
+            opacity: 0.95;
+        }
+
+        @media (max-width: 768px) {
+            .gift-banner {
+                padding: 60px 20px;
+            }
+
+            .gift-banner h3 {
+                font-size: 1.8rem;
+            }
+
+            .gift-banner p {
+                font-size: 1rem;
+            }
+        }
+        
+        /* ==================== CONTENT SECTIONS ==================== */
+        .content-section {
+            max-width: 1280px;
+            margin: 100px auto;
+            padding: 0 24px;
+        }
+        
+        .content-section h2 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--maroon);
+            margin-bottom: 20px;
+            letter-spacing: -0.02em;
+        }
+
+        .content-section h3 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--maroon);
+            margin-bottom: 16px;
+            margin-top: 40px;
+            letter-spacing: -0.02em;
+        }
+        
+        .content-section p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-light);
+            margin-bottom: 16px;
+        }
+
+        @media (max-width: 768px) {
+            .content-section {
+                margin: 60px auto;
+                padding: 0 20px;
+            }
+
+            .content-section h2 {
+                font-size: 1.8rem;
+            }
+
+            .content-section h3 {
+                font-size: 1.5rem;
+            }
+
+            .content-section p {
+                font-size: 1rem;
+            }
+        }
+
+        /* ==================== SPECIAL SECTIONS ==================== */
+        .special-section {
+            background: var(--bg-subtle);
+            padding: 100px 24px;
+        }
+
+        .special-section-white {
+            background: white;
+            padding: 100px 24px;
+        }
+
+        .container-custom {
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        /* Photo Gallery */
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            margin-top: 48px;
+        }
+
+        .photo-item {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 2px solid var(--border);
+            transition: all 0.3s ease;
+            padding: 24px;
+            text-align: center;
+        }
+
+        .photo-item:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 16px 40px var(--shadow-lg);
+            border-color: var(--primary);
+        }
+
+        .photo-item h4 {
+            color: var(--maroon);
+            margin-bottom: 8px;
+            font-weight: 700;
+            font-size: 1.15rem;
+        }
+
+        .photo-item p {
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+
+        /* Gifts Grid */
+        .gifts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            margin-top: 48px;
+        }
+
+        .gift-item {
+            background: white;
+            padding: 40px 28px;
+            border-radius: 16px;
+            text-align: center;
+            border: 2px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        .gift-item:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 16px 40px var(--shadow-lg);
+            border-color: var(--primary);
+        }
+
+        .gift-icon {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+        }
+
+        .gift-item h4 {
+            color: var(--maroon);
+            margin-bottom: 10px;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .gift-item p {
+            color: var(--text-light);
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        /* Syllabus Grid */
+        .syllabus-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+            margin-top: 48px;
+        }
+
+        .syllabus-item {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: white;
+            padding: 28px 24px;
+            border-radius: 14px;
+            text-align: center;
+            font-weight: 700;
+            font-size: 1.1rem;
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .syllabus-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.4);
+        }
+
+        /* Solution Grid */
+        .solution-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 28px;
+            margin-top: 48px;
+        }
+
+        .solution-card {
+            background: white;
+            padding: 40px 32px;
+            border-radius: 16px;
+            text-align: center;
+            border: 2px solid var(--border);
+            border-top: 4px solid var(--primary);
+            transition: all 0.3s ease;
+        }
+
+        .solution-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 16px 40px var(--shadow-lg);
+        }
+
+        .solution-number {
+            width: 64px;
+            height: 64px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
+            font-weight: 900;
+            font-size: 1.8rem;
+            box-shadow: 0 6px 20px rgba(255, 153, 51, 0.3);
+        }
+
+        .solution-card h3 {
+            color: var(--maroon);
+            font-size: 1.5rem;
+            margin-bottom: 14px;
+            font-weight: 800;
+        }
+
+        .solution-card p {
+            color: var(--text-light);
+            line-height: 1.7;
+            font-size: 1.05rem;
+        }
+
+        /* Videos */
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 24px;
+            margin-top: 40px;
+        }
+
+        .video-item {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 2px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        .video-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px var(--shadow);
+        }
+
+        .video-item iframe {
+            width: 100%;
+            height: 280px;
+            border: 0;
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .special-section,
+            .special-section-white {
+                padding: 60px 20px;
+            }
+
+            .photo-grid,
+            .gifts-grid,
+            .syllabus-grid,
+            .solution-grid,
+            .video-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+
+            .video-item iframe {
+                height: 220px;
+            }
+        }
+
+        /* ==================== CONTACT SECTION ==================== */
+        .contact-section {
+            background: var(--bg-subtle);
+            padding: 80px 24px;
+            border-top: 1px solid var(--border);
+        }
+
+        .contact-card {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 48px;
+            border-radius: 20px;
+            box-shadow: 0 12px 40px var(--shadow);
+            border: 1px solid var(--border);
+            text-align: center;
+        }
+
+        .contact-badge {
+            display: inline-block;
+            background: rgba(255, 153, 51, 0.1);
+            color: var(--primary);
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            letter-spacing: 0.1em;
+            margin-bottom: 16px;
+        }
+
+        .contact-card h2 {
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--maroon);
+            margin-bottom: 24px;
+            letter-spacing: -0.02em;
+        }
+
+        .contact-phone {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 18px 40px;
+            background: #25D366;
+            color: white;
+            border-radius: 14px;
+            font-weight: 700;
+            font-size: 1.2rem;
+            text-decoration: none;
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.3);
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+        }
+
+        .contact-phone:hover {
+            background: #128C7E;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 28px rgba(37, 211, 102, 0.4);
+            color: white;
+        }
+
+        .contact-hours {
+            color: var(--text-light);
+            font-size: 0.95rem;
+            margin-top: 16px;
+        }
+
+        @media (max-width: 768px) {
+            .contact-section {
+                padding: 60px 20px;
+            }
+
+            .contact-card {
+                padding: 32px 24px;
+            }
+
+            .contact-card h2 {
+                font-size: 1.7rem;
+            }
+
+            .contact-phone {
+                width: 100%;
+                justify-content: center;
+                font-size: 1.1rem;
+            }
+        }
+        
+        /* ==================== FOOTER ==================== */
+        footer {
+            background: var(--maroon);
+            color: white;
+            padding: 60px 24px 40px;
+            margin-top: 100px;
+            border-top: 4px solid var(--primary);
+        }
+        
+        .footer-content {
+            max-width: 1280px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .footer-title {
+            font-size: 1.4rem;
+            font-weight: 800;
+            margin-bottom: 12px;
+            letter-spacing: -0.02em;
+        }
+        
+        .footer-content p {
+            opacity: 0.9;
+            font-size: 1.05rem;
+            line-height: 1.7;
+        }
+        
+        .footer-year {
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top: 1px solid rgba(255,255,255,0.2);
+            opacity: 0.8;
+            font-size: 0.95rem;
+        }
+
+        @media (max-width: 768px) {
+            footer {
+                padding: 48px 20px 32px;
+            }
+
+            .footer-title {
+                font-size: 1.2rem;
+            }
+
+            .footer-content p {
+                font-size: 0.95rem;
+            }
+        }
+
+        /* ==================== MODAL ==================== */
+        .modal-backdrop {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(8px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            padding: 20px;
+        }
+        
+        .modal-backdrop.show {
+            display: flex;
+        }
+        
+        .modal-content {
+            width: 100%;
+            max-width: 560px;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 25px 80px rgba(0,0,0,0.3);
+            border: 1px solid var(--border);
+            animation: modalSlideUp 0.3s ease;
+        }
+        
+        @keyframes modalSlideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+        
+        .modal-header h3 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--maroon);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .modal-close {
+            background: transparent;
+            border: none;
+            font-size: 28px;
+            cursor: pointer;
+            color: var(--text-light);
+            transition: all 0.2s ease;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+        }
+        
+        .modal-close:hover {
+            background: var(--bg-subtle);
+            color: var(--maroon);
+        }
+        
+        .modal-body p {
+            color: var(--text-light);
+            line-height: 1.7;
+            margin-bottom: 28px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-label {
+            display: block;
+            color: var(--text);
+            font-weight: 700;
+            font-size: 0.95rem;
+            margin-bottom: 10px;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 14px 18px;
+            border-radius: 12px;
+            border: 2px solid var(--border);
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: var(--bg-subtle);
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(255, 153, 51, 0.1);
+            outline: none;
+            background: white;
+        }
+        
+        .modal-action-btn {
+            width: 100%;
+            padding: 16px;
+            border-radius: 12px;
+            border: none;
+            font-weight: 700;
+            font-size: 1.05rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 12px;
+        }
+        
+        .modal-action-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .btn-whatsapp {
+            background: #25D366;
+            color: white;
+            box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
+        }
+        
+        .btn-whatsapp:hover:not(:disabled) {
+            background: #128C7E;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            .modal-content {
+                padding: 28px 24px;
+            }
+            
+            .modal-header h3 {
+                font-size: 1.3rem;
+            }
+        }
+
+        /* ==================== FLOATING ACTION BUTTON ==================== */
+        .fab-container {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1500;
+            display: none;
+            gap: 10px;
+            padding: 12px 20px;
+            background: white;
+            border-radius: 50px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            border: 1px solid var(--border);
+        }
+        
+        .fab-btn {
+            border: none;
+            border-radius: 50px;
+            padding: 10px 18px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            cursor: pointer;
+            background: transparent;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+        
+        .fab-btn:hover {
+            background: var(--bg-subtle);
+        }
+        
+        .fab-whatsapp { color: #25D366; }
+        .fab-submit { color: #3b82f6; }
+        .fab-results { color: #f59e0b; }
+
+        @media (max-width: 991px) {
+            .fab-container {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .fab-container {
+                padding: 10px 14px;
+                gap: 6px;
+            }
+            
+            .fab-btn {
+                padding: 8px 14px;
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">
+                <img src="https://i.ibb.co/DfVR6KX8/iskcon-logo.png" alt="ISKCON logo">
+                <div class="logo-text">
+                    <div class="logo-title">ISKCON Values</div>
+                    <div class="logo-sub">National VEC 2025-26</div>
+                </div>
+            </div>
+
+            <div style="display: flex; align-items: center; gap: 8px;">
+                <div class="nav-links">
+                    <a href="#quick">Quick Links</a>
+                    <a href="#about">About</a>
+                    <a href="#videos">Videos</a>
+                    <a href="#gifts">Gifts</a>
+                </div>
+                <button class="nav-cta-btn" onclick="scrollToResults()">
+                    <i class="fa-solid fa-award"></i> Check Results
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-left">
+            <div class="subtitle">A Pan-India Initiative</div>
+            <h1>National Value Education Contest <span style="color:var(--primary)">2026</span></h1>
+            <p class="tagline">Empowering students across India with timeless wisdom from the <strong>Bhagavad Gita</strong>. Join the largest contest for character building and ethical clarity.</p>
+            
+            <div class="hero-stats">
+                <div class="stat-card">
+                    <strong><span class="count" data-target="1350000">0</span>+</strong>
+                    <div class="label">Students Impacted</div>
+                </div>
+                <div class="stat-card">
+                    <strong><span class="count" data-target="4200">0</span>+</strong>
+                    <div class="label">Schools</div>
+                </div>
+                <div class="stat-card">
+                    <strong><span class="count" data-target="14">0</span>+</strong>
+                    <div class="label">Years Running</div>
+                </div>
+            </div>
+
+            <div class="hero-actions">
+                <button class="btn-primary-hero" onclick="openModal('whatsapp')">
+                    <i class="fa-brands fa-whatsapp"></i> Join WhatsApp Group
+                </button>
+                <button class="btn-secondary-hero" onclick="openModal('submit')">
+                    <i class="fa-solid fa-paper-plane"></i> Submit Answers
+                </button>
+                <button class="btn-secondary-hero" onclick="scrollToResults()">
+                    <i class="fa-solid fa-award"></i> Check Results
+                </button>
+            </div>
+        </div>
+        <div class="hero-right">
+            <img src="/images/front page.png" alt="Students studying" onerror="this.src='https://via.placeholder.com/500x600/ff9933/ffffff?text=VEC+2026'">
+        </div>
+    </section>
+
+    <!-- Quick Links Section -->
+    <section class="quick-section" id="quick">
+        <div class="section-header">
+            <h2 class="section-title">Essential Links & Actions</h2>
+            <p class="section-description">Quick access to all important resources and updates</p>
+        </div>
+        
+        <div class="quick-grid">
+            <div class="quick-card" onclick="openModal('whatsapp')">
+                <div class="quick-icon icon-whatsapp">
+                    <i class="fa-brands fa-whatsapp"></i>
+                </div>
+                <div class="quick-content">
+                    <h3>Join WhatsApp Group</h3>
+                    <p>Get state & district updates instantly</p>
+                </div>
+            </div>
+            
+            <div class="quick-card" onclick="openModal('submit')">
+                <div class="quick-icon icon-submit">
+                    <i class="fa-solid fa-paper-plane"></i>
+                </div>
+                <div class="quick-content">
+                    <h3>Submit Answers</h3>
+                    <p>Upload your exam answer sheet</p>
+                </div>
+            </div>
+            
+            <div class="quick-card" onclick="alert('Study guide coming soon!')">
+                <div class="quick-icon icon-guide">
+                    <i class="fa-solid fa-book-open"></i>
+                </div>
+                <div class="quick-content">
+                    <h3>Study Guide</h3>
+                    <p>Syllabus & preparation materials</p>
+                </div>
+            </div>
+            
+            <div class="quick-card" onclick="scrollToResults()">
+                <div class="quick-icon icon-results">
+                    <i class="fa-solid fa-award"></i>
+                </div>
+                <div class="quick-content">
+                    <h3>Check Results</h3>
+                    <p>Download your certificate</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- WhatsApp Section -->
+    <section class="whatsapp-section" id="whatsapp">
+        <div class="whatsapp-container">
+            <h2>Join Your District's WhatsApp Group</h2>
+            <p>Get updates, study materials, and connect with fellow participants</p>
+
+            <div class="whatsapp-card">
+                <h3>Select Your State & District</h3>
+
+                <div class="form-group">
+                    <select id="wa_stateSelect" class="form-control">
+                        <option value="">-- Select State --</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <select id="wa_districtSelect" class="form-control">
+                        <option value="">-- Select District --</option>
+                    </select>
+                </div>
+
+                <a id="wa_openLink" class="btn-primary-hero" style="width: 100%; justify-content: center;">
+                    <i class="fa-brands fa-whatsapp"></i> Open WhatsApp Group
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Results Section -->
+    <section class="results-section" id="results">
+        <div class="results-container">
+            <div class="results-card">
+                <div class="results-header">
+                    <span class="results-badge">VEC 2025-26 RESULTS</span>
+                    <h2>Claim Your Achievement</h2>
+                    <p>Enter your unique exam code to generate your official PDF certificate</p>
+                </div>
+
+                <div class="search-box">
+                    <div class="search-input-wrapper">
+                        <input 
+                            type="text" 
+                            id="vecCodeInput" 
+                            placeholder="VE60DZ9304"
+                            maxlength="12"
+                            autocomplete="off"
+                        >
+                        <button class="search-btn" id="searchBtn">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div id="errorDisplay" style="display: none;">
+                    <div class="error-message">
+                        <i class="fa-solid fa-circle-xmark"></i>
+                        <span>No student record found. Please verify your code.</span>
+                    </div>
+                </div>
+
+                <div id="resultDisplay" style="display: none;" class="result-display">
+                    <div class="certificate-box">
+                        <div class="certificate-icon">
+                            <i class="fa-solid fa-graduation-cap"></i>
+                        </div>
+                        <div class="student-name" id="studentName"></div>
+                        <div class="student-grade" id="studentGrade"></div>
+                        <a href="#" id="downloadLink" class="download-btn" target="_blank">
+                            <i class="fa-solid fa-file-arrow-down"></i>
+                            Download Official Certificate
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gift Banner -->
+    <div class="gift-banner" id="gifts">
+        <h3>🎁 Every Participant Receives</h3>
+        <p>
+            Complete Bhagavad Gita (All Languages) • VEC Booklet & Question Bank • Practice Answer Sheets • Calendar • Certificate e-signed by Former President Pranab Mukherjee • Flair Pens & Many More Gifts!
+        </p>
+    </div>
+
+    <!-- About Section -->
+    <section class="content-section" id="about">
+        <h2>About the Value Education Contest</h2>
+        <p><strong>ISKCON's "Values For All"</strong> is a nationwide initiative dedicated to instilling core ethical and moral values in young minds through the timeless teachings of the Bhagavad Gita. The VEC is an opportunity for students to not just compete, but to truly connect with profound spiritual wisdom and transform their lives.</p>
+        <p>The contest is open for <strong>individual registrations</strong> across various states and cities in India, encouraging independent learning and personal growth.</p>
+    </section>
+
+    <!-- Photo Gallery -->
+    <section class="special-section">
+        <div class="container-custom">
+            <div class="section-header">
+                <h2 class="section-title">VEC in Action</h2>
+                <p class="section-description">Moments from our award ceremonies and events across India</p>
+            </div>
+
+            <div class="photo-grid">
+                <div class="photo-item">
+                    <h4>Award Ceremony</h4>
+                    <p>Celebrating excellence</p>
+                </div>
+                <div class="photo-item">
+                    <h4>Student Winners</h4>
+                    <p>Young achievers</p>
+                </div>
+                <div class="photo-item">
+                    <h4>Mass Participation</h4>
+                    <p>Thousands learning together</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gifts & Prizes -->
+    <section class="special-section-white">
+        <div class="container-custom">
+            <div class="section-header">
+                <h2 class="section-title">Gifts & Recognition</h2>
+                <p class="section-description">Every participant is a winner with valuable gifts and learning materials</p>
+            </div>
+
+            <div class="gifts-grid">
+                <div class="gift-item">
+                    <div class="gift-icon">📖</div>
+                    <h4>Complete Bhagavad Gita</h4>
+                    <p>Available in all languages</p>
+                </div>
+                <div class="gift-item">
+                    <div class="gift-icon">📚</div>
+                    <h4>Study Material</h4>
+                    <p>VEC Booklet & Question Bank</p>
+                </div>
+                <div class="gift-item">
+                    <div class="gift-icon">🏆</div>
+                    <h4>Certificate</h4>
+                    <p>E-signed by Former President</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Core Values -->
+    <section class="special-section">
+        <div class="container-custom">
+            <div class="section-header">
+                <h2 class="section-title">Core Values Covered</h2>
+                <p class="section-description">Essential virtues for character building and holistic development</p>
+            </div>
+            <div class="syllabus-grid">
+                <div class="syllabus-item">Cleanliness</div>
+                <div class="syllabus-item">Forgiveness</div>
+                <div class="syllabus-item">Tolerance</div>
+                <div class="syllabus-item">Generosity</div>
+                <div class="syllabus-item">Concentration</div>
+                <div class="syllabus-item">Self-Confidence</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solution Framework -->
+    <section class="special-section-white">
+        <div class="container-custom">
+            <div class="section-header">
+                <h2 class="section-title">Our Solution Framework</h2>
+                <p class="section-description">How VEC builds character — step by step</p>
+            </div>
+            <div class="solution-grid">
+                <div class="solution-card">
+                    <div class="solution-number">1</div>
+                    <h3>Awareness</h3>
+                    <p>Introduce values through stories, Gita lessons and activities</p>
+                </div>
+                <div class="solution-card">
+                    <div class="solution-number">2</div>
+                    <h3>Practice</h3>
+                    <p>Practice through classroom activities and roleplay</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Videos Section -->
+    <section class="content-section" id="videos">
+        <h3>Video Gallery & Testimonials</h3>
+        <p>A glimpse into the VEC experience, success stories, and testimonials from students, parents, and educators.</p>
+        <div class="video-grid">
+            <div class="video-item">
+                <iframe src="https://www.youtube-nocookie.com/embed/3uWc5Bl3Gj0" title="VEC Experience 1" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+            </div>
+            <div class="video-item">
+                <iframe src="https://www.youtube-nocookie.com/embed/pwFhgRDQus0" title="VEC Experience 2" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section">
+        <div class="contact-card">
+            <span class="contact-badge">ANY QUERIES?</span>
+            <h2>Kindly Contact Us</h2>
+            <a href="tel:+918888022900" class="contact-phone">
+                <i class="fa-solid fa-phone-volume"></i>
+                <span>+91 8888022900</span>
+            </a>
+            <p class="contact-hours">Available Monday to Sunday (10 AM - 8 PM)</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-title">ISKCON Values — National VEC 2025-26</div>
+            <p>Connecting students with timeless wisdom from the Bhagavad Gita</p>
+            <div class="footer-year">
+                &copy; <span id="footerYear"></span> ISKCON Values. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal -->
+    <div class="modal-backdrop" id="modalBackdrop">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>
+                    <i id="modalIcon" class="fa-brands fa-whatsapp"></i>
+                    <span id="modalTitle">Join WhatsApp Group</span>
+                </h3>
+                <button class="modal-close" onclick="closeModal()">×</button>
+            </div>
+            <div class="modal-body">
+                <p id="modalDescription">Select your state and district to join the official WhatsApp group</p>
+                
+                <div class="form-group">
+                    <label class="form-label">Select State</label>
+                    <select id="stateSelect" class="form-control">
+                        <option value="">-- Choose State --</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Select District</label>
+                    <select id="districtSelect" class="form-control">
+                        <option value="">-- Choose District --</option>
+                    </select>
+                </div>
+                
+                <button id="modalActionBtn" class="modal-action-btn btn-whatsapp" disabled>
+                    <i id="modalBtnIcon" class="fa-brands fa-whatsapp"></i>
+                    <span id="modalBtnText">Open WhatsApp Group</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Action Buttons -->
+    <div class="fab-container">
+        <button class="fab-btn fab-whatsapp" onclick="openModal('whatsapp')">
+            <i class="fa-brands fa-whatsapp"></i>
+            <span>WhatsApp</span>
+        </button>
+        <button class="fab-btn fab-submit" onclick="openModal('submit')">
+            <i class="fa-solid fa-paper-plane"></i>
+            <span>Submit</span>
+        </button>
+        <button class="fab-btn fab-results" onclick="scrollToResults()">
+            <i class="fa-solid fa-award"></i>
+            <span>Results</span>
+        </button>
+    </div>
+
+    <script>
+        // ==================== SUPABASE CONFIGURATION ====================
+        const SUPABASE_URL = 'https://qnvhtrfdwihmyjerujqa.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFudmh0cmZkd2lobXlqZXJ1anFhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAyNTY4MjcsImV4cCI6MjA4NTgzMjgyN30.9OQZ1Qcyttry8EazLV7XR88NFBLSKST9qBKp_SBiLPA';
+        
+        const sbClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+        // ==================== DATA MANAGEMENT ====================
+        let whatsappData = {};
+        let currentModalType = 'whatsapp';
+
+        const MODAL_CONFIG = {
+            whatsapp: {
+                title: 'Join WhatsApp Group',
+                description: 'Select your state and district to join the official WhatsApp group',
+                icon: 'fa-brands fa-whatsapp',
+                btnText: 'Open WhatsApp Group',
+                btnClass: 'btn-whatsapp'
+            },
+            submit: {
+                title: 'Submit Answer Sheet',
+                description: 'Select your state and district to access the submission portal',
+                icon: 'fa-solid fa-paper-plane',
+                btnText: 'Open Submission Portal',
+                btnClass: 'btn-whatsapp'
+            }
+        };
+
+        // ==================== CSV DATA LOADING ====================
+        async function loadWhatsAppData() {
+            const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS25FQotsgdlN-k6xCO-gczCkMluhjMl59EC7rGVhaOGCM1WF4tC21KVXB7kxmneUVXTGWdrAlc1Hlh/pub?output=csv';
+            
+            try {
+                const response = await fetch(csvUrl + '&t=' + Date.now(), { cache: 'no-store' });
+                const text = await response.text();
+                const rows = text.trim().split('\n');
+                const headers = rows[0].split(',').map(h => h.trim());
+                
+                rows.slice(1).forEach(row => {
+                    const values = row.split(',').map(v => v.trim());
+                    const state = values[0];
+                    const district = values[1];
+                    const whatsapp = values[2];
+                    const omr = values[3];
+                    const result = values[4];
+                    
+                    if (state && district) {
+                        if (!whatsappData[state]) whatsappData[state] = {};
+                        whatsappData[state][district] = {
+                            whatsapp: whatsapp || '',
+                            omr: omr || '',
+                            result: result || ''
+                        };
+                    }
+                });
+                
+                initializeDropdowns();
+                initializeInlineWhatsApp();
+            } catch (error) {
+                console.error('Error loading data:', error);
+            }
+        }
+
+        // ==================== DROPDOWN MANAGEMENT ====================
+        function initializeDropdowns() {
+            const stateSelect = document.getElementById('stateSelect');
+            const states = Object.keys(whatsappData).sort();
+            
+            stateSelect.innerHTML = '<option value="">-- Choose State --</option>' +
+                states.map(state => `<option value="${state}">${state}</option>`).join('');
+            
+            stateSelect.addEventListener('change', function() {
+                updateDistrictDropdown(this.value);
+            });
+            
+            document.getElementById('districtSelect').addEventListener('change', updateModalButton);
+        }
+
+        function initializeInlineWhatsApp() {
+            const wa_state = document.getElementById('wa_stateSelect');
+            const wa_district = document.getElementById('wa_districtSelect');
+            const openLink = document.getElementById('wa_openLink');
+            
+            const states = Object.keys(whatsappData).sort();
+            wa_state.innerHTML = '<option value="">-- Select State --</option>' +
+                states.map(state => `<option value="${state}">${state}</option>`).join('');
+            
+            wa_state.addEventListener('change', function() {
+                const state = this.value;
+                if (!state || !whatsappData[state]) {
+                    wa_district.innerHTML = '<option value="">-- Select District --</option>';
+                    wa_district.disabled = true;
+                    return;
+                }
+                
+                const districts = Object.keys(whatsappData[state]).sort();
+                wa_district.innerHTML = '<option value="">-- Select District --</option>' +
+                    districts.map(district => `<option value="${district}">${district}</option>`).join('');
+                wa_district.disabled = false;
+            });
+            
+            wa_district.addEventListener('change', function() {
+                const state = wa_state.value;
+                const district = this.value;
+                
+                if (state && district && whatsappData[state] && whatsappData[state][district]) {
+                    const link = whatsappData[state][district].whatsapp;
+                    if (link) {
+                        openLink.href = link;
+                        openLink.onclick = () => window.open(link, '_blank');
+                    }
+                }
+            });
+        }
+
+        function updateDistrictDropdown(state) {
+            const districtSelect = document.getElementById('districtSelect');
+            
+            if (!state || !whatsappData[state]) {
+                districtSelect.innerHTML = '<option value="">-- Choose District --</option>';
+                districtSelect.disabled = true;
+                updateModalButton();
+                return;
+            }
+            
+            const districts = Object.keys(whatsappData[state]).sort();
+            districtSelect.innerHTML = '<option value="">-- Choose District --</option>' +
+                districts.map(district => `<option value="${district}">${district}</option>`).join('');
+            districtSelect.disabled = false;
+            updateModalButton();
+        }
+
+        function updateModalButton() {
+            const state = document.getElementById('stateSelect').value;
+            const district = document.getElementById('districtSelect').value;
+            const btn = document.getElementById('modalActionBtn');
+            
+            if (!state || !district || !whatsappData[state] || !whatsappData[state][district]) {
+                btn.disabled = true;
+                btn.onclick = null;
+                return;
+            }
+            
+            const link = currentModalType === 'whatsapp' 
+                ? whatsappData[state][district].whatsapp 
+                : whatsappData[state][district].omr;
+            
+            if (link) {
+                btn.disabled = false;
+                btn.onclick = () => window.open(link, '_blank');
+            } else {
+                btn.disabled = true;
+                btn.onclick = null;
+            }
+        }
+
+        // ==================== MODAL MANAGEMENT ====================
+        function openModal(type) {
+            currentModalType = type || 'whatsapp';
+            const config = MODAL_CONFIG[currentModalType];
+            
+            document.getElementById('modalTitle').textContent = config.title;
+            document.getElementById('modalDescription').textContent = config.description;
+            document.getElementById('modalIcon').className = config.icon;
+            document.getElementById('modalBtnIcon').className = config.icon;
+            document.getElementById('modalBtnText').textContent = config.btnText;
+            document.getElementById('modalActionBtn').className = 'modal-action-btn ' + config.btnClass;
+            
+            document.getElementById('stateSelect').value = '';
+            document.getElementById('districtSelect').value = '';
+            document.getElementById('districtSelect').disabled = true;
+            document.getElementById('modalActionBtn').disabled = true;
+            
+            document.getElementById('modalBackdrop').classList.add('show');
+        }
+
+        function closeModal() {
+            document.getElementById('modalBackdrop').classList.remove('show');
+        }
+
+        // Close modal on backdrop click
+        document.getElementById('modalBackdrop').addEventListener('click', function(e) {
+            if (e.target === this) closeModal();
+        });
+
+        // ==================== RESULTS SEARCH ====================
+        async function searchCertificate() {
+            const vecCode = document.getElementById('vecCodeInput').value.trim().toUpperCase();
+            const searchBtn = document.getElementById('searchBtn');
+            const errorDisplay = document.getElementById('errorDisplay');
+            const resultDisplay = document.getElementById('resultDisplay');
+            
+            if (!vecCode) {
+                alert('Please enter your VEC Exam Code');
+                return;
+            }
+            
+            // Show loading state
+            searchBtn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i>';
+            searchBtn.disabled = true;
+            errorDisplay.style.display = 'none';
+            resultDisplay.style.display = 'none';
+            
+            try {
+                const { data, error } = await sbClient
+                    .from('students')
+                    .select('"Name of Student", "Result Grades", "Link of Certificate"')
+                    .eq('VEC Exam Code', vecCode)
+                    .single();
+                
+                if (error || !data) {
+                    errorDisplay.style.display = 'block';
+                    resultDisplay.style.display = 'none';
+                } else {
+                    errorDisplay.style.display = 'none';
+                    resultDisplay.style.display = 'block';
+                    
+                    document.getElementById('studentName').textContent = data["Name of Student"];
+                    document.getElementById('studentGrade').textContent = "Secured: " + data["Result Grades"];
+                    
+                    const downloadLink = document.getElementById('downloadLink');
+                    if (data["Link of Certificate"]) {
+                        downloadLink.href = data["Link of Certificate"];
+                        downloadLink.style.display = 'inline-flex';
+                    } else {
+                        downloadLink.style.display = 'none';
+                    }
+                }
+            } catch (error) {
+                console.error('Search error:', error);
+                errorDisplay.style.display = 'block';
+                resultDisplay.style.display = 'none';
+            } finally {
+                searchBtn.innerHTML = '<i class="fa-solid fa-magnifying-glass"></i>';
+                searchBtn.disabled = false;
+            }
+        }
+
+        // ==================== UTILITY FUNCTIONS ====================
+        function scrollToResults() {
+            document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Counter animation
+        function animateCounter(element) {
+            const target = parseInt(element.dataset.target);
+            const duration = 2000;
+            const startTime = performance.now();
+            
+            function update(currentTime) {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                const easeOut = 1 - Math.pow(1 - progress, 3);
+                const current = Math.floor(easeOut * target);
+                
+                element.textContent = current.toLocaleString();
+                
+                if (progress < 1) {
+                    requestAnimationFrame(update);
+                } else {
+                    element.textContent = target.toLocaleString();
+                }
+            }
+            
+            requestAnimationFrame(update);
+        }
+
+        // ==================== INITIALIZATION ====================
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set footer year
+            document.getElementById('footerYear').textContent = new Date().getFullYear();
+            
+            // Load WhatsApp data
+            loadWhatsAppData();
+            
+            // Initialize counter animation
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        animateCounter(entry.target);
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.5 });
+            
+            document.querySelectorAll('.count').forEach(counter => {
+                observer.observe(counter);
+            });
+            
+            // Search button click handler
+            document.getElementById('searchBtn').addEventListener('click', searchCertificate);
+            
+            // Enter key on search input
+            document.getElementById('vecCodeInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    searchCertificate();
+                }
+            });
+            
+            // Auto-uppercase input
+            document.getElementById('vecCodeInput').addEventListener('input', function(e) {
+                this.value = this.value.toUpperCase();
+            });
+        });
+    </script>
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-TFCGKLZC8M"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-TFCGKLZC8M');
+    </script>
+</body>
+</html>
