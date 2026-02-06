@@ -92,7 +92,24 @@ try:
             for shape in slide.placeholders:
                 idx = shape.placeholder_format.idx
                 if idx in data_map:
-                    shape.text = data_map[idx]
+                    # To preserve formatting (bold, color, etc.), we modify the existing text run
+                    if shape.has_text_frame:
+                        text_frame = shape.text_frame
+                        if text_frame.paragraphs:
+                            paragraph = text_frame.paragraphs[0]
+                            # If there's an existing run, modify its text to keep formatting
+                            if paragraph.runs:
+                                paragraph.runs[0].text = str(data_map[idx])
+                                # Remove any additional runs to avoid appending text
+                                for run_idx in range(len(paragraph.runs) - 1, 0, -1):
+                                    p = paragraph._p
+                                    p.remove(paragraph.runs[run_idx]._r)
+                            else:
+                                paragraph.text = str(data_map[idx])
+                        else:
+                            shape.text = str(data_map[idx])
+                    else:
+                        shape.text = str(data_map[idx])
 
             temp_pptx = os.path.abspath(os.path.join(OUTPUT_DIR, f"{exam_code}.pptx"))
             pdf_path = os.path.abspath(os.path.join(OUTPUT_DIR, f"{exam_code}.pdf"))
