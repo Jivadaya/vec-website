@@ -2233,7 +2233,7 @@
 
             try {
                 // Determine if searching by Mobile Number or Exam Code
-                let query = sbClient.from('students').select('"Name of Student", "Result Grades", "Link of Certificate", "District"');
+                let query = sbClient.from('students').select('"Name of Student", "Result Grades", "Link of Certificate", "District", "VEC Exam Code", "Download Count"');
 
                 // Use .or to search both columns
                 const { data, error } = await query
@@ -2250,6 +2250,10 @@
                     resultDisplay.innerHTML = ''; // Clear previous results
 
                     data.forEach((student, index) => {
+                        const examCode = student["VEC Exam Code"];
+                        const downloadCount = student["Download Count"] || 0;
+                        const certUrl = student["Link of Certificate"];
+
                         const resultCard = `
                             <div class="certificate-box" style="animation-delay: ${index * 0.15}s">
                                 <div class="certificate-icon" style="position: relative; z-index: 1;">
@@ -2258,11 +2262,11 @@
                                 <div class="student-name" style="position: relative; z-index: 1; font-size: 2rem; font-weight: 800; color: var(--maroon); margin-bottom: 4px;">${student["Name of Student"]}</div>
                                 <div class="student-district" style="position: relative; z-index: 1; font-size: 1.1rem; color: var(--primary); font-weight: 700; margin-bottom: 12px; text-transform: uppercase;">${student["District"] || ""}</div>
                                 <div class="student-grade" style="position: relative; z-index: 1; font-size: 1.2rem; color: var(--text-light); margin-bottom: 30px; font-weight: 600;">Secured: ${student["Result Grades"]}</div>
-                                ${student["Link of Certificate"] ? `
-                                    <a href="${student["Link of Certificate"]}" class="download-btn" target="_blank" style="position: relative; z-index: 1; display: inline-flex; align-items: center; gap: 10px; background: var(--primary); color: white; padding: 15px 30px; border-radius: 12px; font-weight: 700; text-decoration: none; transition: all 0.3s ease;">
+                                ${certUrl ? `
+                                    <button onclick="trackDownload('${examCode}', ${downloadCount}, '${certUrl}')" class="download-btn" style="position: relative; z-index: 1; display: inline-flex; align-items: center; gap: 10px; background: var(--primary); color: white; padding: 15px 30px; border-radius: 12px; font-weight: 700; text-decoration: none; border: none; width: 100%; justify-content: center; cursor: pointer; transition: all 0.3s ease;">
                                         <i class="fa-solid fa-file-arrow-down"></i>
                                         Download Official Certificate
-                                    </a>
+                                    </button>
                                 ` : ''}
                             </div>
                         `;
@@ -2303,6 +2307,20 @@
                 searchBtn.innerHTML = '<i class="fa-solid fa-magnifying-glass"></i>';
                 searchBtn.disabled = false;
             }
+        }
+
+        async function trackDownload(examCode, currentCount, url) {
+            try {
+                // Increment download count in Supabase
+                await sbClient
+                    .from('students')
+                    .update({ 'Download Count': (currentCount || 0) + 1 })
+                    .eq('VEC Exam Code', examCode);
+            } catch (err) {
+                console.error('Tracking error:', err);
+            }
+            // Open certificate in new tab
+            window.open(url, '_blank');
         }
 
         // ==================== UTILITY FUNCTIONS ====================
