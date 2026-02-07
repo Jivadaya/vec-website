@@ -2311,10 +2311,13 @@
 
         async function trackDownload(examCode, currentCount, url) {
             try {
-                // Increment download count in Supabase
+                // Increment download count and update timestamp in Supabase
                 await sbClient
                     .from('students')
-                    .update({ 'Download Count': (currentCount || 0) + 1 })
+                    .update({
+                        'Download Count': (currentCount || 0) + 1,
+                        'Last Download At': new Date().toISOString()
+                    })
                     .eq('VEC Exam Code', examCode);
             } catch (err) {
                 console.error('Tracking error:', err);
