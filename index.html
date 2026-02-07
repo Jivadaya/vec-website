@@ -824,22 +824,36 @@
         }
 
         .result-display {
-            animation: magicalShow 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
-            position: relative;
-            margin-top: 30px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin-top: 40px;
+            width: 100%;
         }
 
-        .result-display::before {
+        .certificate-box {
+            animation: magicalShow 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+            background: linear-gradient(135deg, #fff 0%, #fff8f0 100%);
+            border: 2px solid var(--primary);
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 15px 45px rgba(255, 153, 51, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .certificate-box::after {
             content: '';
             position: absolute;
-            top: -20px;
-            left: -20px;
-            right: -20px;
-            bottom: -20px;
-            background: radial-gradient(circle, rgba(255, 153, 51, 0.15) 0%, rgba(255, 153, 51, 0) 70%);
-            z-index: -1;
-            border-radius: 40px;
-            animation: pulseGlow 2s infinite alternate;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 153, 51, 0.1) 0%, transparent 70%);
+            z-index: 0;
+            pointer-events: none;
+            animation: pulseGlow 3s infinite alternate;
         }
 
         @keyframes magicalShow {
@@ -858,23 +872,14 @@
 
         @keyframes pulseGlow {
             from {
-                opacity: 0.5;
-                transform: scale(0.95);
+                opacity: 0.3;
+                transform: scale(0.9);
             }
 
             to {
-                opacity: 1;
-                transform: scale(1.05);
+                opacity: 0.7;
+                transform: scale(1.1);
             }
-        }
-
-        .certificate-box {
-            background: linear-gradient(135deg, #fff 0%, #fff8f0 100%);
-            border: 2px solid var(--primary);
-            padding: 40px;
-            border-radius: 20px;
-            text-align: center;
-            box-shadow: 0 15px 45px rgba(255, 153, 51, 0.2);
         }
 
         .certificate-icon {
@@ -1809,24 +1814,7 @@
                 </div>
 
                 <div id="resultDisplay" style="display: none;" class="result-display">
-                    <div class="certificate-box">
-                        <div class="certificate-icon">
-                            <i class="fa-solid fa-crown"></i>
-                        </div>
-                        <div class="student-name" id="studentName"
-                            style="font-size: 2rem; font-weight: 800; color: var(--maroon); margin-bottom: 4px;"></div>
-                        <div class="student-district" id="studentDistrict"
-                            style="font-size: 1.1rem; color: var(--primary); font-weight: 700; margin-bottom: 12px; text-transform: uppercase;">
-                        </div>
-                        <div class="student-grade" id="studentGrade"
-                            style="font-size: 1.2rem; color: var(--text-light); margin-bottom: 30px; font-weight: 600;">
-                        </div>
-                        <a href="#" id="downloadLink" class="download-btn" target="_blank"
-                            style="display: inline-flex; align-items: center; gap: 10px; background: var(--primary); color: white; padding: 15px 30px; border-radius: 12px; font-weight: 700; text-decoration: none; transition: all 0.3s ease;">
-                            <i class="fa-solid fa-file-arrow-down"></i>
-                            Download Official Certificate
-                        </a>
-                    </div>
+                    <!-- Results will be injected here dynamically -->
                 </div>
             </div>
         </div>
@@ -2249,29 +2237,37 @@
 
                 // Use .or to search both columns
                 const { data, error } = await query
-                    .or(`"VEC Exam Code".eq."${inputVal.toUpperCase()}", "Mobile Number".eq."${inputVal}"`)
-                    .maybeSingle();
+                    .or(`"VEC Exam Code".eq."${inputVal.toUpperCase()}", "Mobile Number".eq."${inputVal}"`);
 
-                if (error || !data) {
+                if (error || !data || data.length === 0) {
                     errorDisplay.style.display = 'block';
                     resultDisplay.style.display = 'none';
-                    // Scroll to error
                     errorDisplay.scrollIntoView({ behavior: 'smooth', block: 'center' });
                 } else {
                     errorDisplay.style.display = 'none';
-                    resultDisplay.style.display = 'block';
+                    resultDisplay.style.display = 'grid';
+                    resultDisplay.style.gap = '20px';
+                    resultDisplay.innerHTML = ''; // Clear previous results
 
-                    document.getElementById('studentName').textContent = data["Name of Student"];
-                    document.getElementById('studentDistrict').textContent = data["District"] || "";
-                    document.getElementById('studentGrade').textContent = "Secured: " + data["Result Grades"];
-
-                    const downloadLink = document.getElementById('downloadLink');
-                    if (data["Link of Certificate"]) {
-                        downloadLink.href = data["Link of Certificate"];
-                        downloadLink.style.display = 'inline-flex';
-                    } else {
-                        downloadLink.style.display = 'none';
-                    }
+                    data.forEach((student, index) => {
+                        const resultCard = `
+                            <div class="certificate-box" style="animation-delay: ${index * 0.15}s">
+                                <div class="certificate-icon" style="position: relative; z-index: 1;">
+                                    <i class="fa-solid fa-crown"></i>
+                                </div>
+                                <div class="student-name" style="position: relative; z-index: 1; font-size: 2rem; font-weight: 800; color: var(--maroon); margin-bottom: 4px;">${student["Name of Student"]}</div>
+                                <div class="student-district" style="position: relative; z-index: 1; font-size: 1.1rem; color: var(--primary); font-weight: 700; margin-bottom: 12px; text-transform: uppercase;">${student["District"] || ""}</div>
+                                <div class="student-grade" style="position: relative; z-index: 1; font-size: 1.2rem; color: var(--text-light); margin-bottom: 30px; font-weight: 600;">Secured: ${student["Result Grades"]}</div>
+                                ${student["Link of Certificate"] ? `
+                                    <a href="${student["Link of Certificate"]}" class="download-btn" target="_blank" style="position: relative; z-index: 1; display: inline-flex; align-items: center; gap: 10px; background: var(--primary); color: white; padding: 15px 30px; border-radius: 12px; font-weight: 700; text-decoration: none; transition: all 0.3s ease;">
+                                        <i class="fa-solid fa-file-arrow-down"></i>
+                                        Download Official Certificate
+                                    </a>
+                                ` : ''}
+                            </div>
+                        `;
+                        resultDisplay.innerHTML += resultCard;
+                    });
 
                     // Magical Scroll & Animation
                     setTimeout(() => {
