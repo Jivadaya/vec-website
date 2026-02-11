@@ -95,13 +95,13 @@ try:
                 slide = prs.slides[0] if len(prs.slides) > 0 else prs.slides.add_slide(prs.slide_layouts[0])
 
                 data_map = {
-                    10: str(name).upper(), # ALL CAPS as requested
-                    11: str(school),
+                    10: str(name).capitalize(),
+                    11: str(school).capitalize(),
                     14: ACADEMIC_YEAR,
                     15: str(standard),
                     16: f"Secured: {grade}",
                     17: str(exam_code),
-                    18: str(district) # Mapping new District placeholder
+                    18: str(district).capitalize() # Mapping new District placeholder
                 }
 
                 for shape in slide.placeholders:

@@ -1626,6 +1626,23 @@
                 font-size: 0.85rem;
             }
         }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            50% {
+                transform: scale(1.02);
+                opacity: 0.8;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
     </style>
 </head>
 
@@ -1798,11 +1815,15 @@
 
                 <div class="search-box">
                     <div class="search-input-wrapper">
-                        <input type="text" id="vecCodeInput" placeholder="Mobile No or VEC Exam Code"
-                            autocomplete="off">
-                        <button class="search-btn" id="searchBtn">
+                        <input type="text" id="vecCodeInput" placeholder="Mobile No or VEC Exam Code" autocomplete="off"
+                            maxlength="10" disabled>
+                        <button class="search-btn" id="searchBtn" disabled>
                             <i class="fa-solid fa-magnifying-glass"></i>
                         </button>
+                    </div>
+                    <div class="search-remark"
+                        style="margin-top: 15px; text-align: center; color: var(--maroon); font-weight: 600; font-size: 0.95rem; animation: pulse 2s infinite;">
+                        <i class="fa-solid fa-circle-info"></i> Once in WhatsApp group informed result will open
                     </div>
                 </div>
 
