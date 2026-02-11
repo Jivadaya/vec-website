@@ -41,8 +41,8 @@ LOCK_FILE = os.path.join(OUTPUT_DIR, "script.lock")
 
 # Simple lock check to prevent cron overlaps
 if os.path.exists(LOCK_FILE):
-    # Check if the process is actually running (simple age check - 30 mins)
-    if (time.time() - os.path.getmtime(LOCK_FILE)) < 1800:
+    # Check if the process is actually running (simple age check - 4 hours)
+    if (time.time() - os.path.getmtime(LOCK_FILE)) < 14400:
         print("⏳ Script is already running. Skipping this turn.")
         exit()
     else:
