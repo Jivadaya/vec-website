@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Supabase Fix Verification</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+
+<body>
+    <h1>Supabase Fix Verification</h1>
+    <div id="status">Testing Supabase queries...</div>
+    <ul id="districts"></ul>
+
+    <script>
+        const SUPABASE_URL = 'https://qnvhtrfdwihmyjerujqa.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFudmh0cmZkd2lobXlqZXJ1anFhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAyNTY4MjcsImV4cCI6MjA4NTgzMjgyN30.9OQZ1Qcyttry8EazLV7XR88NFBLSKST9qBKp_SBiLPA';
+        const sbClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+        async function verify() {
+            const status = document.getElementById('status');
+            const list = document.getElementById('districts');
+            try {
+                status.innerText = 'Fetching districts...';
+                const { data, error } = await sbClient
+                    .from('students')
+                    .select('"District"')
+                    .neq('"District"', null)
+                    .order('"District"', { ascending: true })
+                    .limit(5);
+
+                if (error) throw error;
+
+                if (data && data.length > 0) {
+                    status.innerText = 'Success! Districts found:';
+                    data.forEach(d => {
+                        const li = document.createElement('li');
+                        li.innerText = d.District;
+                        list.appendChild(li);
+                    });
+                } else {
+                    status.innerText = 'No districts found.';
+                }
+            } catch (err) {
+                status.innerText = 'Error: ' + err.message;
+                console.error(err);
+            }
+        }
+
+        verify();
+    </script>
+</body>
+
+</html>
