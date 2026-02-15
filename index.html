@@ -11,6 +11,7 @@
         rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
         :root {
             --primary: #ff9933;
@@ -229,6 +230,77 @@
             margin-bottom: 14px;
         }
 
+        /* Result Announcement Pill */
+        .result-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(255, 153, 51, 0.08);
+            border: 1px solid rgba(255, 153, 51, 0.2);
+            padding: 8px 16px;
+            border-radius: 100px;
+            margin-bottom: 24px;
+            animation: shimmer 3s infinite;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .result-pill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
+            animation: pulse-light 3s infinite;
+        }
+
+        .result-badge-live {
+            background: var(--primary);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 50px;
+            font-size: 0.7rem;
+            font-weight: 800;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .pill-text {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--maroon);
+        }
+
+        @keyframes shimmer {
+            0% {
+                box-shadow: 0 0 0 0 rgba(255, 153, 51, 0.2);
+            }
+
+            50% {
+                box-shadow: 0 0 15px 5px rgba(255, 153, 51, 0.1);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(255, 153, 51, 0.2);
+            }
+        }
+
+        @keyframes pulse-light {
+            0% {
+                left: -100%;
+            }
+
+            50% {
+                left: 100%;
+            }
+
+            100% {
+                left: 100%;
+            }
+        }
+
         h1 {
             font-size: clamp(2.2rem, 5vw, 3.5rem);
             margin-bottom: 24px;
@@ -356,6 +428,26 @@
             animation: floatCard 6s ease-in-out infinite;
             max-width: 100%;
             margin: 0 auto;
+        }
+
+        /* Magic Announcement on Left */
+        .magic-announcement {
+            animation: magicGlow 4s infinite alternate;
+            border-radius: 100px;
+            display: inline-block;
+            margin-bottom: 24px;
+        }
+
+        @keyframes magicGlow {
+            0% {
+                box-shadow: 0 0 10px rgba(255, 153, 51, 0.2);
+                border-color: rgba(255, 153, 51, 0.2);
+            }
+
+            100% {
+                box-shadow: 0 0 25px rgba(255, 153, 51, 0.5);
+                border-color: rgba(255, 153, 51, 0.6);
+            }
         }
 
         .event-card-container::before {
@@ -1643,6 +1735,23 @@
                 opacity: 1;
             }
         }
+
+        /* Certificate Template hidden */
+        #certLoading {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 9999;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-family: 'Inter', sans-serif;
+        }
     </style>
 </head>
 
@@ -1675,7 +1784,6 @@
     <!-- Hero Section -->
     <section class="hero">
         <div class="hero-left">
-
             <div class="subtitle">A Pan-India Initiative</div>
             <h1>National Value Education Contest <span style="color:var(--primary)">2026</span></h1>
             <p class="tagline">Empowering students across India with timeless wisdom from the <strong>Bhagavad
@@ -1709,17 +1817,34 @@
             </div>
         </div>
         <div class="hero-right">
-            <div class="event-card-container">
-                <span class="event-label">Mark the Date</span>
-                <h2 class="event-title">Grand Results Day</h2>
-                <div class="event-date">
-                    <span class="date-day">15</span>
-                    <div class="date-month-year">
-                        <span class="date-month">February</span>
-                        <span class="date-year">2026</span>
-                    </div>
+            <div class="event-card-container magic-announcement"
+                style="border-radius: 24px; animation: magicGlow 4s infinite alternate, floatCard 6s ease-in-out infinite;">
+                <div class="result-badge-live"
+                    style="margin-bottom: 20px; display: inline-block; padding: 6px 14px; font-size: 0.8rem;">
+                    ANNOUNCEMENT</div>
+                <h2 class="event-title" style="font-size: 2.2rem; margin-bottom: 12px; line-height: 1.2;">Results are
+                    Declared!</h2>
+                <p
+                    style="font-size: 1.1rem; color: var(--maroon); font-weight: 700; margin-bottom: 20px; line-height: 1.4;">
+                    Your journey of wisdom <br> is being celebrated.
+                </p>
+                <div
+                    style="background: white; padding: 20px; border-radius: 16px; border: 1px dashed var(--primary); margin-bottom: 25px; box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);">
+                    <p
+                        style="color: var(--text-light); font-weight: 600; font-size: 0.95rem; line-height: 1.6; margin: 0;">
+                        Major district results are now live! <br>
+                        <span style="color: var(--primary); font-weight: 700;">Other districts will be displayed
+                            soon.</span>
+                    </p>
                 </div>
-                <p class="event-context">Value Education Contest</p>
+                <p style="font-size: 0.9rem; color: var(--text-light); margin-bottom: 25px; font-weight: 500;">
+                    <i class="fa-brands fa-whatsapp" style="color: #25D366; margin-right: 5px;"></i>
+                    Follow your <strong>WhatsApp Group</strong> for live district-wise updates.
+                </p>
+                <button class="btn-primary-hero" onclick="scrollToResults()"
+                    style="width: 100%; justify-content: center; padding: 18px;">
+                    <i class="fa-solid fa-award"></i> Claim My Certificate
+                </button>
             </div>
         </div>
     </section>
@@ -1813,17 +1938,69 @@
                         official PDF certificate</p>
                 </div>
 
-                <div class="search-box">
-                    <div class="search-input-wrapper">
-                        <input type="text" id="vecCodeInput" placeholder="Mobile No or VEC Exam Code" autocomplete="off"
-                            maxlength="10" disabled>
-                        <button class="search-btn" id="searchBtn" disabled>
-                            <i class="fa-solid fa-magnifying-glass"></i>
-                        </button>
+                <div id="resultsAdvisory"
+                    style="margin-bottom: 30px; padding: 20px 25px; background: #fdfcfb; border: 1px solid #e5e7eb; border-radius: 16px; text-align: left; position: relative; overflow: hidden;">
+                    <div
+                        style="position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--primary);">
                     </div>
-                    <div class="search-remark"
-                        style="margin-top: 15px; text-align: center; color: var(--maroon); font-weight: 600; font-size: 0.95rem; animation: pulse 2s infinite;">
-                        <i class="fa-solid fa-circle-info"></i> Once in WhatsApp group informed result will open
+                    <div style="display: flex; align-items: flex-start; gap: 18px;">
+                        <div
+                            style="background: #fff8f1; width: 42px; height: 42px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--primary); font-size: 1.2rem; flex-shrink: 0;">
+                            <i class="fa-solid fa-bell"></i>
+                        </div>
+                        <div>
+                            <p
+                                style="color: #475569; font-weight: 700; font-size: 1.05rem; margin-bottom: 4px; letter-spacing: -0.01em;">
+                                Result Declaration Status</p>
+                            <p
+                                style="color: #64748b; font-weight: 500; font-size: 0.95rem; line-height: 1.5; margin: 0;">
+                                Note: results are declared in phases. If yours isn't shown, please follow your <span
+                                    style="color: var(--primary); font-weight: 600;">WhatsApp Group</span> for live
+                                updates.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="search-box"
+                    style="background: #f8fafc; padding: 25px; border-radius: 20px; border: 1px solid #f1f5f9;">
+                    <div class="form-group" style="margin-bottom: 20px;">
+                        <label
+                            style="display: block; margin-bottom: 10px; font-weight: 700; color: #475569; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em;">Step
+                            1: Select Your District</label>
+                        <div style="position: relative;">
+                            <select id="resultDistrictSelect" class="form-control"
+                                style="width: 100%; height: 50px; font-size: 1rem; border: 1px solid #cbd5e1; border-radius: 12px; padding: 0 40px 0 15px; font-weight: 600; color: #1e293b; appearance: none; background: #fff; transition: border-color 0.2s; box-shadow: 0 1px 2px rgba(0,0,0,0.05);">
+                                <option value="">-- Start by Choosing District --</option>
+                            </select>
+                            <div
+                                style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); pointer-events: none; color: #94a3b8; font-size: 0.8rem;">
+                                <i class="fa-solid fa-chevron-down"></i>
+                            </div>
+                        </div>
+                        <p
+                            style="margin-top: 8px; font-size: 0.85rem; color: #64748b; font-weight: 500; display: flex; align-items: center; gap: 6px;">
+                            <i class="fa-solid fa-circle-info" style="color: var(--primary);"></i>
+                            District not visible? Regular updates are shared in your <a href="#whatsapp"
+                                style="color: var(--primary); font-weight: 700; text-decoration: underline;">WhatsApp
+                                Group</a>.
+                        </p>
+                    </div>
+
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label
+                            style="display: block; margin-bottom: 10px; font-weight: 700; color: #475569; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em;">Step
+                            2: Enter Roll No / Mobile</label>
+                        <div class="search-input-wrapper"
+                            style="box-shadow: 0 1px 2px rgba(0,0,0,0.05); border-radius: 12px; border: 1px solid #cbd5e1; background: white;">
+                            <input type="text" id="vecCodeInput" placeholder="e.g. 9876543210 or VEC12345"
+                                autocomplete="off" maxlength="10"
+                                style="border: none; height: 50px; font-size: 1rem; font-weight: 600; padding: 0 15px;">
+                            <button class="search-btn" id="searchBtn"
+                                style="height: 50px; width: 55px; background: var(--primary); border-radius: 0 11px 11px 0; display: flex; align-items: center; justify-content: center; font-size: 1.1rem;">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
 
@@ -1837,6 +2014,23 @@
                 <div id="resultDisplay" style="display: none;" class="result-display">
                     <!-- Results will be injected here dynamically -->
                 </div>
+
+                <div id="encouragingMessage"
+                    style="margin-top: 50px; padding: 40px 20px; text-align: center; border-radius: 20px; background: #fff;">
+                    <p
+                        style="font-size: 1.05rem; font-style: italic; color: #475569; margin-bottom: 25px; line-height: 1.6; max-width: 600px; margin-left: auto; margin-right: auto;">
+                        "Your hard work and dedication are the foundation of your future success. Every step of learning
+                        brings you closer to your true potential."
+                    </p>
+                    <div style="display: inline-flex; flex-direction: column; align-items: center; gap: 12px;">
+                        <div style="width: 40px; height: 1px; background: #e2e8f0;"></div>
+                        <p
+                            style="font-size: 1.15rem; font-weight: 800; color: var(--maroon); margin: 0; letter-spacing: -0.01em;">
+                            Thank you for your patience.</p>
+                        <p style="font-size: 1rem; font-weight: 600; color: var(--primary); margin: 0;">We are always
+                            with you in this journey.</p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -1846,7 +2040,7 @@
         <h3>🎁 Every Participant Receives</h3>
         <p>
             Complete Bhagavad Gita (All Languages) • VEC Booklet & Question Bank • Practice Answer Sheets • Calendar •
-            Certificate e-signed by Former President Pranab Mukherjee • Flair Pens & Many More Gifts!
+            Certificate e-signed by Former ISRO Chairman • Flair Pens & Many More Gifts!
         </p>
     </div>
 
@@ -1909,7 +2103,7 @@
                 <div class="gift-item">
                     <div class="gift-icon">🏆</div>
                     <h4>Certificate</h4>
-                    <p>E-signed by Former President</p>
+                    <p>E-signed by Former ISRO Chairman</p>
                 </div>
             </div>
         </div>
@@ -2033,20 +2227,11 @@
         </div>
     </div>
 
-    <!-- Floating Action Buttons -->
-    <div class="fab-container">
-        <button class="fab-btn fab-whatsapp" onclick="openModal('whatsapp')">
-            <i class="fa-brands fa-whatsapp"></i>
-            <span>WhatsApp</span>
-        </button>
-        <button class="fab-btn fab-submit" onclick="openModal('submit')">
-            <i class="fa-solid fa-paper-plane"></i>
-            <span>Submit</span>
-        </button>
-        <button class="fab-btn fab-results" onclick="scrollToResults()">
-            <i class="fa-solid fa-award"></i>
-            <span>Results</span>
-        </button>
+    </div>
+
+    <div id="certLoading">
+        <i class="fa-solid fa-circle-notch fa-spin fa-3x"></i>
+        <p style="margin-top: 20px; font-size: 1.2rem;">Generating your Certificate...</p>
     </div>
 
     <script>
@@ -2107,6 +2292,7 @@
 
                 initializeDropdowns();
                 initializeInlineWhatsApp();
+                initializeResultsDistrictDropdown();
             } catch (error) {
                 console.error('Error loading data:', error);
             }
@@ -2162,6 +2348,62 @@
                     }
                 }
             });
+        }
+
+        async function initializeResultsDistrictDropdown() {
+            const resultDistrictSelect = document.getElementById('resultDistrictSelect');
+            let allDistricts = new Set();
+            let lastDistrict = null;
+            let hasMore = true;
+            let safetyCounter = 0;
+
+            try {
+                // Optimized Skip-Scan to get unique districts from large table
+                while (hasMore && safetyCounter < 50) { // Safety break at 50 unique scans
+                    safetyCounter++;
+                    let query = sbClient
+                        .from('students')
+                        .select('"District"')
+                        .neq('District', null)
+                        .order('District', { ascending: true })
+                        .limit(1); // We only need the NEXT unique district
+
+                    if (lastDistrict) {
+                        query = query.gt('District', lastDistrict);
+                    }
+
+                    const { data, error } = await query;
+                    if (error) throw error;
+
+                    if (data && data.length > 0) {
+                        const newDistrict = data[0].District;
+                        allDistricts.add(newDistrict);
+                        lastDistrict = newDistrict;
+                    } else {
+                        hasMore = false;
+                    }
+                }
+
+                const sortedDistricts = Array.from(allDistricts).sort();
+
+                if (sortedDistricts.length > 0) {
+                    resultDistrictSelect.innerHTML = '<option value="">-- Choose Your District --</option>' +
+                        sortedDistricts.map(district => `<option value="${district}">${district}</option>`).join('');
+                    console.log(`✅ Success: Loaded ${sortedDistricts.length} unique districts using Skip-Scan.`);
+                } else {
+                    throw new Error('No districts found in Supabase');
+                }
+            } catch (err) {
+                console.error('Supabase district fetch failed, using fallback:', err);
+                // System fallback
+                const districts = new Set();
+                Object.values(whatsappData).forEach(stateDistricts => {
+                    Object.keys(stateDistricts).forEach(district => districts.add(district));
+                });
+                const sortedDistricts = Array.from(districts).sort();
+                resultDistrictSelect.innerHTML = '<option value="">-- Choose Your District (System Fallback) --</option>' +
+                    sortedDistricts.map(district => `<option value="${district}">${district}</option>`).join('');
+            }
         }
 
         function updateDistrictDropdown(state) {
@@ -2237,9 +2479,15 @@
         // ==================== RESULTS SEARCH ====================
         async function searchCertificate() {
             const inputVal = document.getElementById('vecCodeInput').value.trim();
+            const districtVal = document.getElementById('resultDistrictSelect').value;
             const searchBtn = document.getElementById('searchBtn');
             const errorDisplay = document.getElementById('errorDisplay');
             const resultDisplay = document.getElementById('resultDisplay');
+
+            if (!districtVal) {
+                alert('Please choose your District first');
+                return;
+            }
 
             if (!inputVal) {
                 alert('Please enter your Mobile Number or VEC Exam Code');
@@ -2253,14 +2501,28 @@
             resultDisplay.style.display = 'none';
 
             try {
-                // Determine if searching by Mobile Number or Exam Code
-                let query = sbClient.from('students').select('"Name of Student", "Result Grades", "Link of Certificate", "District", "VEC Exam Code", "Download Count"');
+                const upperVal = inputVal.toUpperCase();
+                let orFilter;
 
-                // Use .or to search both columns
-                const { data, error } = await query
-                    .or(`"VEC Exam Code".eq."${inputVal.toUpperCase()}", "Mobile Number".eq."${inputVal}"`);
+                // If input is purely numeric, prioritize Mobile Number search
+                if (/^\d+$/.test(inputVal)) {
+                    orFilter = `"VEC Exam Code".eq.${upperVal},"Mobile Number".eq.${inputVal}`;
+                } else {
+                    orFilter = `"VEC Exam Code".eq.${upperVal}`;
+                }
 
-                if (error || !data || data.length === 0) {
+                const { data, error } = await sbClient
+                    .from('students')
+                    .select('"Name of Student", "Result Grades", "Link of Certificate", "District", "VEC Exam Code", "Download Count", "School Name", "Standard/Class"')
+                    .eq('District', districtVal)
+                    .or(orFilter);
+
+                if (error) {
+                    console.error('Supabase error:', error);
+                    throw error;
+                }
+
+                if (!data || data.length === 0) {
                     errorDisplay.style.display = 'block';
                     resultDisplay.style.display = 'none';
                     errorDisplay.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -2280,15 +2542,15 @@
                                 <div class="certificate-icon" style="position: relative; z-index: 1;">
                                     <i class="fa-solid fa-crown"></i>
                                 </div>
-                                <div class="student-name" style="position: relative; z-index: 1; font-size: 2rem; font-weight: 800; color: var(--maroon); margin-bottom: 4px;">${student["Name of Student"]}</div>
-                                <div class="student-district" style="position: relative; z-index: 1; font-size: 1.1rem; color: var(--primary); font-weight: 700; margin-bottom: 12px; text-transform: uppercase;">${student["District"] || ""}</div>
-                                <div class="student-grade" style="position: relative; z-index: 1; font-size: 1.2rem; color: var(--text-light); margin-bottom: 30px; font-weight: 600;">Secured: ${student["Result Grades"]}</div>
-                                ${certUrl ? `
-                                    <button onclick="trackDownload('${examCode}', ${downloadCount}, '${certUrl}')" class="download-btn" style="position: relative; z-index: 1; display: inline-flex; align-items: center; gap: 10px; background: var(--primary); color: white; padding: 15px 30px; border-radius: 12px; font-weight: 700; text-decoration: none; border: none; width: 100%; justify-content: center; cursor: pointer; transition: all 0.3s ease;">
-                                        <i class="fa-solid fa-file-arrow-down"></i>
-                                        Download Official Certificate
-                                    </button>
-                                ` : ''}
+                        <div class="student-name" style="position: relative; z-index: 1; font-size: 2rem; font-weight: 800; color: var(--maroon); margin-bottom: 4px;">${student["Name of Student"]}</div>
+                        <div class="student-school" style="position: relative; z-index: 1; font-size: 1.1rem; color: #475569; font-weight: 600; margin-bottom: 4px;">${student["School Name"] || ""}</div>
+                        <div class="student-class" style="position: relative; z-index: 1; font-size: 1.1rem; color: #64748b; font-weight: 600; margin-bottom: 8px;">Class: ${student["Standard/Class"] || ""}</div>
+                        <div class="student-district" style="position: relative; z-index: 1; font-size: 1.1rem; color: var(--primary); font-weight: 700; margin-bottom: 12px; text-transform: uppercase;">${student["District"] || ""}</div>
+                                <div class="student-grade" style="position: relative; z-index: 1; font-size: 1.2rem; color: var(--text-light); margin-bottom: 30px; font-weight: 600;">${student["Result Grades"]}</div>
+                                <button onclick="handleDownload(this, ${JSON.stringify(student).replace(/"/g, '&quot;')})" class="download-btn" style="position: relative; z-index: 1; display: inline-flex; align-items: center; gap: 10px; background: var(--primary); color: white; padding: 15px 30px; border-radius: 12px; font-weight: 700; text-decoration: none; border: none; width: 100%; justify-content: center; cursor: pointer; transition: all 0.3s ease;">
+                                    <i class="fa-solid fa-file-arrow-down"></i>
+                                    Download Official Certificate
+                                </button>
                             </div>
                         `;
                         resultDisplay.innerHTML += resultCard;
@@ -2330,19 +2592,149 @@
             }
         }
 
-        async function trackDownload(examCode, currentCount, url) {
+        async function handleDownload(btn, student) {
+            const originalContent = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Generating...';
+
             try {
-                // Call Supabase RPC to securely increment count
-                const { error } = await sbClient.rpc('increment_download_count', {
-                    exam_code: examCode
+                const examCode = student["VEC Exam Code"];
+                const certUrl = student["Link of Certificate"];
+
+                // Track download attempt
+                try {
+                    await sbClient.rpc('increment_download_count', {
+                        exam_code: examCode
+                    });
+                } catch (rpcErr) {
+                    console.warn('Tracking ignored:', rpcErr);
+                }
+
+                if (certUrl && String(certUrl).startsWith('http')) {
+                    window.open(certUrl, '_blank');
+                } else {
+                    await generateCertificateFrontend(student);
+                }
+            } catch (err) {
+                console.error('Download error details:', err);
+                alert('Generation Error: ' + (err.message || 'Unknown error') + '. Please check if images/certificate_bg.png exists.');
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = originalContent;
+            }
+        }
+
+        async function generateCertificateFrontend(student) {
+            const loader = document.getElementById('certLoading');
+            loader.style.display = 'flex';
+
+            try {
+                // Optimized image source (1MB JPEG)
+                const bgUrl = 'images/certificate_template.jpg';
+
+                // Helper to load image
+                const loadImage = (url) => new Promise((resolve, reject) => {
+                    const img = new Image();
+                    img.crossOrigin = "anonymous";
+                    img.onload = () => resolve(img);
+                    img.onerror = () => reject(new Error('Failed to load certificate background.'));
+                    img.src = url;
                 });
 
-                if (error) throw error;
+                const bgImg = await loadImage(bgUrl);
+
+                // Professional Canvas System (A4 at 300 DPI - 3508x2481)
+                const canvas = document.createElement('canvas');
+                canvas.width = 3508;
+                canvas.height = 2481;
+                const ctx = canvas.getContext('2d');
+
+                // Step 1: Draw Background
+                ctx.drawImage(bgImg, 0, 0, canvas.width, canvas.height);
+
+                // Step 2: Styling settings
+                ctx.fillStyle = "#1e293b";
+                ctx.textBaseline = "middle";
+
+                // Professional Font definitions (Stylistic & Premium)
+                const nameFont = "500 60px 'Georgia', serif"; // Elegant serif for Name
+                const bodyFont = "500 40px 'Inter', Arial, sans-serif"; // Cleaner sans-serif
+                const smallFont = "500 52px 'Inter', Arial, sans-serif";
+                const codeFont = "640 48px 'Courier New', monospace";
+
+                // Improved Title Case
+                const toTitleCase = (str) => {
+                    if (!str) return "";
+                    return str.toLowerCase().replace(/\b\w/g, c => c.toUpperCase());
+                };
+
+                // Step 3: Draw Text using Center Alignment for the lines
+
+                // Student Name
+                ctx.font = nameFont;
+                ctx.fillStyle = "#7c2d12";
+                ctx.textAlign = "center";
+                ctx.fillText(toTitleCase(student["Name of Student"] || ""), canvas.width * 0.66, canvas.height * 0.485);
+
+                // School Name
+                ctx.font = bodyFont;
+                ctx.fillStyle = "#1e293b";
+                ctx.textAlign = "center";
+                ctx.fillText((student["School Name"] || ""), canvas.width * 0.70, canvas.height * 0.535);
+
+                // Standard (Moved to middle of line)
+                ctx.font = smallFont;
+                ctx.textAlign = "center";
+                ctx.fillText((student["Standard/Class"] || ""), canvas.width * 0.525, canvas.height * 0.582);
+
+                // Grade
+                ctx.font = "50px 'Inter', sans-serif";
+                ctx.textAlign = "center";
+                ctx.fillText((student["Result Grades"] || ""), canvas.width * 0.725, canvas.height * 0.582);
+
+                // District / Region (Final positioning - Match color & nudge UP)
+                ctx.font = bodyFont;
+                ctx.fillStyle = "#1e293b";
+                ctx.textAlign = "left";
+                const districtPrefix = "District / Region: ";
+                const districtText = districtPrefix + (student["District"] || "");
+                ctx.fillText(districtText, canvas.width * 0.42, canvas.height * 0.690);
+
+                // Year (Nudged further right)
+                ctx.font = smallFont;
+                ctx.fillStyle = "#1e293b";
+                ctx.textAlign = "center";
+                ctx.fillText("2025-26", canvas.width * 0.85, canvas.height * 0.630);
+
+                // Exam Code (Nudged further right)
+                ctx.font = codeFont;
+                ctx.fillStyle = "#64748b";
+                ctx.textAlign = "left";
+                ctx.fillText((student["VEC Exam Code"] || ""), canvas.width * 0.24, canvas.height * 0.880);
+
+                // Step 4: Export to PDF
+                const { jsPDF } = window.jspdf;
+                const pdf = new jsPDF({
+                    orientation: 'landscape',
+                    unit: 'px',
+                    format: [3508, 2481]
+                });
+
+                // Convert canvas to compressed JPEG for the PDF
+                const imgData = canvas.toDataURL('image/jpeg', 0.85);
+                pdf.addImage(imgData, 'JPEG', 0, 0, 3508, 2481);
+                pdf.save(`VEC_Certificate_${student["VEC Exam Code"]}.pdf`);
+
             } catch (err) {
-                console.error('Tracking error:', err);
+                console.error('Professional Gen Error:', err);
+                alert('Professional Generation Error: ' + err.message);
+            } finally {
+                loader.style.display = 'none';
             }
-            // Open certificate in new tab
-            window.open(url, '_blank');
+        }
+
+        async function trackDownload(examCode, currentCount, url) {
+            // Deprecated in favor of handleDownload
         }
 
         // ==================== UTILITY FUNCTIONS ====================

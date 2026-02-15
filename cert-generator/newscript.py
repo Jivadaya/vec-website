@@ -99,7 +99,7 @@ try:
                     11: str(school).title(),
                     14: ACADEMIC_YEAR,
                     15: str(standard),
-                    16: f"Secured: {grade}",
+                    16: str(grade),
                     17: str(exam_code),
                     18: str(district).title() # Mapping new District placeholder
                 }
