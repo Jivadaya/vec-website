@@ -2608,6 +2608,7 @@
         }
 
         let globalDistricts = [];
+        let districtLeaderboardData = [];
 
 
         async function initializeResultsDistrictDropdown() {
@@ -2681,24 +2682,21 @@
             if (statsWrapper) statsWrapper.style.display = 'flex';
             if (nationwideWrapper) nationwideWrapper.style.display = 'none';
             if (nameEl) nameEl.innerText = district;
-
+            // Use cached leaderboard data (no Supabase call)
             try {
-                // Sum download counts for the specific district
-                const { data, error } = await sbClient
-                    .from('students')
-                    .select('"Download Count"')
-                    .eq('District', district)
-                    .not('Download Count', 'is', null);
-
-                if (error) throw error;
-
-                const total = data.reduce((sum, row) => sum + (row["Download Count"] || 0), 0);
-                if (countEl) {
-                    const current = parseInt(countEl.innerText.replace(/,/g, '')) || 0;
-                    animateValue(countEl, current, total, 1000);
+                if (Array.isArray(districtLeaderboardData) && districtLeaderboardData.length) {
+                    const record = districtLeaderboardData.find(r => (r.dist_name || r.District || '').toLowerCase() === district.toLowerCase());
+                    const total = record ? parseInt(record.issued_count || record.sum || 0) : 0;
+                    if (countEl) {
+                        const current = parseInt(countEl.innerText.replace(/,/g, '')) || 0;
+                        animateValue(countEl, current, total, 800);
+                    }
+                } else {
+                    // If cache not available yet, display zero and hide until leaderboard loads
+                    if (countEl) countEl.innerText = '0';
                 }
             } catch (err) {
-                console.warn('District stats fetch failed:', err);
+                console.warn('District stats lookup failed:', err);
             }
         }
 
@@ -2728,6 +2726,9 @@
                 // Update active district count
                 if (countLabel) countLabel.innerText = data.length;
 
+                // Cache leaderboard data for client-side lookups
+                districtLeaderboardData = data;
+
                 // Render the table rows
                 body.innerHTML = data.map((row, index) => {
                     // This handles both 'dist_name' and 'District' as fallback
@@ -2748,7 +2749,6 @@
 
 
                 const totalDownloads = data.reduce((sum, row) => sum + parseInt(row.issued_count || 0), 0);
-                const globalStatsEl = document.getElementById('globalDownloadCount');
                 if (globalStatsEl) {
                     const current = parseInt(globalStatsEl.innerText.replace(/,/g, '')) || 0;
                     animateValue(globalStatsEl, current, totalDownloads, 1000);
@@ -3288,6 +3288,9 @@
             document.getElementById('vecCodeInput').addEventListener('input', function (e) {
                 this.value = this.value.toUpperCase();
             });
+
+            // Load leaderboard and global stats on page load
+            fetchDistrictLeaderboard();
         });
     </script>
 
