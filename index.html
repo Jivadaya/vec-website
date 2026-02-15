@@ -886,6 +886,94 @@
             transform: scale(0.95);
         }
 
+        /* ==================== PREMIUM DROPDOWN STYLES ==================== */
+        .premium-dropdown {
+            position: relative;
+            width: 100%;
+        }
+
+        .premium-dropdown-input {
+            width: 100%;
+            padding: 14px 45px 14px 18px;
+            border-radius: 12px;
+            border: 2px solid var(--border);
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            background: white;
+            cursor: pointer;
+            color: var(--text);
+        }
+
+        .premium-dropdown-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(255, 153, 51, 0.1);
+            outline: none;
+        }
+
+        .premium-dropdown-icon {
+            position: absolute;
+            right: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-light);
+            pointer-events: none;
+            transition: transform 0.3s ease;
+        }
+
+        .premium-dropdown.active .premium-dropdown-icon {
+            transform: translateY(-50%) rotate(180deg);
+        }
+
+        .premium-dropdown-list {
+            position: absolute;
+            top: calc(100% + 8px);
+            left: 0;
+            right: 0;
+            background: white;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .premium-dropdown.active .premium-dropdown-list {
+            max-height: 300px;
+            overflow-y: auto;
+            opacity: 1;
+        }
+
+        .premium-dropdown-item {
+            padding: 12px 18px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-weight: 600;
+            color: var(--text);
+            border-bottom: 1px solid var(--bg-subtle);
+        }
+
+        .premium-dropdown-item:last-child {
+            border-bottom: none;
+        }
+
+        .premium-dropdown-item:hover {
+            background: var(--bg-subtle);
+            color: var(--primary);
+        }
+
+        .premium-dropdown-no-results {
+            padding: 20px;
+            text-align: center;
+            color: var(--text-light);
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
         .error-message {
             background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
             color: #991b1b;
