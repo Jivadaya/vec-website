@@ -2190,6 +2190,10 @@
                     </div>
                 </div>
 
+                <div id="resultDisplay" class="result-display" style="display:none;">
+                    <!-- Results injected here -->
+                </div>
+
                 <div id="resultsAdvisory"
                     style="margin-bottom: 30px; margin-top:30px; padding: 20px 25px; background: #fdfcfb; border: 1px solid #e5e7eb; border-radius: 16px; text-align: left; position: relative; overflow: hidden;">
                     <div
@@ -2622,7 +2626,7 @@
                 if (error) throw error;
 
                 // 2. Map the database results to our global array
-                globalDistricts = data.map(item => item.dist_name);
+                globalDistricts = data.map(item => item.dist_name || item.District).filter(Boolean);
 
                 if (globalDistricts.length === 0) {
                     districtList.innerHTML = '<div class="premium-dropdown-no-results">No districts found in database.</div>';
@@ -2664,26 +2668,7 @@
         }
 
 
-        async function updateGlobalStats() {
-            try {
-                // Sum all download counts across all districts
-                const { data, error } = await sbClient
-                    .from('students')
-                    .select('"Download Count"')
-                    .not('Download Count', 'is', null);
 
-                if (error) throw error;
-
-                const total = data.reduce((sum, row) => sum + (row["Download Count"] || 0), 0);
-                const statsEl = document.getElementById('globalDownloadCount');
-                if (statsEl) {
-                    const current = parseInt(statsEl.innerText.replace(/,/g, '')) || 0;
-                    animateValue(statsEl, current, total, 1000);
-                }
-            } catch (err) {
-                console.warn('Global stats fetch failed:', err);
-            }
-        }
 
         async function updateDistrictStats(district) {
             if (!district) return;
@@ -2744,17 +2729,26 @@
                 if (countLabel) countLabel.innerText = data.length;
 
                 // Render the table rows
-                body.innerHTML = data.map((row, index) => `
-                    <tr style="border-bottom: 1px solid #f8fafc;">
-                        <td style="padding: 15px 25px; font-weight: 700;">#${index + 1} ${row.dist_name}</td>
-                        <td style="padding: 15px 25px; text-align: right; color: var(--primary); font-weight: 800;">
-                            ${(row.issued_count || 0).toLocaleString()}
-                        </td>
-                    </tr>
-                `).join('');
+                body.innerHTML = data.map((row, index) => {
+                    // This handles both 'dist_name' and 'District' as fallback
+                    const name = row.dist_name || row.District || "Unknown";
+                    const count = row.issued_count || row.sum || 0;
+
+                    return `
+                        <tr style="border-bottom: 1px solid #f8fafc;">
+                            <td style="padding: 15px 25px; font-weight: 700;">#${index + 1} ${name}</td>
+                            <td style="padding: 15px 25px; text-align: right; color: var(--primary); font-weight: 800;">
+                                ${parseInt(count).toLocaleString()}
+                            </td>
+                        </tr>
+                    `;
+                }).join('');
 
                 // Update Global nationwide total instantly
-                const totalDownloads = data.reduce((sum, row) => sum + parseInt(row.issued_count), 0);
+
+
+                const totalDownloads = data.reduce((sum, row) => sum + parseInt(row.issued_count || 0), 0);
+                const globalStatsEl = document.getElementById('globalDownloadCount');
                 if (globalStatsEl) {
                     const current = parseInt(globalStatsEl.innerText.replace(/,/g, '')) || 0;
                     animateValue(globalStatsEl, current, totalDownloads, 1000);
@@ -2922,121 +2916,151 @@
         });
 
         // ==================== RESULTS SEARCH ====================
+
+
+        // DECLARE THIS ONLY ONCE AT THE TOP OF YOUR SCRIPT
+        if (typeof isSearchCoolingDown === 'undefined') {
+            var isSearchCoolingDown = false;
+        }
+
         async function searchCertificate() {
-            const districtVal = document.getElementById('selectedDistrict').value;
-            const inputVal = document.getElementById('vecCodeInput').value.trim();
+            // 1. Get Elements with Safety check
+            const districtInput = document.getElementById('selectedDistrict');
+            const vecInput = document.getElementById('vecCodeInput');
             const searchBtn = document.getElementById('searchBtn');
             const errorDisplay = document.getElementById('errorDisplay');
             const resultDisplay = document.getElementById('resultDisplay');
+
+            // Stop if UI elements are missing (Fixes the "reading style of null" error)
+            if (!searchBtn || !errorDisplay || !resultDisplay) return;
+
+            const districtVal = districtInput ? districtInput.value : '';
+            const inputVal = vecInput ? vecInput.value.trim() : '';
 
             if (!districtVal) {
                 alert('Please search and select your District first');
                 return;
             }
-
             if (!inputVal) {
                 alert('Please enter your Mobile Number or VEC Exam Code');
                 return;
             }
 
-            // Show loading state
+            // 2. Prevent spamming during high traffic
+            if (isSearchCoolingDown) return;
+
+            // 3. UI Loading State
             searchBtn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i>';
             searchBtn.disabled = true;
             errorDisplay.style.display = 'none';
             resultDisplay.style.display = 'none';
+            resultDisplay.innerHTML = '';
 
             try {
                 const upperVal = inputVal.toUpperCase();
-                let orFilter;
+                const selectFields = '"Name of Student", "Result Grades", "Link of Certificate", "District", "VEC Exam Code", "Download Count", "School Name", "Standard/Class"';
 
-                // If input is purely numeric, prioritize Mobile Number search
-                if (/^\d+$/.test(inputVal)) {
-                    orFilter = `"VEC Exam Code".eq.${upperVal},"Mobile Number".eq.${inputVal}`;
-                } else {
-                    orFilter = `"VEC Exam Code".eq.${upperVal}`;
-                }
+                // 4. Sequential, index-friendly lookups (prefer equality filters so DB can use indexes)
+                // 4a. Try exact VEC Exam Code within the selected district first
+                let data = null;
 
-                const { data, error } = await sbClient
+                const { data: byCode, error: errCode } = await sbClient
                     .from('students')
-                    .select('"Name of Student", "Result Grades", "Link of Certificate", "District", "VEC Exam Code", "Download Count", "School Name", "Standard/Class"')
+                    .select(selectFields)
                     .eq('District', districtVal)
-                    .or(orFilter);
+                    .eq('VEC Exam Code', upperVal)
+                    .limit(10);
 
-                if (error) {
-                    console.error('Supabase error:', error);
-                    throw error;
+                if (errCode) throw errCode;
+                if (byCode && byCode.length) data = byCode;
+
+                // 4b. If nothing found and input looks numeric, try Mobile Number within district
+                if ((!data || data.length === 0) && /^^\d+$/.test(inputVal)) {
+                    const { data: byMobile, error: errMobile } = await sbClient
+                        .from('students')
+                        .select(selectFields)
+                        .eq('District', districtVal)
+                        .eq('Mobile Number', inputVal)
+                        .limit(10);
+
+                    if (errMobile) throw errMobile;
+                    if (byMobile && byMobile.length) data = byMobile;
                 }
 
+                // 4c. As a last, limited-rescue attempt (small limit) try a relaxed search across districts
+                if (!data || data.length === 0) {
+                    const { data: fallback, error: errFb } = await sbClient
+                        .from('students')
+                        .select(selectFields)
+                        .or(`"VEC Exam Code".eq.${upperVal},"Mobile Number".eq.${inputVal}`)
+                        .limit(5);
+
+                    if (errFb) throw errFb;
+                    if (fallback && fallback.length) data = fallback;
+                }
+
+                // 5. Render Results (same UI as before)
                 if (!data || data.length === 0) {
                     errorDisplay.style.display = 'block';
-                    resultDisplay.style.display = 'none';
                     errorDisplay.scrollIntoView({ behavior: 'smooth', block: 'center' });
                 } else {
                     errorDisplay.style.display = 'none';
                     resultDisplay.style.display = 'grid';
                     resultDisplay.style.gap = '20px';
-                    resultDisplay.innerHTML = ''; // Clear previous results
+                    resultDisplay.innerHTML = '';
 
                     data.forEach((student, index) => {
-                        const examCode = student["VEC Exam Code"];
-                        const downloadCount = student["Download Count"] || 0;
-                        const certUrl = student["Link of Certificate"];
-
-                        const resultCard = `
-                            <div class="certificate-box" style="animation-delay: ${index * 0.15}s">
-                                <div class="certificate-icon" style="position: relative; z-index: 1;">
-                                    <i class="fa-solid fa-crown"></i>
-                                </div>
-                        <div class="student-name" style="position: relative; z-index: 1; font-size: 2rem; font-weight: 800; color: var(--maroon); margin-bottom: 4px;">${student["Name of Student"]}</div>
-                        <div class="student-school" style="position: relative; z-index: 1; font-size: 1.1rem; color: #475569; font-weight: 600; margin-bottom: 4px;">${student["School Name"] || ""}</div>
-                        <div class="student-class" style="position: relative; z-index: 1; font-size: 1.1rem; color: #64748b; font-weight: 600; margin-bottom: 8px;">Class: ${student["Standard/Class"] || ""}</div>
-                        <div class="student-district" style="position: relative; z-index: 1; font-size: 1.1rem; color: var(--primary); font-weight: 700; margin-bottom: 12px; text-transform: uppercase;">${student["District"] || ""}</div>
-                                <div class="student-grade" style="position: relative; z-index: 1; font-size: 1.2rem; color: var(--text-light); margin-bottom: 30px; font-weight: 600;">${student["Result Grades"]}</div>
-                                <button onclick="handleDownload(this, ${JSON.stringify(student).replace(/"/g, '&quot;')})" class="download-btn" style="position: relative; z-index: 1; display: inline-flex; align-items: center; gap: 10px; background: var(--primary); color: white; padding: 15px 30px; border-radius: 12px; font-weight: 700; text-decoration: none; border: none; width: 100%; justify-content: center; cursor: pointer; transition: all 0.3s ease;">
-                                    <i class="fa-solid fa-file-arrow-down"></i>
-                                    Download Official Certificate
-                                </button>
-                            </div>
-                        `;
+                        const safeStudent = JSON.parse(JSON.stringify(student));
+                        const resultCard = `\n                    <div class="certificate-box" style="animation-delay: ${index * 0.1}s">\n                        <div class="certificate-icon"><i class="fa-solid fa-crown"></i></div>\n                        <div class="student-name" style="font-size: 1.8rem; font-weight: 800;">${safeStudent["Name of Student"]}</div>\n                        <div class="student-school" style="font-weight: 600; color: #475569;">${safeStudent["School Name"] || ""}</div>\n                        <div class="student-grade" style="color: var(--primary); font-weight: 700; margin-top: 10px;">Result: ${safeStudent["Result Grades"]}</div>\n                        <button onclick=\"handleDownload(this, ${JSON.stringify(safeStudent).replace(/\"/g, '&quot;')} )\" class=\"download-btn\" style=\"margin-top: 20px; width: 100%;\">\n                            <i class=\"fa-solid fa-file-arrow-down\"></i> Download Certificate\n                        </button>\n                    </div>\n                `;
                         resultDisplay.innerHTML += resultCard;
                     });
 
-                    // Magical Scroll & Animation
                     setTimeout(() => {
                         resultDisplay.scrollIntoView({ behavior: 'smooth', block: 'center' });
-
-                        // Burst of confetti
-                        const count = 200;
-                        const defaults = {
-                            origin: { y: 0.7 },
-                            zIndex: 2000
-                        };
-
-                        function fire(particleRatio, opts) {
-                            confetti({
-                                ...defaults,
-                                ...opts,
-                                particleCount: Math.floor(count * particleRatio)
-                            });
-                        }
-
-                        fire(0.25, { spread: 26, startVelocity: 55 });
-                        fire(0.2, { spread: 60 });
-                        fire(0.35, { spread: 100, decay: 0.91, scalar: 0.8 });
-                        fire(0.1, { spread: 120, startVelocity: 25, decay: 0.92, scalar: 1.2 });
-                        fire(0.1, { spread: 120, startVelocity: 45 });
+                        confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
                     }, 100);
                 }
             } catch (error) {
                 console.error('Search error:', error);
-                errorDisplay.style.display = 'block';
-                resultDisplay.style.display = 'none';
+                alert('Server is busy. Please wait for the countdown.');
             } finally {
-                searchBtn.innerHTML = '<i class="fa-solid fa-magnifying-glass"></i>';
-                searchBtn.disabled = false;
+                startSearchCountdown(searchBtn);
             }
         }
 
+        function startSearchCountdown(btn) {
+            isSearchCoolingDown = true;
+            let secondsLeft = 3;
+
+            const timer = setInterval(() => {
+                btn.innerHTML = `<span style="font-weight: 800;">${secondsLeft}s</span>`;
+                secondsLeft--;
+
+                if (secondsLeft < 0) {
+                    clearInterval(timer);
+                    isSearchCoolingDown = false;
+                    btn.disabled = false;
+                    btn.innerHTML = '<i class="fa-solid fa-magnifying-glass"></i>';
+                }
+            }, 1000);
+        }
+        // 7. The Countdown Logic (3 seconds)
+        function startSearchCountdown(btn) {
+            isSearchCoolingDown = true;
+            let secondsLeft = 3;
+
+            const timer = setInterval(() => {
+                btn.innerHTML = `<span style="font-size: 0.9rem; font-weight: 800;">${secondsLeft}s</span>`;
+                secondsLeft--;
+
+                if (secondsLeft < 0) {
+                    clearInterval(timer);
+                    isSearchCoolingDown = false;
+                    btn.disabled = false;
+                    btn.innerHTML = '<i class="fa-solid fa-magnifying-glass"></i>';
+                }
+            }, 1000);
+        }
         async function handleDownload(btn, student) {
             const originalContent = btn.innerHTML;
             btn.disabled = true;
@@ -3046,34 +3070,36 @@
                 const examCode = student["VEC Exam Code"];
                 const certUrl = student["Link of Certificate"];
 
-                // Track download attempt
+                // 1. Increment the count in the database
                 try {
                     await sbClient.rpc('increment_download_count', {
                         exam_code: examCode
                     });
 
-                    // Update stats after incrementing
+                    // 2. REFRESH EVERYTHING WITH ONE SINGLE CALL
+                    // This optimized RPC updates the Leaderboard and Global Counter together
+                    await fetchDistrictLeaderboard();
+
+                    // 3. Update the specific District label if selected
                     const currentDistrict = document.getElementById('selectedDistrict').value;
                     if (currentDistrict) {
                         updateDistrictStats(currentDistrict);
-                    } else {
-                        updateGlobalStats();
                     }
 
-                    // Always refresh leaderboard after a download to show live impact
-                    fetchDistrictLeaderboard();
                 } catch (rpcErr) {
-                    console.warn('Tracking ignored:', rpcErr);
+                    console.warn('Tracking update failed, but proceeding to download:', rpcErr);
                 }
 
+                // 4. Handle PDF Delivery
                 if (certUrl && String(certUrl).startsWith('http')) {
                     window.open(certUrl, '_blank');
                 } else {
                     await generateCertificateFrontend(student);
                 }
+
             } catch (err) {
-                console.error('Download error details:', err);
-                alert('Generation Error: ' + (err.message || 'Unknown error') + '. Please check if images/certificate_bg.png exists.');
+                console.error('Download error:', err);
+                alert('Generation Error. Please try again.');
             } finally {
                 btn.disabled = false;
                 btn.innerHTML = originalContent;
@@ -3233,8 +3259,6 @@
             initializeDropdowns();
             initializeInlineWhatsApp();
             initializeResultsDistrictDropdown();
-            updateGlobalStats();
-            fetchDistrictLeaderboard();
 
             // Initialize counter animation
             const observer = new IntersectionObserver((entries) => {
