@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Supabase Debug</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+
+<body>
+    <div id="output">Checking Supabase columns...</div>
+    <script>
+        const SUPABASE_URL = 'https://qnvhtrfdwihmyjerujqa.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFudmh0cmZkd2lobXlqZXJ1anFhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAyNTY4MjcsImV4cCI6MjA1NDgzMjgyN30.9OQZ1Qcyttry8EazLV7XR88NFBLSKST9qBKp_SBiLPA';
+        const sbClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+        async function check() {
+            try {
+                const { data, error } = await sbClient.from('students').select('*').limit(1);
+                if (error) throw error;
+                if (data && data.length > 0) {
+                    document.getElementById('output').innerHTML = 'Columns: ' + Object.keys(data[0]).join(', ');
+                } else {
+                    document.getElementById('output').innerHTML = 'No data found';
+                }
+            } catch (err) {
+                document.getElementById('output').innerHTML = 'Error: ' + err.message;
+            }
+        }
+        check();
+    </script>
+</body>
+
+</html>

@@ -995,6 +995,113 @@
             font-weight: 600;
         }
 
+        .download-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 153, 51, 0.4);
+        }
+
+        /* Premium Searchable District Dropdown Styles */
+        .premium-dropdown {
+            position: relative;
+            width: 100%;
+        }
+
+        .premium-dropdown-input {
+            width: 100%;
+            height: 50px;
+            font-size: 1rem;
+            border: 1px solid #cbd5e1;
+            border-radius: 12px;
+            padding: 0 45px 0 15px;
+            font-weight: 600;
+            color: #1e293b;
+            background: #fff;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+            cursor: pointer;
+        }
+
+        .premium-dropdown-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(255, 153, 51, 0.1);
+            background: #fff;
+        }
+
+        .premium-dropdown-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
+            color: #94a3b8;
+            font-size: 0.9rem;
+            transition: transform 0.3s ease;
+        }
+
+        .premium-dropdown.active .premium-dropdown-icon {
+            transform: translateY(-50%) rotate(180deg);
+            color: var(--primary);
+        }
+
+        .premium-dropdown-list {
+            position: absolute;
+            top: calc(100% + 8px);
+            left: 0;
+            right: 0;
+            background: #ffffff;
+            border-radius: 14px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
+            max-height: 280px;
+            overflow-y: auto;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            scrollbar-width: thin;
+            scrollbar-color: #cbd5e1 transparent;
+        }
+
+        .premium-dropdown.active .premium-dropdown-list {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .premium-dropdown-item {
+            padding: 12px 16px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #475569;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .premium-dropdown-item:hover {
+            background: #fff8f1;
+            color: var(--primary);
+            padding-left: 20px;
+        }
+
+        .premium-dropdown-item.selected {
+            background: #fff1e6;
+            color: var(--primary);
+        }
+
+        .premium-dropdown-no-results {
+            padding: 20px;
+            text-align: center;
+            color: #94a3b8;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
         .download-btn {
             display: inline-flex;
             align-items: center;
@@ -1014,9 +1121,8 @@
 
         .download-btn:hover {
             background: var(--primary-dark);
-            transform: translateY(-3px);
-            box-shadow: 0 8px 28px rgba(255, 153, 51, 0.4);
-            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 153, 51, 0.4);
         }
 
         @media (max-width: 768px) {
@@ -1899,6 +2005,39 @@
         </div>
     </section>
 
+    <!-- Spiritual Quote for Students -->
+    <section
+        style="background: linear-gradient(135deg, #fff8f1 0%, #fffbf7 100%); padding: 60px 24px; border-top: 3px solid var(--primary); border-bottom: 3px solid var(--primary);">
+        <div style="max-width: 900px; margin: 0 auto; text-align: center;">
+            <div
+                style="display: inline-block; background: rgba(255, 153, 51, 0.1); padding: 8px 20px; border-radius: 50px; margin-bottom: 24px;">
+                <span
+                    style="color: var(--primary); font-weight: 800; font-size: 0.85rem; letter-spacing: 0.1em; text-transform: uppercase;">
+                    <i class="fa-solid fa-om" style="margin-right: 8px;"></i>Wisdom for Students
+                </span>
+            </div>
+            <p
+                style="font-size: 1.4rem; line-height: 1.8; color: var(--maroon); font-weight: 600; font-style: italic; margin-bottom: 24px; letter-spacing: -0.01em;">
+                "You have a right to perform your prescribed duty, but you are not entitled to the fruits of action.
+                Never consider yourself to be the cause of the results of your activities, and never be attached to not
+                doing your duty."
+            </p>
+            <div style="display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 20px;">
+                <div style="width: 50px; height: 2px; background: linear-gradient(90deg, transparent, var(--primary));">
+                </div>
+                <span style="font-size: 0.95rem; font-weight: 700; color: var(--primary); letter-spacing: 0.05em;">—
+                    BHAGAVAD GITA 2.47</span>
+                <div style="width: 50px; height: 2px; background: linear-gradient(90deg, var(--primary), transparent);">
+                </div>
+            </div>
+            <p
+                style="font-size: 1rem; color: var(--text-light); font-weight: 500; max-width: 700px; margin: 0 auto; line-height: 1.7;">
+                Dear students, focus on your efforts and learning, not just the results. Keep studying with dedication!
+                📚✨
+            </p>
+        </div>
+    </section>
+
     <!-- WhatsApp Section -->
     <section class="whatsapp-section" id="whatsapp">
         <div class="whatsapp-container">
@@ -1933,7 +2072,67 @@
             <div class="results-card">
                 <div class="results-header">
                     <span class="results-badge">VEC 2025-26 RESULTS</span>
-                    <h2>Claim Your Achievement</h2>
+
+                    <!-- Spiritual Quote for Students -->
+                    <div style="margin: 20px 0;">
+                        <p
+                            style="font-size: 1.05rem; line-height: 1.6; color: var(--maroon); font-weight: 600; font-style: italic; margin-bottom: 0; letter-spacing: -0.01em;">
+                            "You have a right to perform your prescribed duty, but you are not entitled to the fruits of
+                            action. Never consider yourself the cause of the results of your activities, and never be
+                            attached to not doing your duty. - Bhagavad Gita 2.47"
+                        </p>
+                    </div>
+
+                    <!-- Grading Scale -->
+                    <div
+                        style="margin: 25px 0; padding: 20px; background: linear-gradient(135deg, #f8fafc 0%, #fff 100%); border: 1px solid #e2e8f0; border-radius: 14px;">
+                        <div
+                            style="display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 14px;">
+                            <i class="fa-solid fa-graduation-cap" style="color: var(--primary); font-size: 1.1rem;"></i>
+                            <h4
+                                style="margin: 0; font-size: 0.95rem; font-weight: 800; color: var(--text); text-transform: uppercase; letter-spacing: 0.05em;">
+                                Grading Scale</h4>
+                        </div>
+                        <div
+                            style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; font-size: 0.85rem;">
+                            <div
+                                style="padding: 8px 12px; background: #fff; border-radius: 8px; border: 1px solid #e5e7eb; text-align: center;">
+                                <span style="font-weight: 800; color: #059669;">A+</span>
+                                <span
+                                    style="color: var(--text-light); font-weight: 600; margin-left: 4px;">81-100%</span>
+                            </div>
+                            <div
+                                style="padding: 8px 12px; background: #fff; border-radius: 8px; border: 1px solid #e5e7eb; text-align: center;">
+                                <span style="font-weight: 800; color: #10b981;">A</span>
+                                <span
+                                    style="color: var(--text-light); font-weight: 600; margin-left: 4px;">71-80%</span>
+                            </div>
+                            <div
+                                style="padding: 8px 12px; background: #fff; border-radius: 8px; border: 1px solid #e5e7eb; text-align: center;">
+                                <span style="font-weight: 800; color: #3b82f6;">B+</span>
+                                <span
+                                    style="color: var(--text-light); font-weight: 600; margin-left: 4px;">61-70%</span>
+                            </div>
+                            <div
+                                style="padding: 8px 12px; background: #fff; border-radius: 8px; border: 1px solid #e5e7eb; text-align: center;">
+                                <span style="font-weight: 800; color: #60a5fa;">B</span>
+                                <span
+                                    style="color: var(--text-light); font-weight: 600; margin-left: 4px;">51-60%</span>
+                            </div>
+                            <div
+                                style="padding: 8px 12px; background: #fff; border-radius: 8px; border: 1px solid #e5e7eb; text-align: center;">
+                                <span style="font-weight: 800; color: #f59e0b;">Passing</span>
+                                <span style="color: var(--text-light); font-weight: 600; margin-left: 4px;">≥33%</span>
+                            </div>
+                            <div
+                                style="padding: 8px 12px; background: #fff; border-radius: 8px; border: 1px solid #e5e7eb; text-align: center;">
+                                <span style="font-weight: 800; color: #94a3b8;">Participated</span>
+                                <span style="color: var(--text-light); font-weight: 600; margin-left: 4px;">\<33%<
+                                        /span>
+                            </div>
+                        </div>
+                    </div>
+
                     <p>Enter your 10-digit <strong>Mobile Number</strong> or <strong>Exam Code</strong> to generate your
                         official PDF certificate</p>
                 </div>
@@ -1964,32 +2163,65 @@
 
                 <div class="search-box"
                     style="background: #f8fafc; padding: 25px; border-radius: 20px; border: 1px solid #f1f5f9;">
-                    <div class="form-group" style="margin-bottom: 20px;">
+                    <div class="form-group" style="margin-bottom: 25px;">
                         <label
-                            style="display: block; margin-bottom: 10px; font-weight: 700; color: #475569; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em;">Step
-                            1: Select Your District</label>
-                        <div style="position: relative;">
-                            <select id="resultDistrictSelect" class="form-control"
-                                style="width: 100%; height: 50px; font-size: 1rem; border: 1px solid #cbd5e1; border-radius: 12px; padding: 0 40px 0 15px; font-weight: 600; color: #1e293b; appearance: none; background: #fff; transition: border-color 0.2s; box-shadow: 0 1px 2px rgba(0,0,0,0.05);">
-                                <option value="">-- Start by Choosing District --</option>
-                            </select>
-                            <div
-                                style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); pointer-events: none; color: #94a3b8; font-size: 0.8rem;">
+                            style="display: block; margin-bottom: 12px; font-weight: 700; color: #475569; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em;">Step
+                            1: Choose Your District</label>
+                        <div class="premium-dropdown" id="districtDropdown">
+                            <input type="text" id="districtInput" placeholder="🔍 Search or select district..."
+                                class="premium-dropdown-input" readonly>
+                            <div class="premium-dropdown-icon">
                                 <i class="fa-solid fa-chevron-down"></i>
                             </div>
+                            <div class="premium-dropdown-list" id="districtList">
+                                <!-- Districts injected here -->
+                            </div>
+                            <input type="hidden" id="selectedDistrict">
                         </div>
+                        <div id="districtStatsWrapper"
+                            style="margin-top: 8px; font-size: 0.8rem; color: #64748b; font-weight: 600; display: flex; align-items: center; gap: 6px; opacity: 0.9; display: none;">
+                            <span class="pulse-dot"
+                                style="width: 6px; height: 6px; background: #22c55e; border-radius: 50%; display: inline-block;"></span>
+                            <span id="districtDownloadCount">0</span> Certificates Issued in <span
+                                id="statDistrictName">District</span>
+                        </div>
+                        <div id="nationwideStatsWrapper"
+                            style="margin-top: 8px; font-size: 0.8rem; color: #64748b; font-weight: 600; display: flex; align-items: center; gap: 6px; opacity: 0.9;">
+                            <span style="opacity: 0.6;">Total Nationwide:</span>
+                            <span id="globalDownloadCount">0</span> Issued
+                        </div>
+                        <style>
+                            .pulse-dot {
+                                animation: pulse 2s infinite;
+                            }
+
+                            @keyframes pulse {
+                                0% {
+                                    opacity: 1;
+                                }
+
+                                50% {
+                                    opacity: 0.4;
+                                }
+
+                                100% {
+                                    opacity: 1;
+                                }
+                            }
+                        </style>
                         <p
-                            style="margin-top: 8px; font-size: 0.85rem; color: #64748b; font-weight: 500; display: flex; align-items: center; gap: 6px;">
-                            <i class="fa-solid fa-circle-info" style="color: var(--primary);"></i>
+                            style="margin-top: 10px; font-size: 0.85rem; color: #64748b; font-weight: 500; display: flex; align-items: center; gap: 8px; padding-left: 4px;">
+                            <i class="fa-solid fa-circle-info" style="color: var(--primary); font-size: 0.75rem;"></i>
                             District not visible? Regular updates are shared in your <a href="#whatsapp"
                                 style="color: var(--primary); font-weight: 700; text-decoration: underline;">WhatsApp
                                 Group</a>.
                         </p>
                     </div>
 
+
                     <div class="form-group" style="margin-bottom: 0;">
                         <label
-                            style="display: block; margin-bottom: 10px; font-weight: 700; color: #475569; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em;">Step
+                            style="display: block; margin-bottom: 12px; font-weight: 700; color: #475569; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em;">Step
                             2: Enter Roll No / Mobile</label>
                         <div class="search-input-wrapper"
                             style="box-shadow: 0 1px 2px rgba(0,0,0,0.05); border-radius: 12px; border: 1px solid #cbd5e1; background: white;">
@@ -2002,6 +2234,15 @@
                             </button>
                         </div>
                     </div>
+                </div>
+
+                <!-- Results Advisory Message -->
+                <div
+                    style="margin-top: 15px; text-align: center; padding: 12px; background: #fffbeb; border: 1px solid #fef3c7; border-radius: 12px; display: flex; align-items: center; gap: 10px; justify-content: center; max-width: 600px; margin-left: auto; margin-right: auto;">
+                    <i class="fa-solid fa-circle-info" style="color: #d97706;"></i>
+                    <p style="margin: 0; font-size: 0.9rem; font-weight: 700; color: #92400e; letter-spacing: -0.01em;">
+                        Gwalior, Gautam Buddha Nagar and other district Results will be declared later.
+                    </p>
                 </div>
 
                 <div id="errorDisplay" style="display: none;">
@@ -2017,11 +2258,7 @@
 
                 <div id="encouragingMessage"
                     style="margin-top: 50px; padding: 40px 20px; text-align: center; border-radius: 20px; background: #fff;">
-                    <p
-                        style="font-size: 1.05rem; font-style: italic; color: #475569; margin-bottom: 25px; line-height: 1.6; max-width: 600px; margin-left: auto; margin-right: auto;">
-                        "Your hard work and dedication are the foundation of your future success. Every step of learning
-                        brings you closer to your true potential."
-                    </p>
+
                     <div style="display: inline-flex; flex-direction: column; align-items: center; gap: 12px;">
                         <div style="width: 40px; height: 1px; background: #e2e8f0;"></div>
                         <p
@@ -2030,6 +2267,56 @@
                         <p style="font-size: 1rem; font-weight: 600; color: var(--primary); margin: 0;">We are always
                             with you in this journey.</p>
                     </div>
+                </div>
+            </div>
+
+            <!-- District Impact Leaderboard (Dedicated Section) -->
+            <div id="districtImpactContainer"
+                style="margin-top: 40px; background: white; border-radius: 20px; border: 1px solid #e2e8f0; overflow: hidden; display: none; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); width: 100%; max-width: 500px; margin-left: auto; margin-right: auto;">
+                <div
+                    style="background: #f8fafc; padding: 18px 25px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center;">
+                    <h4
+                        style="margin: 0; font-size: 0.9rem; color: #1e293b; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 800;">
+                        <i class="fa-solid fa-trophy" style="margin-right: 10px; color: #f59e0b;"></i>
+                        District Impact Leaderboard
+                    </h4>
+                    <span
+                        style="font-size: 0.7rem; background: #dcfce7; color: #166534; padding: 5px 12px; border-radius: 12px; font-weight: 700; display: flex; align-items: center; gap: 6px;">
+                        <span class="pulse-dot"
+                            style="width: 6px; height: 6px; background: #22c55e; border-radius: 50%;"></span>
+                        LIVE STATS
+                    </span>
+                </div>
+                <div id="leaderboardScrollArea" style="max-height: 400px; overflow-y: auto;">
+                    <div id="leaderboardLoader" style="padding: 50px 30px; text-align: center; color: #64748b;">
+                        <i class="fa-solid fa-circle-notch fa-spin"
+                            style="font-size: 1.5rem; color: var(--primary);"></i>
+                        <span style="font-size: 0.9rem; display: block; margin-top: 15px; font-weight: 600;">Scanning
+                            80,000+ Records...</span>
+                        <div style="margin-top: 10px; font-size: 0.75rem; opacity: 0.7;" id="leaderboardProgress">
+                            Starting scan...</div>
+                    </div>
+                    <table id="leaderboardTable"
+                        style="width: 100%; border-collapse: collapse; font-size: 0.95rem; display: none;">
+                        <thead style="position: sticky; top: 0; background: #f8fafc; z-index: 1;">
+                            <tr>
+                                <th
+                                    style="text-align: left; padding: 15px 25px; color: #64748b; font-weight: 700; font-size: 0.75rem; text-transform: uppercase; border-bottom: 1px solid #e2e8f0;">
+                                    District</th>
+                                <th
+                                    style="text-align: right; padding: 15px 25px; color: #64748b; font-weight: 700; font-size: 0.75rem; text-transform: uppercase; border-bottom: 1px solid #e2e8f0;">
+                                    Issued</th>
+                            </tr>
+                        </thead>
+                        <tbody id="leaderboardBody"></tbody>
+                    </table>
+                </div>
+                <div style="background: white; padding: 15px 25px; border-top: 1px solid #e2e8f0; text-align: center;">
+                    <span style="font-size: 0.8rem; color: #64748b; font-weight: 600;">
+                        <i class="fa-solid fa-earth-asia" style="margin-right: 6px; color: var(--primary);"></i>
+                        Impact across <span id="activeDistrictCount"
+                            style="color: var(--primary); font-weight: 900;">0</span> Active Districts
+                    </span>
                 </div>
             </div>
         </div>
@@ -2241,117 +2528,131 @@
 
         const sbClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-        // ==================== DATA MANAGEMENT ====================
-        let whatsappData = {};
-        let currentModalType = 'whatsapp';
+        // WhatsApp links and other dynamic external data from Google Sheets
+        const WHATSAPP_SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS25FQotsgdlN-k6xCO-gczCkMluhjMl59EC7rGVhaOGCM1WF4tC21KVXB7kxmneUVXTGWdrAlc1Hlh/pub?output=csv';
+        let whatsappData = [];
+        let stateMap = new Map();
 
-        const MODAL_CONFIG = {
-            whatsapp: {
-                title: 'Join WhatsApp Group',
-                description: 'Select your state and district to join the official WhatsApp group',
-                icon: 'fa-brands fa-whatsapp',
-                btnText: 'Open WhatsApp Group',
-                btnClass: 'btn-whatsapp'
-            },
-            submit: {
-                title: 'Submit Answer Sheet',
-                description: 'Select your state and district to access the submission portal',
-                icon: 'fa-solid fa-paper-plane',
-                btnText: 'Open Submission Portal',
-                btnClass: 'btn-whatsapp'
-            }
-        };
-
-        // ==================== CSV DATA LOADING ====================
         async function loadWhatsAppData() {
-            const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS25FQotsgdlN-k6xCO-gczCkMluhjMl59EC7rGVhaOGCM1WF4tC21KVXB7kxmneUVXTGWdrAlc1Hlh/pub?output=csv';
-
             try {
-                const response = await fetch(csvUrl + '&t=' + Date.now(), { cache: 'no-store' });
-                const text = await response.text();
-                const rows = text.trim().split('\n');
-                const headers = rows[0].split(',').map(h => h.trim());
+                const response = await fetch(WHATSAPP_SHEET_URL, { cache: 'no-store' });
+                const csvText = await response.text();
 
-                rows.slice(1).forEach(row => {
-                    const values = row.split(',').map(v => v.trim());
-                    const state = values[0];
-                    const district = values[1];
-                    const whatsapp = values[2];
-                    const omr = values[3];
-                    const result = values[4];
+                // Parse CSV (state, district, whatsapp_link, omr_link, result_link)
+                const rows = csvText.split('\n').map(row => row.split(',').map(cell => cell.trim()));
+                whatsappData = rows.slice(1).map(row => ({
+                    state: row[0],
+                    district: row[1],
+                    whatsapp: row[2],
+                    submit: row[3] || row[4] || row[2], // omr or result link, fallback to whatsapp
+                    omr: row[3],
+                    result: row[4]
+                })).filter(item => item.district && item.state);
 
-                    if (state && district) {
-                        if (!whatsappData[state]) whatsappData[state] = {};
-                        whatsappData[state][district] = {
-                            whatsapp: whatsapp || '',
-                            omr: omr || '',
-                            result: result || ''
-                        };
-                    }
+                // Build State -> Districts map
+                stateMap = new Map();
+                whatsappData.forEach(item => {
+                    const s = item.state;
+                    if (!stateMap.has(s)) stateMap.set(s, new Set());
+                    stateMap.get(s).add(item.district);
                 });
 
-                initializeDropdowns();
-                initializeInlineWhatsApp();
-                initializeResultsDistrictDropdown();
-            } catch (error) {
-                console.error('Error loading data:', error);
+                console.log('Sheet data loaded:', whatsappData.length, 'districts');
+                populateStateDropdowns();
+            } catch (err) {
+                console.error('Failed to load data from Sheets:', err);
             }
+        }
+
+        function populateStateDropdowns() {
+            const stateSelects = [
+                document.getElementById('stateSelect'),
+                document.getElementById('wa_stateSelect')
+            ];
+            const states = Array.from(stateMap.keys()).sort();
+            const options = '<option value="">-- Choose State --</option>' +
+                states.map(s => `<option value="${s}">${s}</option>`).join('');
+
+            stateSelects.forEach(sel => {
+                if (sel) {
+                    sel.innerHTML = options;
+                    sel.disabled = false;
+                }
+            });
         }
 
         // ==================== DROPDOWN MANAGEMENT ====================
         function initializeDropdowns() {
             const stateSelect = document.getElementById('stateSelect');
-            const states = Object.keys(whatsappData).sort();
+            const districtSelect = document.getElementById('districtSelect');
+            const actionBtn = document.getElementById('modalActionBtn');
 
-            stateSelect.innerHTML = '<option value="">-- Choose State --</option>' +
-                states.map(state => `<option value="${state}">${state}</option>`).join('');
-
-            stateSelect.addEventListener('change', function () {
-                updateDistrictDropdown(this.value);
+            stateSelect.addEventListener('change', () => {
+                const state = stateSelect.value;
+                const districts = state ? Array.from(stateMap.get(state) || []).sort() : [];
+                districtSelect.innerHTML = '<option value="">-- Choose District --</option>' +
+                    districts.map(d => `<option value="${d}">${d}</option>`).join('');
+                districtSelect.disabled = !state;
+                if (actionBtn) actionBtn.disabled = true;
             });
 
-            document.getElementById('districtSelect').addEventListener('change', updateModalButton);
+            districtSelect.addEventListener('change', () => {
+                const district = districtSelect.value;
+                const state = stateSelect.value;
+                const data = whatsappData.find(d => d.district === district && d.state === state);
+
+                if (actionBtn) {
+                    actionBtn.disabled = !district;
+                    actionBtn.onclick = () => {
+                        if (!data) return alert('Link coming soon...');
+                        const link = (currentModalType === 'submit') ? data.submit : data.whatsapp;
+                        if (link && link.startsWith('http')) window.open(link, '_blank');
+                        else alert('Link not available yet.');
+                    };
+                }
+            });
         }
 
         function initializeInlineWhatsApp() {
             const wa_state = document.getElementById('wa_stateSelect');
             const wa_district = document.getElementById('wa_districtSelect');
-            const openLink = document.getElementById('wa_openLink');
+            const wa_btn = document.getElementById('wa_openLink');
 
-            const states = Object.keys(whatsappData).sort();
-            wa_state.innerHTML = '<option value="">-- Select State --</option>' +
-                states.map(state => `<option value="${state}">${state}</option>`).join('');
-
-            wa_state.addEventListener('change', function () {
-                const state = this.value;
-                if (!state || !whatsappData[state]) {
-                    wa_district.innerHTML = '<option value="">-- Select District --</option>';
-                    wa_district.disabled = true;
-                    return;
-                }
-
-                const districts = Object.keys(whatsappData[state]).sort();
-                wa_district.innerHTML = '<option value="">-- Select District --</option>' +
-                    districts.map(district => `<option value="${district}">${district}</option>`).join('');
-                wa_district.disabled = false;
-            });
-
-            wa_district.addEventListener('change', function () {
+            wa_state.addEventListener('change', () => {
                 const state = wa_state.value;
-                const district = this.value;
-
-                if (state && district && whatsappData[state] && whatsappData[state][district]) {
-                    const link = whatsappData[state][district].whatsapp;
-                    if (link) {
-                        openLink.href = link;
-                        openLink.onclick = () => window.open(link, '_blank');
-                    }
-                }
+                const districts = state ? Array.from(stateMap.get(state) || []).sort() : [];
+                wa_district.innerHTML = '<option value="">-- Choose District --</option>' +
+                    districts.map(d => `<option value="${d}">${d}</option>`).join('');
+                wa_district.disabled = !state;
             });
+
+            if (wa_btn) {
+                wa_btn.onclick = (e) => {
+                    e.preventDefault();
+                    const state = wa_state.value;
+                    const district = wa_district.value;
+                    if (!state || !district) return alert('Please select State and District');
+
+                    const data = whatsappData.find(d => d.district === district && d.state === state);
+                    if (data && data.whatsapp && data.whatsapp.startsWith('http')) {
+                        window.open(data.whatsapp, '_blank');
+                    } else {
+                        alert('WhatsApp group link coming soon...');
+                    }
+                };
+            }
         }
 
+        let globalDistricts = [];
+
         async function initializeResultsDistrictDropdown() {
-            const resultDistrictSelect = document.getElementById('resultDistrictSelect');
+            const districtDropdown = document.getElementById('districtDropdown');
+            const districtInput = document.getElementById('districtInput');
+            const districtList = document.getElementById('districtList');
+            const selectedDistrictHidden = document.getElementById('selectedDistrict');
+
+            districtList.innerHTML = '<div class="premium-dropdown-no-results"><i class="fa-solid fa-circle-notch fa-spin"></i> Loading districts...</div>';
+
             let allDistricts = new Set();
             let lastDistrict = null;
             let hasMore = true;
@@ -2359,14 +2660,14 @@
 
             try {
                 // Optimized Skip-Scan to get unique districts from large table
-                while (hasMore && safetyCounter < 50) { // Safety break at 50 unique scans
+                while (hasMore && safetyCounter < 100) {
                     safetyCounter++;
                     let query = sbClient
                         .from('students')
                         .select('"District"')
                         .neq('District', null)
                         .order('District', { ascending: true })
-                        .limit(1); // We only need the NEXT unique district
+                        .limit(1);
 
                     if (lastDistrict) {
                         query = query.gt('District', lastDistrict);
@@ -2384,70 +2685,311 @@
                     }
                 }
 
-                const sortedDistricts = Array.from(allDistricts).sort();
+                globalDistricts = Array.from(allDistricts).sort();
 
-                if (sortedDistricts.length > 0) {
-                    resultDistrictSelect.innerHTML = '<option value="">-- Choose Your District --</option>' +
-                        sortedDistricts.map(district => `<option value="${district}">${district}</option>`).join('');
-                    console.log(`✅ Success: Loaded ${sortedDistricts.length} unique districts using Skip-Scan.`);
-                } else {
-                    throw new Error('No districts found in Supabase');
+                // If fetch failed or empty, use fallback/error
+                if (globalDistricts.length === 0) throw new Error('No districts returned from Supabase');
+
+                renderDistrictDropdown(globalDistricts);
+
+                // Hook: Update other district selects on the page with Supabase data
+                updateAllOtherDistrictSelects(globalDistricts);
+
+            } catch (err) {
+                console.error('Supabase district fetch failed:', err);
+                districtList.innerHTML = '<div class="premium-dropdown-no-results">Unable to load districts. Please check your connection.</div>';
+            }
+
+            // Setup Search & Selection Logic
+            districtInput.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const isActive = districtDropdown.classList.contains('active');
+
+                if (!isActive) {
+                    districtDropdown.classList.add('active');
+                    districtInput.readOnly = false;
+                    districtInput.value = '';
+                    districtInput.placeholder = 'Type to search...';
+                    renderDistrictDropdown(globalDistricts);
+                    districtInput.focus();
+                }
+            });
+
+            districtInput.addEventListener('input', (e) => {
+                const term = e.target.value.toLowerCase().trim();
+                const filtered = globalDistricts.filter(d => d.toLowerCase().includes(term));
+                renderDistrictDropdown(filtered);
+            });
+
+            // Close on click outside
+            document.addEventListener('click', (e) => {
+                if (!districtDropdown.contains(e.target)) {
+                    closeDistrictDropdown();
+                }
+            });
+        }
+
+        async function updateGlobalStats() {
+            try {
+                // Sum all download counts across all districts
+                const { data, error } = await sbClient
+                    .from('students')
+                    .select('"Download Count"')
+                    .not('Download Count', 'is', null);
+
+                if (error) throw error;
+
+                const total = data.reduce((sum, row) => sum + (row["Download Count"] || 0), 0);
+                const statsEl = document.getElementById('globalDownloadCount');
+                if (statsEl) {
+                    const current = parseInt(statsEl.innerText.replace(/,/g, '')) || 0;
+                    animateValue(statsEl, current, total, 1000);
                 }
             } catch (err) {
-                console.error('Supabase district fetch failed, using fallback:', err);
-                // System fallback
-                const districts = new Set();
-                Object.values(whatsappData).forEach(stateDistricts => {
-                    Object.keys(stateDistricts).forEach(district => districts.add(district));
-                });
-                const sortedDistricts = Array.from(districts).sort();
-                resultDistrictSelect.innerHTML = '<option value="">-- Choose Your District (System Fallback) --</option>' +
-                    sortedDistricts.map(district => `<option value="${district}">${district}</option>`).join('');
+                console.warn('Global stats fetch failed:', err);
             }
+        }
+
+        async function updateDistrictStats(district) {
+            if (!district) return;
+
+            const statsWrapper = document.getElementById('districtStatsWrapper');
+            const nationwideWrapper = document.getElementById('nationwideStatsWrapper');
+            const countEl = document.getElementById('districtDownloadCount');
+            const nameEl = document.getElementById('statDistrictName');
+
+            if (statsWrapper) statsWrapper.style.display = 'flex';
+            if (nationwideWrapper) nationwideWrapper.style.display = 'none';
+            if (nameEl) nameEl.innerText = district;
+
+            try {
+                // Sum download counts for the specific district
+                const { data, error } = await sbClient
+                    .from('students')
+                    .select('"Download Count"')
+                    .eq('District', district)
+                    .not('Download Count', 'is', null);
+
+                if (error) throw error;
+
+                const total = data.reduce((sum, row) => sum + (row["Download Count"] || 0), 0);
+                if (countEl) {
+                    const current = parseInt(countEl.innerText.replace(/,/g, '')) || 0;
+                    animateValue(countEl, current, total, 1000);
+                }
+            } catch (err) {
+                console.warn('District stats fetch failed:', err);
+            }
+        }
+
+        async function fetchDistrictLeaderboard() {
+            const container = document.getElementById('districtImpactContainer');
+            const loader = document.getElementById('leaderboardLoader');
+            const progress = document.getElementById('leaderboardProgress');
+            const table = document.getElementById('leaderboardTable');
+            const body = document.getElementById('leaderboardBody');
+            const countLabel = document.getElementById('activeDistrictCount');
+
+            if (container) container.style.display = 'block';
+
+            try {
+                let allData = [];
+                let hasMore = true;
+                const PAGE_SIZE = 1000;
+                let pageCount = 0;
+
+                while (hasMore) {
+                    pageCount++;
+                    if (progress) progress.innerText = `Searching Database: Page ${pageCount}...`;
+
+                    const { data, error } = await sbClient
+                        .from('students')
+                        .select('District, "Download Count"')
+                        .not('Download Count', 'is', null)
+                        .order('VEC Exam Code', { ascending: true })
+                        .range(allData.length, allData.length + PAGE_SIZE - 1);
+
+                    if (error) throw error;
+                    if (!data || data.length === 0) {
+                        hasMore = false;
+                    } else {
+                        allData = allData.concat(data);
+                        if (data.length < PAGE_SIZE) hasMore = false;
+                    }
+                    if (pageCount > 150) break;
+                }
+
+                const districtMap = new Map();
+                allData.forEach(row => {
+                    if (!row.District) return;
+                    const prev = districtMap.get(row.District) || 0;
+                    districtMap.set(row.District, prev + (row["Download Count"] || 0));
+                });
+
+                const sortedDistricts = Array.from(districtMap.entries())
+                    .filter(([name, count]) => count > 0)
+                    .sort((a, b) => b[1] - a[1]);
+
+                if (sortedDistricts.length === 0) {
+                    if (loader) loader.innerHTML = '<span style="font-size: 0.85rem; color: #94a3b8; font-weight: 600;">No downloads tracked yet.</span>';
+                    return;
+                }
+
+                if (countLabel) countLabel.innerText = sortedDistricts.length;
+
+                body.innerHTML = sortedDistricts.map(([name, count], index) => `
+                    <tr style="border-bottom: 1px solid #f8fafc; transition: all 0.2s;" onmouseover="this.style.background='#f8fafc'" onmouseout="this.style.background='transparent'">
+                        <td style="padding: 15px 25px; color: #1e293b; font-weight: 700; font-size: 0.9rem;">
+                            <span style="display: inline-block; width: 25px; color: #94a3b8; font-weight: 500; font-size: 0.8rem;">#${index + 1}</span>
+                            ${name}
+                        </td>
+                        <td style="padding: 15px 25px; text-align: right; font-weight: 800; color: var(--primary); font-family: monospace; font-size: 1rem;">
+                            ${count.toLocaleString()}
+                        </td>
+                    </tr>
+                `).join('');
+
+                if (loader) loader.style.display = 'none';
+                if (table) table.style.display = 'table';
+
+                // SYNC GLOBAL STATS: Update nationwide count with 100% database scan results
+                const totalDownloads = Array.from(districtMap.values()).reduce((sum, count) => sum + count, 0);
+                const globalStatsEl = document.getElementById('globalDownloadCount');
+                if (globalStatsEl) {
+                    const current = parseInt(globalStatsEl.innerText.replace(/,/g, '')) || 0;
+                    animateValue(globalStatsEl, current, totalDownloads, 1000);
+                }
+            } catch (err) {
+                console.warn('Leaderboard fetch failed:', err);
+            }
+        }
+
+        function animateValue(obj, start, end, duration) {
+            let startTimestamp = null;
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                obj.innerHTML = Math.floor(progress * (end - start) + start).toLocaleString();
+                if (progress < 1) {
+                    window.requestAnimationFrame(step);
+                }
+            };
+            window.requestAnimationFrame(step);
+        }
+
+        function closeDistrictDropdown() {
+            const districtDropdown = document.getElementById('districtDropdown');
+            const districtInput = document.getElementById('districtInput');
+            const selectedDistrictHidden = document.getElementById('selectedDistrict');
+
+            districtDropdown.classList.remove('active');
+            districtInput.readOnly = true;
+            districtInput.placeholder = '🔍 Search or select district...';
+
+            if (selectedDistrictHidden.value) {
+                districtInput.value = selectedDistrictHidden.value;
+            } else {
+                districtInput.value = '';
+            }
+        }
+
+        function renderDistrictDropdown(districts) {
+            const districtList = document.getElementById('districtList');
+            const selectedDistrictHidden = document.getElementById('selectedDistrict');
+
+            if (districts.length === 0) {
+                districtList.innerHTML = '<div class="premium-dropdown-no-results">No districts found matching search</div>';
+                return;
+            }
+
+            districtList.innerHTML = districts.map(district => `
+                <div class="premium-dropdown-item ${selectedDistrictHidden.value === district ? 'selected' : ''}" 
+                     data-district="${district.replace(/'/g, "&apos;")}">
+                    <i class="fa-solid fa-location-dot" style="font-size: 0.8rem; opacity: 0.5;"></i>
+                    ${district}
+                </div>
+            `).join('');
+
+            // Add event listeners to newly rendered items
+            districtList.querySelectorAll('.premium-dropdown-item').forEach(item => {
+                item.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const district = item.getAttribute('data-district').replace(/&apos;/g, "'");
+                    selectDistrict(district);
+                });
+            });
+        }
+
+        function selectDistrict(district) {
+            const districtInput = document.getElementById('districtInput');
+            const selectedDistrictHidden = document.getElementById('selectedDistrict');
+
+            selectedDistrictHidden.value = district;
+            districtInput.value = district;
+            closeDistrictDropdown();
+
+            // Fetch and show district-specific stats
+            updateDistrictStats(district);
+
+            // Re-render to update selected state inside the list for next time
+            renderDistrictDropdown(globalDistricts);
+        };
+
+        function updateAllOtherDistrictSelects(districts) {
+            const districtSelects = [
+                document.getElementById('districtSelect'),
+                document.getElementById('wa_districtSelect')
+            ];
+
+            const options = '<option value="">-- Select District --</option>' +
+                districts.map(d => `<option value="${d}">${d}</option>`).join('');
+
+            districtSelects.forEach(select => {
+                if (select) {
+                    select.innerHTML = options;
+                    select.disabled = false;
+
+                    // Add listeners for simplified modal/inline logic
+                    select.addEventListener('change', () => {
+                        const district = select.value;
+                        const btn = document.getElementById('modalActionBtn');
+                        const data = whatsappData.find(d => d.district === district);
+
+                        if (btn) {
+                            btn.disabled = !district;
+                            btn.onclick = () => {
+                                if (!data) {
+                                    alert('Link coming soon for ' + district);
+                                    return;
+                                }
+                                const link = (currentModalType === 'submit') ? data.submit : data.whatsapp;
+                                if (link && link.startsWith('http')) {
+                                    window.open(link, '_blank');
+                                } else {
+                                    alert('Link not available yet for ' + district);
+                                }
+                            };
+                        }
+                    });
+                }
+            });
         }
 
         function updateDistrictDropdown(state) {
-            const districtSelect = document.getElementById('districtSelect');
-
-            if (!state || !whatsappData[state]) {
-                districtSelect.innerHTML = '<option value="">-- Choose District --</option>';
-                districtSelect.disabled = true;
-                updateModalButton();
-                return;
-            }
-
-            const districts = Object.keys(whatsappData[state]).sort();
-            districtSelect.innerHTML = '<option value="">-- Choose District --</option>' +
-                districts.map(district => `<option value="${district}">${district}</option>`).join('');
-            districtSelect.disabled = false;
-            updateModalButton();
+            // Deprecated: Results dropdown is now searchable and Supabase-only
         }
 
         function updateModalButton() {
-            const state = document.getElementById('stateSelect').value;
-            const district = document.getElementById('districtSelect').value;
-            const btn = document.getElementById('modalActionBtn');
-
-            if (!state || !district || !whatsappData[state] || !whatsappData[state][district]) {
-                btn.disabled = true;
-                btn.onclick = null;
-                return;
-            }
-
-            const link = currentModalType === 'whatsapp'
-                ? whatsappData[state][district].whatsapp
-                : whatsappData[state][district].omr;
-
-            if (link) {
-                btn.disabled = false;
-                btn.onclick = () => window.open(link, '_blank');
-            } else {
-                btn.disabled = true;
-                btn.onclick = null;
-            }
+            // Deprecated: Logic moved to updateAllOtherDistrictSelects
         }
 
         // ==================== MODAL MANAGEMENT ====================
+        let currentModalType = 'whatsapp';
+        const MODAL_CONFIG = {
+            whatsapp: { title: 'Join WhatsApp Group', description: 'Select your district to join the official group', icon: 'fa-brands fa-whatsapp', btnText: 'Open WhatsApp Group', btnClass: 'btn-whatsapp' },
+            submit: { title: 'Submit Answer Sheet', description: 'Select your district to access the submission portal', icon: 'fa-solid fa-paper-plane', btnText: 'Open Submission Portal', btnClass: 'btn-whatsapp' }
+        };
+
         function openModal(type) {
             currentModalType = type || 'whatsapp';
             const config = MODAL_CONFIG[currentModalType];
@@ -2459,9 +3001,8 @@
             document.getElementById('modalBtnText').textContent = config.btnText;
             document.getElementById('modalActionBtn').className = 'modal-action-btn ' + config.btnClass;
 
-            document.getElementById('stateSelect').value = '';
+            document.getElementById('stateSelect').value = 'India';
             document.getElementById('districtSelect').value = '';
-            document.getElementById('districtSelect').disabled = true;
             document.getElementById('modalActionBtn').disabled = true;
 
             document.getElementById('modalBackdrop').classList.add('show');
@@ -2478,14 +3019,14 @@
 
         // ==================== RESULTS SEARCH ====================
         async function searchCertificate() {
+            const districtVal = document.getElementById('selectedDistrict').value;
             const inputVal = document.getElementById('vecCodeInput').value.trim();
-            const districtVal = document.getElementById('resultDistrictSelect').value;
             const searchBtn = document.getElementById('searchBtn');
             const errorDisplay = document.getElementById('errorDisplay');
             const resultDisplay = document.getElementById('resultDisplay');
 
             if (!districtVal) {
-                alert('Please choose your District first');
+                alert('Please search and select your District first');
                 return;
             }
 
@@ -2606,6 +3147,17 @@
                     await sbClient.rpc('increment_download_count', {
                         exam_code: examCode
                     });
+
+                    // Update stats after incrementing
+                    const currentDistrict = document.getElementById('selectedDistrict').value;
+                    if (currentDistrict) {
+                        updateDistrictStats(currentDistrict);
+                    } else {
+                        updateGlobalStats();
+                    }
+
+                    // Always refresh leaderboard after a download to show live impact
+                    fetchDistrictLeaderboard();
                 } catch (rpcErr) {
                     console.warn('Tracking ignored:', rpcErr);
                 }
@@ -2769,10 +3321,16 @@
         // ==================== INITIALIZATION ====================
         document.addEventListener('DOMContentLoaded', function () {
             // Set footer year
-            document.getElementById('footerYear').textContent = new Date().getFullYear();
+            const footerYear = document.getElementById('footerYear');
+            if (footerYear) footerYear.textContent = new Date().getFullYear();
 
-            // Load WhatsApp data
+            // Start loading data
             loadWhatsAppData();
+            initializeDropdowns();
+            initializeInlineWhatsApp();
+            initializeResultsDistrictDropdown();
+            updateGlobalStats();
+            fetchDistrictLeaderboard();
 
             // Initialize counter animation
             const observer = new IntersectionObserver((entries) => {
