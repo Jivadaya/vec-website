@@ -1,0 +1,12 @@
+--- Definition of 'increment_download_count' ---
+
+begin
+  update students
+  set 
+    "Download Count" = coalesce("Download Count", 0) + 1,
+    "Last Download At" = now()
+  where "VEC Exam Code" = exam_code;
+end;
+
+========================================
+

@@ -1,0 +1,27 @@
+--- Definition of 'get_district_leaderboard' ---
+
+BEGIN
+  RETURN QUERY
+  SELECT 
+    CAST("District" AS text) AS dist_name, 
+    SUM(COALESCE("Download Count", 0))::bigint AS issued_count
+  FROM students
+  WHERE "Download Count" > 0
+  GROUP BY "District"
+  ORDER BY issued_count DESC;
+END;
+
+========================================
+
+--- Definition of 'get_unique_districts' ---
+
+BEGIN
+  RETURN QUERY
+  SELECT DISTINCT "District"
+  FROM students
+  WHERE "District" IS NOT NULL
+  ORDER BY "District" ASC;
+END;
+
+========================================
+
