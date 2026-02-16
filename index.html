@@ -2159,7 +2159,7 @@
                     <div class="form-group" style="margin-bottom: 0;">
                         <label
                             style="display: block; margin-bottom: 12px; font-weight: 700; color: #475569; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em;">Step
-                            2: Enter Roll No / Mobile</label>
+                            2: Enter VEC Exam Code / Mobile</label>
                         <div class="search-input-wrapper"
                             style="box-shadow: 0 1px 2px rgba(0,0,0,0.05); border-radius: 12px; border: 1px solid #cbd5e1; background: white;">
                             <input type="text" id="vecCodeInput" placeholder="e.g. 9876543210 or VEC12345"
@@ -3024,7 +3024,7 @@
                 }
             } catch (error) {
                 console.error('Search error:', error);
-                alert('Server is busy. Please wait for the countdown.');
+                alert('VEC Exam Code not found.');
             } finally {
                 startSearchCountdown(searchBtn);
             }
