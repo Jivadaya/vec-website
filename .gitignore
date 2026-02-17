@@ -6,6 +6,7 @@ venv/
 env/
 
 # Data & Secrets (CRITICAL)
+.env
 cert-generator/token.json
 cert-generator/credentials.json
 cert-generator/service_account.json

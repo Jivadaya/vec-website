@@ -1,11 +1,16 @@
 import psycopg2
+import os
+from dotenv import load_dotenv
+
+# Load environment variables from .env
+load_dotenv()
 
 SUPABASE_DB = {
-    "host": "aws-1-ap-southeast-1.pooler.supabase.com",
-    "dbname": "postgres",
-    "user": "postgres.qnvhtrfdwihmyjerujqa",
-    "password": "RadhaKrishna@!08", 
-    "port": 6543
+    "host": os.getenv("SUPABASE_DB_HOST"),
+    "dbname": os.getenv("SUPABASE_DB_NAME"),
+    "user": os.getenv("SUPABASE_DB_USER"),
+    "password": os.getenv("SUPABASE_DB_PASSWORD"),
+    "port": int(os.getenv("SUPABASE_DB_PORT", 6543))
 }
 
 def check_districts():
