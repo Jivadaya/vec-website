@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Inspect Schema</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+
+<body>
+    <h3>Column Inspector</h3>
+    <pre id="output">Loading...</pre>
+    <script type="module">
+        import { config } from './admin/js/config.js';
+        const supabase = window.supabase.createClient(config.SUPABASE_URL, config.SUPABASE_KEY);
+
+        async function inspect() {
+            try {
+                // Fetch one record to see keys
+                const { data, error } = await supabase.from('students').select('*').limit(1);
+                if (error) throw error;
+                if (!data || data.length === 0) {
+                    document.getElementById('output').innerText = "No data in table to inspect keys from.";
+                    return;
+                }
+                const keys = Object.keys(data[0]);
+                document.getElementById('output').innerText = "Available Columns:\n" + keys.join('\n');
+            } catch (err) {
+                document.getElementById('output').innerText = "Error: " + err.message;
+            }
+        }
+        inspect();
+    </script>
+</body>
+
+</html>
