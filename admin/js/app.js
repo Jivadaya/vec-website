@@ -194,69 +194,122 @@ async function loadDistricts(role, userDistrict) {
     }
 }
 
-// Main Data Fetcher
-async function loadStudents() {
+// ==================== STUDENT DATA & TABLE ====================
+async function loadStudents(page = 1) {
+    // Correct ID: studentsTableBody (Plural)
     const tbody = document.getElementById('studentsTableBody');
-    tbody.innerHTML = `<tr><td colspan="6" class="text-center py-5"><i class="fa-solid fa-circle-notch fa-spin text-primary fa-2x"></i></td></tr>`;
+    const totalCountEl = document.getElementById('totalCount');
+
+    // Pagination Elements
+    const prevBtn = document.getElementById('prevPageBtn');
+    const nextBtn = document.getElementById('nextPageBtn');
+    const pageSpan = document.getElementById('currentPage');
+
+    if (!tbody) { console.error('Table body not found!'); return; }
+
+    tbody.innerHTML = '<tr><td colspan="8" class="text-center">Loading data...</td></tr>';
+
+    // Calculate Range
+    const from = (page - 1) * state.pageSize;
+    const to = from + state.pageSize - 1;
 
     try {
-        let query = supabase
-            .from('students')
-            .select('*', { count: 'exact' });
+        let data, count, error;
 
-        // Apply Search
-        if (state.filters.search) {
-            const term = `%${state.filters.search}%`;
-            query = query.or(`"Name of Student".ilike.${term},"VEC Exam Code".ilike.${term},"Mobile Number".ilike.${term}`);
+        // SMART SEARCH: Use RPC if searching
+        if (state.filters.search && state.filters.search.trim().length > 0) {
+            const term = state.filters.search.trim();
+            const rpcParams = { term: term };
+
+            let query = supabase.rpc('search_students', rpcParams);
+
+            if (state.filters.district) {
+                query = query.eq('District', state.filters.district);
+            }
+
+            const res = await query;
+            data = res.data || [];
+            error = res.error;
+            count = data.length;
+
+            const allData = data;
+            data = allData.slice(from, from + state.pageSize);
+
+        } else {
+            // STANDARD FETCH
+            let query = supabase
+                .from('students')
+                .select('*', { count: 'exact' });
+
+            if (state.filters.district) {
+                query = query.eq('District', state.filters.district);
+            }
+
+            // Fallback ordering
+            query = query.order('VEC Exam Code', { ascending: true }).range(from, to);
+
+            const res = await query;
+            data = res.data;
+            count = res.count;
+            error = res.error;
         }
-
-        // Apply District Filter
-        if (state.filters.district) {
-            query = query.eq('District', state.filters.district); // Specific filter selected
-        } else if (state.allowedDistricts && state.allowedDistricts.length > 0) {
-            // No specific filter, but restricted to a list
-            query = query.in('District', state.allowedDistricts);
-        }
-
-        // Pagination
-        const from = (state.currentPage - 1) * state.pageSize;
-        const to = from + state.pageSize
-        const { data, error, count } = await query
-            .order('Last Download At', { ascending: false, nullsFirst: false }) // Use an existing timestamp or fallback to Name
-            .range(from, to);
 
         if (error) throw error;
 
-        renderTable(data);
-        updatePagination(count);
+        state.currentPage = page;
+        state.totalRecords = count;
+
+        if (totalCountEl) totalCountEl.textContent = `${count} Records`;
+
+        renderTable(data, tbody);
+
+        // Update Pagination Controls
+        const totalPages = Math.ceil(count / state.pageSize) || 1;
+
+        if (pageSpan) pageSpan.textContent = `${page} / ${totalPages}`;
+
+        if (prevBtn) {
+            prevBtn.disabled = page <= 1;
+            prevBtn.onclick = () => loadStudents(page - 1);
+        }
+
+        if (nextBtn) {
+            nextBtn.disabled = page >= totalPages;
+            nextBtn.onclick = () => loadStudents(page + 1);
+        }
 
     } catch (err) {
-        console.error('Error fetching students:', err);
-        tbody.innerHTML = `<tr><td colspan="6" class="text-center text-danger py-4">Error loading data. Please try again.</td></tr>`;
+        console.error('Data Load Error:', err);
+        tbody.innerHTML = `<tr><td colspan="8" class="text-danger text-center">Error loading data: ${err.message}</td></tr>`;
     }
 }
 
-function renderTable(students) {
-    const tbody = document.getElementById('studentsTableBody');
-    if (!students.length) {
-        tbody.innerHTML = `<tr><td colspan="6" class="text-center py-4 text-secondary">No students found.</td></tr>`;
+function highlightMatch(text, term) {
+    if (!text) return '';
+    const str = String(text);
+    if (!term) return str;
+    const regex = new RegExp(`(${term})`, 'gi');
+    return str.replace(regex, '<mark class="bg-warning text-dark p-0">$1</mark>');
+}
+
+function renderTable(data, tbody) {
+    if (data.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="8" class="text-center">No records found.</td></tr>';
         return;
     }
 
-    tbody.innerHTML = students.map(student => `
+    const searchTerm = state.filters.search ? state.filters.search.trim() : '';
+
+    tbody.innerHTML = data.map(s => `
         <tr>
-            <td class="fw-bold text-dark">${student['Name of Student'] || '-'}</td>
-            <td><span class="badge bg-light text-dark border">${student['VEC Exam Code'] || '-'}</span></td>
-            <td>${student['Mobile Number'] || '-'}</td>
-            <td>${student['District'] || '-'}</td>
+            <td>${highlightMatch(s['Name of Student'], searchTerm)}</td>
+            <td>${highlightMatch(s['VEC Exam Code'], searchTerm)}</td>
+            <td>${highlightMatch(s['Mobile Number'], searchTerm)}</td>
+            <td>${s['District']}</td>
+            <td>${s['Result Grades'] || '-'}</td>
             <td>
-                <span class="badge-custom ${getGradeBadgeClass(student['Result Grades'])}">
-                    ${student['Result Grades'] || 'Pending'}
-                </span>
-            </td>
-            <td>
-                <button class="btn btn-sm btn-light border" onclick="window.editStudent('${student['VEC Exam Code']}')">
-                    <i class="fa-solid fa-pen text-primary"></i>
+                <button class="btn btn-sm btn-outline-primary" onclick="window.editStudent('${s['VEC Exam Code']}')">
+                    <i class="fa-solid fa-pen"></i>
                 </button>
             </td>
         </tr>
@@ -298,18 +351,34 @@ window.clearFilters = () => {
     loadStudents();
 };
 
-// Pagination Actions
-document.getElementById('prevPageBtn').addEventListener('click', () => {
-    if (state.currentPage > 1) {
-        state.currentPage--;
-        loadStudents();
+//    // Filter Listeners
+document.getElementById('districtFilter').addEventListener('change', (e) => {
+    state.filters.district = e.target.value;
+    loadStudents(1);
+});
+
+const searchInput = document.getElementById('searchInput');
+let debounceTimer;
+
+// Live Search with Debounce
+searchInput.addEventListener('input', (e) => {
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(() => {
+        state.filters.search = e.target.value;
+        loadStudents(1);
+    }, 300); // 300ms delay
+});
+
+// Also trigger on Enter (immediate)
+searchInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+        clearTimeout(debounceTimer);
+        state.filters.search = e.target.value;
+        loadStudents(1);
     }
 });
 
-document.getElementById('nextPageBtn').addEventListener('click', () => {
-    state.currentPage++;
-    loadStudents();
-});
+// Pagination Listeners handled in loadStudents directly now via onclick assignments
 
 // Modal & CRUD
 const studentModal = new bootstrap.Modal(document.getElementById('studentModal'));
@@ -695,6 +764,51 @@ window.uploadCSV = () => {
         }
     });
 };
+
+// Pagination Renderer
+function renderPagination(total, container) {
+    const totalPages = Math.ceil(total / state.pageSize);
+    if (totalPages <= 1) {
+        container.innerHTML = '';
+        return;
+    }
+
+    let html = '';
+
+    // Previous
+    html += `
+        <li class="page-item ${state.currentPage === 1 ? 'disabled' : ''}">
+            <button class="page-link" onclick="loadStudents(${state.currentPage - 1})">Previous</button>
+        </li>
+    `;
+
+    // Page Numbers (Simplified logic: show current, prev, next)
+    const start = Math.max(1, state.currentPage - 1);
+    const end = Math.min(totalPages, state.currentPage + 1);
+
+    if (start > 1) html += `<li class="page-item"><button class="page-link" onclick="loadStudents(1)">1</button></li>`;
+    if (start > 2) html += `<li class="page-item disabled"><span class="page-link">...</span></li>`;
+
+    for (let i = start; i <= end; i++) {
+        html += `
+            <li class="page-item ${i === state.currentPage ? 'active' : ''}">
+                <button class="page-link" onclick="loadStudents(${i})">${i}</button>
+            </li>
+        `;
+    }
+
+    if (end < totalPages - 1) html += `<li class="page-item disabled"><span class="page-link">...</span></li>`;
+    if (end < totalPages) html += `<li class="page-item"><button class="page-link" onclick="loadStudents(${totalPages})">${totalPages}</button></li>`;
+
+    // Next
+    html += `
+        <li class="page-item ${state.currentPage === totalPages ? 'disabled' : ''}">
+            <button class="page-link" onclick="loadStudents(${state.currentPage + 1})">Next</button>
+        </li>
+    `;
+
+    container.innerHTML = html;
+}
 
 // Start App
 checkSession();

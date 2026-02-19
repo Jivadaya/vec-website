@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Debug Search</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body class="p-5">
+    <h2>Search Debugger</h2>
+
+    <div class="input-group mb-3">
+        <input type="text" id="term" class="form-control" placeholder="Enter search term (e.g. Rishi)">
+        <button class="btn btn-primary" onclick="runSearch()">Test Search</button>
+    </div>
+
+    <div id="output" class="p-3 bg-light border" style="white-space: pre-wrap; height: 300px; overflow: auto;"></div>
+
+    <script type="module">
+        import { config } from './js/config.js';
+        const supabase = window.supabase.createClient(config.SUPABASE_URL, config.SUPABASE_KEY);
+        const out = document.getElementById('output');
+
+        window.runSearch = async () => {
+            const term = document.getElementById('term').value;
+            out.textContent = `Searching for "${term}"...\n`;
+
+            const start = performance.now();
+
+            // Replicate app.js logic EXACTLY
+            const queryStr = `Name of Student.ilike.%${term}%,VEC Exam Code.ilike.%${term}%,Mobile Number.ilike.%${term}%`;
+
+            out.textContent += `Query: .or("${queryStr}")\n`;
+
+            const { data, error, count } = await supabase
+                .from('students')
+                .select('*', { count: 'exact' })
+                .or(queryStr)
+                .range(0, 9); // First 10
+
+            const end = performance.now();
+
+            if (error) {
+                out.textContent += `❌ ERROR: ${error.message}\nCode: ${error.code}\nDetails: ${error.details}`;
+            } else {
+                out.textContent += `✅ SUCCESS: Found ${count} records in ${(end - start).toFixed(2)}ms\n\n`;
+                if (data.length === 0) {
+                    out.textContent += "Result: [] (Empty)";
+                } else {
+                    out.textContent += JSON.stringify(data[0], null, 2); // Show first result
+                }
+            }
+        };
+    </script>
+</body>
+
+</html>
