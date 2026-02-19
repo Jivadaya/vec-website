@@ -407,7 +407,7 @@ window.showToast = (title, message, type = 'info') => {
 
 // ==================== USER MANAGEMENT (Super Admin) ====================
 window.openUserManagement = async () => {
-    // Create Modal on the fly
+    // Create User List Modal
     let modalEl = document.getElementById('userModal');
     if (!modalEl) {
         document.body.insertAdjacentHTML('beforeend', `
@@ -419,8 +419,8 @@ window.openUserManagement = async () => {
                             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                         </div>
                         <div class="modal-body">
-                            <table class="table table-bordered table-striped">
-                                <thead><tr><th>Email</th><th>Role</th><th>District</th><th>Action</th></tr></thead>
+                            <table class="table table-bordered table-striped align-middle">
+                                <thead class="table-light"><tr><th>Email</th><th>Role</th><th>Districts</th><th>Action</th></tr></thead>
                                 <tbody id="userTableBody"></tbody>
                             </table>
                         </div>
@@ -431,6 +431,45 @@ window.openUserManagement = async () => {
         modalEl = document.getElementById('userModal');
     }
 
+    // Create Edit User Modal (Nested)
+    let editModalEl = document.getElementById('editUserModal');
+    if (!editModalEl) {
+        document.body.insertAdjacentHTML('beforeend', `
+            <div class="modal fade" id="editUserModal" tabindex="-1" style="z-index: 1060;">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Edit User Access</h5>
+                            <button type="button" class="btn-close" onclick="closeEditModal()"></button>
+                        </div>
+                        <div class="modal-body">
+                            <input type="hidden" id="editUserId">
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Role</label>
+                                <select id="editUserRole" class="form-select">
+                                    <option value="pending">Pending</option>
+                                    <option value="admin">Admin</option>
+                                    <option value="super_admin">Super Admin</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Assigned Districts</label>
+                                <div class="form-text mb-2">Select districts this user can access.</div>
+                                <div id="districtCheckboxes" class="border rounded p-3 bg-light" style="max-height: 300px; overflow-y: auto;">
+                                    <!-- Checkboxes injected here -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" onclick="closeEditModal()">Cancel</button>
+                            <button type="button" class="btn btn-primary" onclick="window.saveUserChanges()">Save Changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `);
+    }
+
     const modal = new bootstrap.Modal(modalEl);
     modal.show();
     loadUsers();
@@ -438,12 +477,12 @@ window.openUserManagement = async () => {
 
 async function loadUsers() {
     const tbody = document.getElementById('userTableBody');
-    tbody.innerHTML = '<tr><td colspan="4">Loading...</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="4" class="text-center">Loading...</td></tr>';
 
     const { data, error } = await supabase.from('profiles').select('*').order('created_at', { ascending: false });
 
     if (error) {
-        tbody.innerHTML = `<tr><td colspan="4" class="text-danger">${error.message}</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="4" class="text-danger text-center">${error.message}</td></tr>`;
         return;
     }
 
@@ -451,25 +490,103 @@ async function loadUsers() {
         <tr>
             <td>${u.email}</td>
             <td>
-                <select class="form-select form-select-sm" onchange="updateUser('${u.id}', 'role', this.value)">
-                    <option value="pending" ${u.role === 'pending' ? 'selected' : ''}>Pending</option>
-                    <option value="admin" ${u.role === 'admin' ? 'selected' : ''}>Admin</option>
-                    <option value="super_admin" ${u.role === 'super_admin' ? 'selected' : ''}>Super Admin</option>
-                </select>
+                <span class="badge bg-${u.role === 'super_admin' ? 'danger' : (u.role === 'admin' ? 'success' : 'warning text-dark')}">
+                    ${u.role}
+                </span>
             </td>
             <td>
-                <input type="text" class="form-control form-control-sm" 
-                       value="${u.assigned_district || ''}" 
-                       placeholder="All / District Name"
-                       list="districtSuggestions"
-                       onchange="updateUser('${u.id}', 'assigned_district', this.value)">
+                <small class="text-muted">${u.assigned_district || 'None'}</small>
             </td>
             <td>
-                <button class="btn btn-sm btn-outline-danger" onclick="deleteUser('${u.id}')"><i class="fa-solid fa-trash"></i></button>
+                <button class="btn btn-sm btn-outline-primary me-1" onclick="openEditUser('${u.id}', '${u.role}', '${(u.assigned_district || '').replace(/'/g, "\\'")}')">
+                    <i class="fa-solid fa-pen"></i> Edit
+                </button>
+                <button class="btn btn-sm btn-outline-danger" onclick="deleteUser('${u.id}')">
+                    <i class="fa-solid fa-trash"></i>
+                </button>
             </td>
         </tr>
     `).join('');
 }
+
+window.openEditUser = (id, role, currentDistricts) => {
+    document.getElementById('editUserId').value = id;
+    document.getElementById('editUserRole').value = role;
+
+    // Populate Checkboxes
+    const container = document.getElementById('districtCheckboxes');
+    const assigned = currentDistricts.split(',').map(d => d.trim());
+
+    // Ensure districts are allowed unique values logic if needed, but here simply mapping state.districts
+    // We assume state.districts is populated. If not, fallback or re-fetch?
+    // It should be populated by main init. 
+
+    // Sort districts alphabetically
+    const districts = [...(state.districts || [])].sort();
+
+    if (districts.length === 0) {
+        container.innerHTML = '<div class="text-danger">No districts found. Please load data first.</div>';
+    } else {
+        container.innerHTML = `
+            <div class="form-check mb-2 pb-2 border-bottom">
+                <input class="form-check-input" type="checkbox" id="check_ALL" value="ALL" ${assigned.includes('ALL') ? 'checked' : ''}>
+                <label class="form-check-label fw-bold text-primary" for="check_ALL">ALL DISTRICTS (Super Access)</label>
+            </div>
+        ` + districts.map(d => `
+            <div class="form-check">
+                <input class="form-check-input district-check" type="checkbox" value="${d}" id="check_${d.replace(/[^a-zA-Z0-9]/g, '')}" ${assigned.includes(d) ? 'checked' : ''}>
+                <label class="form-check-label" for="check_${d.replace(/[^a-zA-Z0-9]/g, '')}">
+                    ${d}
+                </label>
+            </div>
+        `).join('');
+    }
+
+    // Show Edit Modal
+    const editModal = new bootstrap.Modal(document.getElementById('editUserModal'));
+    editModal.show();
+};
+
+window.closeEditModal = () => {
+    const el = document.getElementById('editUserModal');
+    const modal = bootstrap.Modal.getInstance(el);
+    if (modal) modal.hide();
+};
+
+window.saveUserChanges = async () => {
+    const id = document.getElementById('editUserId').value;
+    const role = document.getElementById('editUserRole').value;
+
+    // Gather Districts
+    const allCheck = document.getElementById('check_ALL');
+    let districtVal = '';
+
+    if (allCheck && allCheck.checked) {
+        districtVal = 'ALL';
+    } else {
+        const checkboxes = document.querySelectorAll('.district-check:checked');
+        const selected = Array.from(checkboxes).map(cb => cb.value);
+        districtVal = selected.join(', ');
+    }
+
+    // Save
+    try {
+        const { error } = await supabase.from('profiles').update({
+            role: role,
+            assigned_district: districtVal
+        }).eq('id', id);
+
+        if (error) throw error;
+
+        showToast('Success', 'User updated successfully', 'success');
+        closeEditModal();
+        loadUsers(); // Refresh list
+
+    } catch (err) {
+        console.error(err);
+        showToast('Error', 'Update failed: ' + err.message, 'error');
+    }
+};
 
 window.updateUser = async (id, field, value) => {
     try {
