@@ -12,7 +12,8 @@ let state = {
     filters: {
         search: '',
         district: ''
-    }
+    },
+    allowedDistricts: []
 };
 
 // DOM Elements
@@ -117,15 +118,17 @@ async function handleLoginSuccess(user) {
         }
     }
 
-    // RBAC: Lock District Filter for District Admins
+    // RBAC: Handle District Filters for Admins
     const filterSelect = document.getElementById('districtFilter');
     if (role === 'admin' && district) {
-        state.filters.district = district;
-        state.userDistrict = district; // Store for validaton
-
-        // We'll enforce this value after loading districts
-        filterSelect.disabled = true;
-        filterSelect.title = "Restricted to your assigned district";
+        state.userDistrict = district; // e.g. 'ALL' or 'Ahmedabad, Surat'
+        if (district !== 'ALL') {
+            state.allowedDistricts = district.split(',').map(d => d.trim());
+        } else {
+            state.allowedDistricts = []; // Empty means all allowed
+        }
+    } else {
+        state.allowedDistricts = [];
     }
 
     // Initial Data Load
@@ -164,6 +167,81 @@ document.getElementById('logoutBtn').addEventListener('click', async () => {
     window.location.reload();
 });
 
+// ==================== PASSWORD RECOVERY ====================
+
+window.openForgotPasswordModal = () => {
+    document.getElementById('forgotPasswordEmail').value = '';
+    const modal = new bootstrap.Modal(document.getElementById('forgotPasswordModal'));
+    modal.show();
+};
+
+window.sendPasswordResetEmail = async () => {
+    const email = document.getElementById('forgotPasswordEmail').value;
+    if (!email) {
+        showToast('Error', 'Please enter your email', 'error');
+        return;
+    }
+
+    const btn = document.getElementById('sendResetBtn');
+    btn.disabled = true;
+    btn.textContent = 'Sending...';
+
+    try {
+        const { error } = await supabase.auth.resetPasswordForEmail(email, {
+            redirectTo: window.location.origin + window.location.pathname
+        });
+
+        if (error) throw error;
+
+        showToast('Success', 'Password reset email sent. Please check your inbox.', 'success');
+        const modal = bootstrap.Modal.getInstance(document.getElementById('forgotPasswordModal'));
+        if (modal) modal.hide();
+    } catch (err) {
+        showToast('Error', err.message, 'error');
+    } finally {
+        btn.disabled = false;
+        btn.textContent = 'Send Link';
+    }
+};
+
+window.updateNewPassword = async () => {
+    const password = document.getElementById('newPassword').value;
+    if (!password || password.length < 6) {
+        showToast('Error', 'Password must be at least 6 characters', 'error');
+        return;
+    }
+
+    const btn = document.getElementById('updatePasswordBtn');
+    btn.disabled = true;
+    btn.textContent = 'Updating...';
+
+    try {
+        const { error } = await supabase.auth.updateUser({ password: password });
+        if (error) throw error;
+
+        showToast('Success', 'Password updated successfully.', 'success');
+        const modal = bootstrap.Modal.getInstance(document.getElementById('updatePasswordModal'));
+        if (modal) modal.hide();
+
+        // Return to login screen or dashboard
+        checkSession();
+    } catch (err) {
+        showToast('Error', err.message, 'error');
+    } finally {
+        btn.disabled = false;
+        btn.textContent = 'Update Password';
+    }
+};
+
+// Listen for Auth changes (for password recovery)
+supabase.auth.onAuthStateChange((event, session) => {
+    if (event === 'PASSWORD_RECOVERY') {
+        // Hide login view if it's visible, modal handles the rest
+        const modal = new bootstrap.Modal(document.getElementById('updatePasswordModal'));
+        modal.show();
+    }
+});
+
 // ==================== DATA MANAGEMENT ====================
 
 // Load Unique Districts for Filter
@@ -176,18 +254,32 @@ async function loadDistricts(role, userDistrict) {
 
         // Populate Filter Dropdown
         const filterSelect = document.getElementById('districtFilter');
+        let availableDistricts = state.districts;
+
+        if (state.allowedDistricts && state.allowedDistricts.length > 0) {
+            availableDistricts = state.districts.filter(d => state.allowedDistricts.includes(d));
+        }
+
         filterSelect.innerHTML = '<option value="">All Districts</option>' +
-            state.districts.map(d => `<option value="${d}">${d}</option>`).join('');
+            availableDistricts.map(d => `<option value="${d}">${d}</option>`).join('');
 
         // RBAC Enforcement
-        if (role === 'admin' && userDistrict) {
-            filterSelect.value = userDistrict;
-            state.filters.district = userDistrict;
+        if (role === 'admin' && state.allowedDistricts && state.allowedDistricts.length === 1) {
+            filterSelect.value = state.allowedDistricts[0];
+            state.filters.district = state.allowedDistricts[0];
+            filterSelect.disabled = true;
+            filterSelect.title = "Restricted to your assigned district";
+        } else if (role === 'admin' && state.allowedDistricts && state.allowedDistricts.length > 1) {
+            filterSelect.disabled = false;
+            filterSelect.title = "Filter by your assigned districts";
+        } else {
+            filterSelect.disabled = false;
+            filterSelect.title = "";
         }
 
         // Populate Modal Datalist
         const datalist = document.getElementById('districtSuggestions');
-        datalist.innerHTML = state.districts.map(d => `<option value="${d}">`).join('');
+        datalist.innerHTML = availableDistricts.map(d => `<option value="${d}">`).join('');
 
     } catch (err) {
         console.error('Failed to load districts:', err);
@@ -225,6 +317,8 @@ async function loadStudents(page = 1) {
 
             if (state.filters.district) {
                 query = query.eq('District', state.filters.district);
+            } else if (state.allowedDistricts && state.allowedDistricts.length > 0) {
+                query = query.in('District', state.allowedDistricts);
             }
 
             const res = await query;
@@ -243,6 +337,8 @@ async function loadStudents(page = 1) {
 
             if (state.filters.district) {
                 query = query.eq('District', state.filters.district);
+            } else if (state.allowedDistricts && state.allowedDistricts.length > 0) {
+                query = query.in('District', state.allowedDistricts);
             }
 
             // Fallback ordering
@@ -389,11 +485,14 @@ window.openAddModal = () => {
     document.getElementById('modalTitle').textContent = 'Add New Student';
 
     // RBAC: Pre-fill district if admin
-    if (state.userDistrict) {
-        const distInput = document.getElementById('district');
-        distInput.value = state.userDistrict;
+    const distInput = document.getElementById('district');
+    if (state.allowedDistricts && state.allowedDistricts.length === 1) {
+        distInput.value = state.allowedDistricts[0];
         distInput.readOnly = true; // Lock it
         distInput.classList.add('bg-light');
+    } else {
+        distInput.readOnly = false;
+        distInput.classList.remove('bg-light');
     }
 
     studentModal.show();
@@ -712,15 +811,26 @@ window.uploadCSV = () => {
             let errorCount = 0;
 
             for (let i = 0; i < rows.length; i += BATCH_SIZE) {
-                const batch = rows.slice(i, i + BATCH_SIZE).map(row => ({
-                    'Name of Student': row['Name of Student'] || row['name'] || '',
-                    'VEC Exam Code': row['VEC Exam Code'] || row['exam_code'] || '',
-                    'Mobile Number': row['Mobile Number'] || row['mobile'] || '',
-                    'District': state.filters.district || row['District'] || row['district'] || '', // Enforce district if User is restricted
-                    'School Name': row['School Name'] || row['school'] || '',
-                    'Standard/Class': row['Standard/Class'] || row['class'] || '',
-                    'Result Grades': row['Result Grades'] || row['grade'] || 'Pending'
-                }));
+                const batch = rows.slice(i, i + BATCH_SIZE).map(row => {
+                    let csvDistrict = state.filters.district || row['District'] || row['district'] || '';
+
+                    // Enforce district access
+                    if (!state.filters.district && state.allowedDistricts && state.allowedDistricts.length > 0) {
+                        if (!state.allowedDistricts.includes(csvDistrict)) {
+                            return null; // Skip records for unauthorized districts
+                        }
+                    }
+
+                    return {
+                        'Name of Student': row['Name of Student'] || row['name'] || '',
+                        'VEC Exam Code': row['VEC Exam Code'] || row['exam_code'] || '',
+                        'Mobile Number': row['Mobile Number'] || row['mobile'] || '',
+                        'District': csvDistrict,
+                        'School Name': row['School Name'] || row['school'] || '',
+                        'Standard/Class': row['Standard/Class'] || row['class'] || '',
+                        'Result Grades': row['Result Grades'] || row['grade'] || 'Pending'
+                    };
+                }).filter(r => r !== null);
 
                 // Filter out empty rows (essential fields missing)
                 const validBatch = batch.filter(r => r['Name of Student'] && r['VEC Exam Code']);

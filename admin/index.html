@@ -45,7 +45,9 @@
                     <span id="loginSpinner" class="spinner-border spinner-border-sm ms-2 d-none"></span>
                 </button>
                 <div class="text-center">
-                    <a href="signup.html" class="text-decoration-none small">Register New Account</a>
+                    <a href="signup.html" class="text-decoration-none small d-block mb-2">Register New Account</a>
+                    <a href="#" class="text-decoration-none small text-muted" onclick="openForgotPasswordModal()">Forgot
+                        Password?</a>
                 </div>
             </form>
             <div id="loginError" class="alert alert-danger mt-3 d-none text-start small"></div>
@@ -213,6 +215,53 @@
                     <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
                     <button type="button" class="btn btn-primary-custom px-4" onclick="saveStudent()">Save
                         Student</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Forgot Password Modal -->
+    <div class="modal fade" id="forgotPasswordModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header border-0 pb-0">
+                    <h5 class="modal-title fw-bold">Reset Password</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <p class="small text-secondary mb-3">Enter your email address and we will send you a link to reset
+                        your password.</p>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold small text-secondary">Email Address</label>
+                        <input type="email" class="form-control" id="forgotPasswordEmail" required>
+                    </div>
+                </div>
+                <div class="modal-footer border-0 pt-0 pe-4 pb-4">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary-custom px-4" id="sendResetBtn"
+                        onclick="sendPasswordResetEmail()">Send Link</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Update Password Modal -->
+    <div class="modal fade" id="updatePasswordModal" tabindex="-1" data-bs-backdrop="static">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header border-0 pb-0">
+                    <h5 class="modal-title fw-bold">Update Password</h5>
+                </div>
+                <div class="modal-body p-4">
+                    <p class="small text-secondary mb-3">Please enter your new password below.</p>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold small text-secondary">New Password</label>
+                        <input type="password" class="form-control" id="newPassword" required>
+                    </div>
+                </div>
+                <div class="modal-footer border-0 pt-0 pe-4 pb-4">
+                    <button type="button" class="btn btn-primary-custom px-4" id="updatePasswordBtn"
+                        onclick="updateNewPassword()">Update Password</button>
                 </div>
             </div>
         </div>
