@@ -12,5 +12,6 @@ AS $$
   WHERE
     "Name of Student" ILIKE '%' || term || '%'
     OR "VEC Exam Code" ILIKE '%' || term || '%'
+    OR "School Name" ILIKE '%' || term || '%'
     OR CAST("Mobile Number" AS TEXT) ILIKE '%' || term || '%';
 $$;

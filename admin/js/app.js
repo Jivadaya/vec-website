@@ -299,7 +299,7 @@ async function loadStudents(page = 1) {
 
     if (!tbody) { console.error('Table body not found!'); return; }
 
-    tbody.innerHTML = '<tr><td colspan="8" class="text-center">Loading data...</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="7" class="text-center">Loading data...</td></tr>';
 
     // Calculate Range
     const from = (page - 1) * state.pageSize;
@@ -376,7 +376,7 @@ async function loadStudents(page = 1) {
 
     } catch (err) {
         console.error('Data Load Error:', err);
-        tbody.innerHTML = `<tr><td colspan="8" class="text-danger text-center">Error loading data: ${err.message}</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="7" class="text-danger text-center">Error loading data: ${err.message}</td></tr>`;
     }
 }
 
@@ -390,7 +390,7 @@ function highlightMatch(text, term) {
 
 function renderTable(data, tbody) {
     if (data.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="8" class="text-center">No records found.</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="7" class="text-center">No records found.</td></tr>';
         return;
     }
 
@@ -401,11 +401,12 @@ function renderTable(data, tbody) {
             <td>${highlightMatch(s['Name of Student'], searchTerm)}</td>
             <td>${highlightMatch(s['VEC Exam Code'], searchTerm)}</td>
             <td>${highlightMatch(s['Mobile Number'], searchTerm)}</td>
+            <td class="text-truncate" style="max-width: 150px;" title="${s['School Name'] || ''}">${highlightMatch(s['School Name'] || '-', searchTerm)}</td>
             <td>${s['District']}</td>
             <td>${s['Result Grades'] || '-'}</td>
-            <td>
-                <button class="btn btn-sm btn-outline-primary" onclick="window.editStudent('${s['VEC Exam Code']}')">
-                    <i class="fa-solid fa-pen"></i>
+            <td class="text-end">
+                <button class="btn btn-sm btn-light border" title="Edit Student" onclick="window.editStudent('${s['VEC Exam Code']}')">
+                    <i class="fa-solid fa-pen text-primary"></i>
                 </button>
             </td>
         </tr>
@@ -919,6 +920,38 @@ function renderPagination(total, container) {
 
     container.innerHTML = html;
 }
+
+// Mobile Sidebar Logics
+document.addEventListener('DOMContentLoaded', () => {
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('sidebarOverlay');
+    const menuBtn = document.getElementById('mobileMenuBtn');
+    const closeBtn = document.getElementById('mobileSidebarClose');
+
+    if (sidebar && overlay && menuBtn && closeBtn) {
+        menuBtn.addEventListener('click', () => {
+            sidebar.classList.add('open');
+            overlay.classList.add('open');
+        });
+
+        const closeSidebar = () => {
+            sidebar.classList.remove('open');
+            overlay.classList.remove('open');
+        };
+
+        closeBtn.addEventListener('click', closeSidebar);
+        overlay.addEventListener('click', closeSidebar);
+
+        // Auto-close on nav link click in mobile view
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth <= 992) {
+                    closeSidebar();
+                }
+            });
+        });
+    }
+});
 
 // Start App
 checkSession();

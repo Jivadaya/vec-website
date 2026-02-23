@@ -22,8 +22,7 @@
     <!-- ==================== LOGIN VIEW ==================== -->
     <div id="loginView" class="login-container">
         <div class="login-card text-center">
-            <img src="../images/logo.png" alt="Logo" style="height: 60px; margin-bottom: 20px;">
-            <h3 class="fw-bold mb-4">Admin Login</h3>
+            <h3 class="fw-bold mb-4 text-dark">Admin Portal</h3>
             <form id="loginForm">
                 <div class="mb-3 text-start">
                     <label class="form-label fw-bold">Email Address</label>
@@ -56,11 +55,15 @@
 
     <!-- ==================== DASHBOARD VIEW ==================== -->
     <div id="dashboardView" class="d-none">
+        <!-- Sidebar Overlay (Mobile) -->
+        <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
         <!-- Sidebar -->
-        <nav class="sidebar">
+        <nav class="sidebar" id="sidebar">
             <div class="sidebar-header">
                 <div class="sidebar-brand">
-                    <i class="fa-solid fa-shield-halved"></i> VEC Admin
+                    <span><i class="fa-solid fa-shield-halved"></i> VEC Admin</span>
+                    <button id="mobileSidebarClose"><i class="fa-solid fa-xmark"></i></button>
                 </div>
             </div>
             <ul class="nav flex-column">
@@ -80,8 +83,16 @@
 
         <!-- Main Content -->
         <div class="main-content">
-            <div class="d-flex justify-content-between align-items-center mb-4">
-                <h2 class="fw-bold text-dark">Student Management</h2>
+            <!-- Mobile Header -->
+            <div class="mobile-header d-flex d-lg-none">
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+                <h5 class="m-0 fw-bold text-dark">VEC Admin</h5>
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center mb-4 mt-3 mt-lg-0">
+                <h2 class="fw-bold text-dark d-none d-lg-block">Student Management</h2>
                 <div class="d-flex align-items-center gap-3" id="adminActions">
                     <span class="text-secondary small fw-bold" id="userEmailDisplay"></span>
                     <button class="btn btn-primary-custom" onclick="openAddModal()">
@@ -125,22 +136,23 @@
                     <span class="badge bg-secondary" id="totalCount">0 Records</span>
                 </div>
                 <div class="table-responsive">
-                    <table class="table table-custom table-hover mb-0">
+                    <table class="table table-custom table-hover align-middle mb-0">
                         <thead>
                             <tr>
-                                <th>Student Name</th>
-                                <th>Exam Code</th>
-                                <th>Mobile</th>
-                                <th>District</th>
-                                <th>Grade</th>
-                                <th>Actions</th>
+                                <th class="border-0">Student Name</th>
+                                <th class="border-0">Exam Code</th>
+                                <th class="border-0">Mobile</th>
+                                <th class="border-0">School Name</th>
+                                <th class="border-0">District</th>
+                                <th class="border-0">Grade</th>
+                                <th class="border-0 text-end">Actions</th>
                             </tr>
                         </thead>
                         <tbody id="studentsTableBody">
                             <tr>
-                                <td colspan="6" class="text-center py-5 text-secondary">
-                                    <i class="fa-solid fa-spinner fa-spin fa-2x mb-3"></i>
-                                    <p>Loading data...</p>
+                                <td colspan="7" class="text-center py-5 text-muted">
+                                    <i class="fa-solid fa-circle-notch fa-spin fa-2x mb-3"></i>
+                                    <p class="mb-0 mt-2">Loading data...</p>
                                 </td>
                             </tr>
                         </tbody>
