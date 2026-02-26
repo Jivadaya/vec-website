@@ -2665,7 +2665,24 @@
                     console.error(`Supabase district fetch failed (Attempt ${retryCount}/${maxRetries}):`, err);
 
                     if (retryCount >= maxRetries) {
-                        districtList.innerHTML = '<div class="premium-dropdown-no-results">Unable to load districts after multiple attempts. Please check your internet connection and try again.</div>';
+                        console.warn('Falling back to Google Sheets data for districts...');
+                        // Fallback: Extract unique districts from whatsappData
+                        if (whatsappData && whatsappData.length > 0) {
+                            const fallbackDistricts = new Set();
+                            whatsappData.forEach(item => {
+                                if (item.district) fallbackDistricts.add(item.district);
+                            });
+
+                            globalDistricts = Array.from(fallbackDistricts).sort();
+
+                            if (globalDistricts.length > 0) {
+                                renderDistrictDropdown(globalDistricts);
+                                updateAllOtherDistrictSelects(globalDistricts);
+                                return; // Success via fallback
+                            }
+                        }
+
+                        districtList.innerHTML = '<div class="premium-dropdown-no-results">Unable to load districts. Please check your internet connection and try again.</div>';
                     } else {
                         // Exponential backoff before next retry (1s, 2s)
                         await new Promise(resolve => setTimeout(resolve, 1000 * Math.pow(2, retryCount - 1)));
