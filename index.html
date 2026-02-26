@@ -2676,6 +2676,8 @@
             // --- Dropdown Interaction Logic (Keep this part) ---
             districtInput.addEventListener('click', (e) => {
                 e.stopPropagation();
+                if (globalDistricts.length === 0) return; // Prevent opening if still loading or failed
+
                 districtDropdown.classList.toggle('active');
                 if (districtDropdown.classList.contains('active')) {
                     districtInput.readOnly = false;
